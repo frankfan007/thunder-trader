@@ -5,38 +5,25 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 else()
     set(BOOST_THREAD "boost_thread")
 endif()
-SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
-SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
-SET(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
+set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+set(CMAKE_BUILD_TYPE "Release")
 
 include_directories("${PROJECT_SOURCE_DIR}/common")
-include_directories("${PROJECT_SOURCE_DIR}/common/CompreTradeSystemHeader")  
-include_directories("${PROJECT_SOURCE_DIR}/common/CTPForLinux32")  
-include_directories("${PROJECT_SOURCE_DIR}/common/DfitcForLinux64")  
-include_directories("${PROJECT_SOURCE_DIR}/common/Femas")  
-include_directories("${PROJECT_SOURCE_DIR}/trade/AtmMarketDataPlugins")  
-include_directories("${PROJECT_SOURCE_DIR}/trade/AtmTradePlugins")  
-include_directories("${PROJECT_SOURCE_DIR}/common/Tick")  
-SET(CTP_MD_PlugPath "${PROJECT_SOURCE_DIR}/trade/AtmMarketDataPlugins/CTP_FUTURE_MDPlugin")
-SET(CTP_TD_PlugPath "${PROJECT_SOURCE_DIR}/trade/AtmTradePlugins/CTP_FUTURE_TDPlugin")
-SET(DFITC_SOP_MDPlugPath "${PROJECT_SOURCE_DIR}/trade/AtmMarketDataPlugins/DFITC_SOP_MDPlugin")
-SET(DFITC_SOP_TDPlugPath "${PROJECT_SOURCE_DIR}/trade/AtmTradePlugins/DFITC_SOP_TDPlugin")
-SET(FEMAS_FUTURE_MDPlugPath "${PROJECT_SOURCE_DIR}/trade/AtmMarketDataPlugins/FEMAS_FUTURE_MDPlugin")
-SET(FEMAS_FUTURE_TDPlugPath "${PROJECT_SOURCE_DIR}/trade/AtmTradePlugins/FEMAS_FUTURE_TDPlugin")
-SET(ATMPath "${PROJECT_SOURCE_DIR}trade/ATM")
-SET(PlugInDef "-DCTP_FUTURE_MDPlugin -DCTP_FUTURE_TDPlugin -DDFITC_SOP_MDPlugin -DDFITC_SOP_TDPlugin -DFEMAS_FUTURE_MDPlugin -DFEMAS_FUTURE_TDPlugin")
-SET(soFiles "Lib/thostmduserapi.so Lib/thosttraderapi.so
-Lib/libDFITCSECMdApi.so Lib/libDFITCSECTraderApi.so
-Lib/libUSTPmduserapi.so Lib/libUSTPtraderapi.so")
+include_directories("${PROJECT_SOURCE_DIR}/common/trade_headers")  
+include_directories("${PROJECT_SOURCE_DIR}/trade/md_plugins")  
+include_directories("${PROJECT_SOURCE_DIR}/trade/trade_plugins")  
+include_directories("${PROJECT_SOURCE_DIR}/common/tick")  
 
-SET(Libs=-ldl -lboost_system -lboost_filesystem -lpthread -lboost_thread -lboost_date_time -lboost_serialization -lboost_log_setup -lboost_log
-SET(Configs=-g -std=c++0x -fexceptions -Wall -DBOOST_SPIRIT_THREADSAFE -DBOOST_ALL_DYN_LINK
+set(libs dl boost_system boost_filesystem pthread boost_thread boost_date_time boost_serialization boost_log_setup boost_log)
+add_definitions(-DBOOST_SPIRIT_THREADSAFE)
+add_definitions(-DBOOST_ALL_DYN_LINK)
 
 message(STATUS "${BOOST_THREAD}")
 add_definitions(-DBOOST_SPIRIT_THREADSAFE)
-find_package(Boost REQUIRED COMPONENTS regex system thread serialization python date_time)
+find_package(Boost REQUIRED COMPONENTS regex system thread serialization date_time)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
@@ -45,25 +32,62 @@ if(NOT Boost_FOUND)
 endif()
 message(STATUS "Found Boost IncPath ${Boost_INCLUDE_DIRS}")
 message(STATUS "Found Boost LibPath ${Boost_LIBRARY_DIRS}")
-find_package(PythonLibs)
-if(NOT PythonLibs_FOUND)
-    message("Can not find PythonLibs")
-endif()
-message(STATUS ${PYTHON_LIBRARIES})
-message(STATUS ${PYTHON_INCLUDE_DIR})
-message(STATUS ${PYTHON_LIBRARY})
-message(STATUS ${PYTHONLIBS_VERSION_STRING})
-set(LIBS_NEEDED ${mysql_library} boost_filesystem boost_system crypto boost_regex ${BOOST_THREAD} boost_serialization boost_date_time)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
-include_directories(${PYTHON_INCLUDE_DIR})
-link_directories(${PYTHON_LIBRARY})
-include_directories(${mysql_include_dir})
-include_directories("${PROJECT_SOURCE_DIR}/public")
-add_library(pyicp SHARED main.cpp )
-#add_executable(pyicp  main.cpp)
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-    target_link_libraries(pyicp ${LIBS_NEEDED} boost_python)
-else()
-    target_link_libraries(pyicp ${LIBS_NEEDED} boost_python python2.7)
-endif()
+
+add_library(io_service_pool STATIC trade/io_service_pool.hpp trade/io_service_pool.cpp)
+add_library(server STATIC  trade/server.hpp trade/server.cpp)
+add_library(connection STATIC  trade/connection.hpp trade/connection.cpp)
+add_library(auto_pend STATIC  common/AutoPend.cpp common/AutoPend.h)
+
+####################### CTP ##########################################
+#include_directories("${PROJECT_SOURCE_DIR}/third/CTPForLinux32/")
+#
+#add_definitions(-DCTP_FUTURE_MDPlugin)
+#set(ctp_md_plugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/CTP_FUTURE_MDPlugin")
+#include_directories("${ctp_md_plugpath}")
+#add_library(ctp_future_mdplugin static ${ctp_md_plugpath}/CTP_FUTURE_MDPlugin.cpp)
+#target_link_libraries(ctp_future_mdplugin "${PROJECT_SOURCE_DIR}/third/CTPForLinux32/thostmduserapi.so")
+#
+#add_definitions(-DCTP_FUTURE_TDPlugin)
+#set(ctp_td_plugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/CTP_FUTURE_TDPlugin")
+#include_directories("${ctp_td_plugpath}")
+#add_library(ctp_future_tdplugin static ${ctp_td_plugpath}/CTP_FUTURE_TDPlugin.cpp ${CTP_TD_PlugPath}/CTP_FUTURE_TDPlugin.h )
+#target_link_libraries(ctp_future_tdplugin "${PROJECT_SOURCE_DIR}/third/CTPForLinux32/thosttraderapi.so"
+#
+######################## DFITC ########################################
+#include_directories("${PROJECT_SOURCE_DIR}/third/DfitcForLinux64/")
+#
+#add_definitions(-DDFITC_SOP_MDPlugin)
+#set(dfitc_sop_mdplugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/DFITC_SOP_MDPlugin")
+#include_directories("${dfitc_sop_mdplugpath}")
+#add_library(dfitc_sop_mdplugin static ${dfitc_sop_mdplugpath}/DFITC_SOP_MDPlugin.cpp)
+#target_link_libraries(dfitc_sop_mdplugin "${project_source_dir}/third/DfitcForLinux64/libDFITCSECMdApi.so"
+#
+#add_definitions(-DDFITC_SOP_TDPlugin)
+#set(dfitc_sop_tdplugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/DFITC_SOP_TDPlugin")
+#include_directories("${dfitc_sop_tdplugpath}")
+#add_library(dfitc_sop_tdplugin static ${dfitc_sop_tdplugpath}/DFITC_SOP_TDPlugin.cpp)
+#target_link_libraries(dfitc_sop_tdplugin "${project_source_dir}/third/DfitcForLinux64/libDFITCSECTraderApi.so"
+#
+####################### FEMAS ##########################################
+#include_directories("${PROJECT_SOURCE_DIR}third/Femas/")
+#
+#add_definitions(-DFEMAS_FUTURE_MDPlugin) 
+#set(femas_future_mdplugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/FEMAS_FUTURE_MDPlugin")
+#include_directories("${femas_future_mdplugpath}")
+#add_library(femas_future_mdplugin static ${femas_future_mdplugpath}/FEMAS_FUTURE_MDPlugin.cpp)
+#target_link_libraries(femas_future_mdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPmduserapi.so")
+#
+#add_definitions(-DFEMAS_FUTURE_TDPlugin)
+#set(femas_future_tdplugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/FEMAS_FUTURE_TDPlugin")
+#include_directories("${femas_future_tdplugpath}")
+#add_library(femas_future_tdplugin static ${femas_future_tdplugpath}/FEMAS_FUTURE_TDPlugin.cpp)
+#target_link_libraries(femas_future_tdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPtraderapi.so")
+
+#add_library(TradeService static ${ATMPath}/public.h ${ATMPath}/TradeService.h ${ATMPath}/TradeService.cpp)
+
+#ATM.o:$(ATMPath)/public.h $(ATMPath)/ATM.cpp $(ATMPath)/TradeService.h $(ATMPath)/TradeService.cpp
+#	g++ $(Includes) $(Libs) $(Configs) $(PlugInDef) -c $(ATMPath)/ATM.cpp
+#
+#ATM:ATM.o TradeService.o libCTP_FUTURE_MDPlugin.a libCTP_FUTURE_TDPlugin.a libFEMAS_FUTURE_MDPlugin.a libFEMAS_FUTURE_TDPlugin.a libDFITC_SOP_MDPlugin.a libDFITC_SOP_TDPlugin.a 
