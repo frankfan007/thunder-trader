@@ -1,13 +1,3 @@
-//
-// connection.hpp
-// ~~~~~~~~~~~~~~
-//
-// Copyright (c) 2003-2015 Christopher M. Kohlhoff (chris at kohlhoff dot com)
-//
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
-
 #ifndef HTTP_SERVER2_CONNECTION_HPP
 #define HTTP_SERVER2_CONNECTION_HPP
 
@@ -29,10 +19,7 @@ class connection
 {
 public:
   /// Construct a connection with the given io_service.
-  explicit connection(
-	  boost::asio::io_service& io_service,
-	  CCommuModForServSpi * handler
-	  );
+  explicit connection(boost::asio::io_service& io_service, CCommuModForServSpi * handler);
 
   /// Get the socket associated with the connection.
   boost::asio::ip::tcp::socket& socket();

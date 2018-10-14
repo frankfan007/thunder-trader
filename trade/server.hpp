@@ -26,16 +26,16 @@ namespace server2 {
 /// The top-level class of the HTTP server.
 class server
   : private boost::noncopyable,
-	public MCommuModForServInterface
+    public MCommuModForServInterface
 {
 public:
   /// Construct the server to listen on the specified TCP address and port, and
   /// serve up files from the given directory.
   explicit server(
-	  const std::string& address, 
-	  const std::string& port,
-	  CCommuModForServSpi * spi_handler,
-	  std::size_t io_service_pool_size);
+      const std::string& address, 
+      const std::string& port,
+      CCommuModForServSpi * spi_handler,
+      std::size_t io_service_pool_size);
 
   virtual ~server();
   /// Run the server's io_service loop.
