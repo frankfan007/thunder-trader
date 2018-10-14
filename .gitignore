@@ -1,0 +1,5 @@
+*.a
+*.log
+CMakeCache.txt
+CMakeFiles 
+cmake_install.cmake 

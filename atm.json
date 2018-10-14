@@ -1,0 +1,24 @@
+{
+    "basic": {
+    "address": "0.0.0.0",
+        "listenport": "3848",
+        "nethandlerthreadcount": "2",
+    "strategybinroot": ".."
+    },
+    "logconfig": {
+    "logtype": "syslog|file|console",
+        "syslog": {
+            "serveraddress": "101.200.203.40",
+            "port": "514"
+        },
+        "file": {
+        "target": "ATMLOG",
+            "filenamehead": "atm_log_",
+            "rotationsize": "1048576",
+            "autoflush": "true"
+        },
+        "console": {
+        }
+    }
+}
+
