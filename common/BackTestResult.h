@@ -1,4 +1,4 @@
-#pragma once
+
 #include "QuantFundHFTBackTestTypedefine.h"
 #include <vector>
 #include <unordered_map>
@@ -7,11 +7,11 @@
 #include <string>
 #include "Order.h"
 #include "Tick.h"
-#pragma region boost::ptime
+
 #include <boost/date_time/posix_time/posix_time.hpp>
 using namespace boost::posix_time;
 using namespace boost::gregorian;
-#pragma endregion
+
 using namespace boost::posix_time;
 using namespace HFTReportNamespace;
 class CBackTestResult

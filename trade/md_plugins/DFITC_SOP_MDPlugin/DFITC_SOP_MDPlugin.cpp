@@ -230,7 +230,7 @@ void CDFITC_SOP_MDPlugin::Stop()
 		}
 		if (0 != m_pUserApi->UnSubscribeSOPMarketData(ppInstrumentID, InstrumentCount, ++m_uRequestID))
 			ShowMessage(severity_levels::error, "send unsubscribemarketdata failed.");
-		for (auto i = 0;i < InstrumentCount;i++)
+		for (unsigned int i = 0;i < InstrumentCount;i++)
 			delete[] ppInstrumentID[i];
 		delete[] ppInstrumentID;
 
@@ -307,7 +307,7 @@ void CDFITC_SOP_MDPlugin::MDAttachStrategy(
 	{
 		m_mapInsid2Strategys[InstrumentID].second.push_back(make_tuple(strategy, dataid, &mtx, updatetime));
 		auto & tick = m_mapInsid2Strategys[InstrumentID].first;
-		#pragma region ³õÊ¼»¯tick
+		
 		memset(tick.m_strInstrumentID, 0, sizeof(TInstrumentIDType));
 		tick.m_datetimeUTCDateTime = not_a_date_time;
 		tick.m_dbLastPrice = 0;
@@ -326,7 +326,7 @@ void CDFITC_SOP_MDPlugin::MDAttachStrategy(
 		tick.m_dbHighestPrice = 0;
 		tick.m_dbLowestPrice = 0;
 		tick.m_dbClosePrice = 0;
-		#pragma endregion
+		
 		if (m_boolIsOnline)
 		{
 			typedef char * NAMETYPE;
@@ -394,7 +394,7 @@ void CDFITC_SOP_MDPlugin::MDDetachStrategy(MStrategy * strategy)
 
 }
 
-#pragma region CThostFtdcMdSpi
+
 
 void CDFITC_SOP_MDPlugin::OnFrontConnected()
 {
@@ -461,7 +461,7 @@ void CDFITC_SOP_MDPlugin::OnRspSOPUserLogin(struct DFITCSECRspUserLoginField * p
 			}
 			if (0 != m_pUserApi->SubscribeSOPMarketData(ppInstrumentID, InstrumentCount, ++m_uRequestID))
 				ShowMessage(severity_levels::error, "send subscribemarketdata failed.");
-			for (auto i = 0;i < InstrumentCount;i++)
+			for (unsigned int i = 0;i < InstrumentCount;i++)
 				delete[] ppInstrumentID[i];
 			delete[] ppInstrumentID;
 		}
@@ -624,4 +624,4 @@ void CDFITC_SOP_MDPlugin::OnSOPMarketData(struct DFITCSOPDepthMarketDataField * 
 
 }
 
-#pragma endregion
+

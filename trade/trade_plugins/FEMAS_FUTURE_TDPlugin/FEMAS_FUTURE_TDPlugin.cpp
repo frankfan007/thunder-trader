@@ -517,7 +517,7 @@ int CFEMAS_FUTURE_TDPlugin::TDGetRemainAmountOfCancelChances(const char * ins)
 	}
 }
 
-#pragma region CUstpFtdcTraderSpi
+
 void CFEMAS_FUTURE_TDPlugin::OnFrontConnected()
 {
 	CUstpFtdcReqUserLoginField req;
@@ -707,4 +707,4 @@ void CFEMAS_FUTURE_TDPlugin::OnErrRtnOrderAction(CUstpFtdcOrderActionField * pOr
 void CFEMAS_FUTURE_TDPlugin::OnRspSubscribeTopic(CUstpFtdcDisseminationField * pDissemination, CUstpFtdcRspInfoField * pRspInfo, int nRequestID, bool bIsLast)
 {
 }
-#pragma endregion
+

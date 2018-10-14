@@ -39,22 +39,22 @@ class CDFITC_SOP_TDPlugin :
 		{ DFITCSEC_DR_WithdrawFail,		"DFITCSEC_DR_WithdrawFail"		},///撤单未成
 		{ DFITCSEC_DR_ManualDeclare,	"DFITCSEC_DR_ManualDeclare"		},///等待人工申报
 	};
-#pragma region 日志属性
-	boost::log::sources::severity_logger< severity_levels > m_Logger;
-#pragma endregion
 
-#pragma region 定时器属性
+	boost::log::sources::severity_logger< severity_levels > m_Logger;
+
+
+
 	io_service  m_IOservice;
 	deadline_timer m_StartAndStopCtrlTimer;
 	std::future<bool> m_futTimerThreadFuture;
-#pragma endregion
 
-#pragma region 交易接口属性
+
+
 	MTradePluginContextInterface * m_pTradePluginContext = nullptr;
 	DFITCSECTraderApi * m_pUserApi = nullptr;//Init at Start()
-#pragma endregion
 
-#pragma region 账号线程关键属性
+
+
 	string m_strServerAddress;//Init at TDInit
 	string m_strAccountid;//Init at TDInit
 	string m_strPassword;//Init at TDInit
@@ -64,22 +64,22 @@ class CDFITC_SOP_TDPlugin :
 	unsigned int m_uIncreasePart = 0;//Init at OnRspUserLogin()
 	DFITCSECFrontIDType m_intFrontID = 0;//Init at OnRspUserLogin()
 	DFITCSECSessionIDType m_intSessionID = 0;//Init at OnRspUserLogin()
-#pragma endregion
 
-#pragma region 登录登出同步
+
+
 	std::mutex m_mtxLoginSignal;
 	condition_variable m_cvLoginSignalCV;
 	std::mutex m_mtxLogoutSignal;
 	condition_variable m_cvLogoutSignalCV;
-#pragma endregion
 
-#pragma region 撤单次数控制
+
+
 	date GetTradeday(ptime _Current);
 	date m_dateTradeDay;
 	boost::shared_mutex m_mtxProtectCancelAmount;
 	map<string, int> m_mapCancelAmount;
 	int m_intInitAmountOfCancelChancesPerDay;
-#pragma endregion
+
 	
 public:
 	static const string s_strAccountKeyword;
@@ -120,7 +120,7 @@ private:
 	void ShowMessage(severity_levels, const char * fmt, ...);
 	void TimerHandler(boost::asio::deadline_timer* timer, const boost::system::error_code& err);
 
-#pragma region DFITCSECTraderSpi
+
 	virtual void OnRspSOPUserLogin(DFITCSECRspUserLoginField *pData, DFITCSECRspInfoField *pRspInfo);
 	virtual void OnRspSOPUserLogout(DFITCSECRspUserLogoutField *pData, DFITCSECRspInfoField *pRspInfo);
 	virtual void OnRspSOPEntrustOrder(DFITCSOPRspEntrustOrderField *pData, DFITCSECRspInfoField *pRspInfo);
@@ -129,7 +129,7 @@ private:
 	virtual void OnSOPWithdrawOrderRtn(DFITCSOPWithdrawOrderRtnField * pData);
 	virtual void OnRspError(DFITCSECRspInfoField *pRspInfo);
 
-#pragma endregion
+
 };
 #endif
 

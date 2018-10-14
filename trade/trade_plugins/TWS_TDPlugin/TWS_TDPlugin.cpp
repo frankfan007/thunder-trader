@@ -470,7 +470,7 @@ int CTWS_TDPlugin::TDGetRemainAmountOfCancelChances(const char *)
 	return std::numeric_limits<int>::max();
 }
 
-#pragma region CThostFtdcTraderSpi
+
 
 void CTWS_TDPlugin::OnRspUserLogin(CTwsRspUserLoginField * loginField, bool IsSucceed)
 {
@@ -542,4 +542,4 @@ void CTWS_TDPlugin::OnRtnTrade(CTwsTradeField * pTrade)
 	m_pTradePluginContext->OnTrade(Ref, Sys, Price, Volume);
 }
 
-#pragma endregion
+

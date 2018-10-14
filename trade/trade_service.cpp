@@ -9,14 +9,14 @@
 #include <regex>
 #include "public.h"
 #include "OrderRefResolve.h"
-#pragma region boost::ptime
+
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 using namespace boost::posix_time;
 using namespace boost::gregorian;
-#pragma endregion
 
-#pragma region boost::log
+
+
 #include <boost/log/common.hpp>
 //#include <boost/log/trivial.hpp>
 //#include <boost/log/core.hpp>
@@ -35,19 +35,19 @@ using namespace boost::gregorian;
 //#include <boost/log/sources/logger.hpp>
 //#include <boost/log/sinks/sync_frontend.hpp>
 //#include <boost/log/sinks/text_file_backend.hpp>
-#pragma endregion
+
 
 #ifndef WIN32
 #include <unistd.h>
 #endif
-#pragma region ptree
+
 #ifndef BOOST_SPIRIT_THREADSAFE
 #define BOOST_SPIRIT_THREADSAFE
 #endif
 #include <boost/property_tree/ptree.hpp>  
 #include <boost/property_tree/json_parser.hpp> 
 using namespace boost::property_tree;
-#pragma endregion
+
 
 
 namespace logging = boost::log;
@@ -60,7 +60,7 @@ namespace keywords = boost::log::keywords;
 using namespace boost::property_tree;
 using namespace std;
 
-#include "TradeService.h"
+#include "trade_service.h"
 #include "OrderRefResolve.h"
 
 string GetNodeData(string name, const ptree & root)
@@ -153,7 +153,7 @@ unsigned short CTradeService::GetListenPort()
 	ptree g_Config;
 	boost::property_tree::read_json(m_strConfigFile, g_Config);
 	
-#pragma region Basic
+
 	if (g_Config.find("basic") != g_Config.not_found())
 	{
 		auto Basic = g_Config.find("basic");
@@ -170,7 +170,7 @@ unsigned short CTradeService::GetListenPort()
 	}
 	else
 		throw std::runtime_error("[error]could not find 'basic' node.");
-#pragma endregion
+
 }
 
 size_t CTradeService::GetNetHandlerThreadCount()
@@ -178,7 +178,7 @@ size_t CTradeService::GetNetHandlerThreadCount()
 	ptree g_Config;
 	boost::property_tree::read_json(m_strConfigFile, g_Config);
 
-#pragma region Basic
+
 	if (g_Config.find("basic") != g_Config.not_found())
 	{
 		auto Basic = g_Config.find("basic");
@@ -195,10 +195,10 @@ size_t CTradeService::GetNetHandlerThreadCount()
 	}
 	else
 		throw std::runtime_error("[error]could not find 'basic' node.");
-#pragma endregion
+
 }
 
-#pragma region 功能函数
+
 void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 {
 	//策略数组互斥:		写互斥
@@ -213,22 +213,22 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 	unordered_map<string, string> _paramMap;
 	unsigned int _maxIncreaseOrderCountPerDay = 10;
 
-#pragma region 零.检查日内最大开仓次数字段
+
 	auto MiocpdNode= in.find("maxincreaseordercountperday");
 	if (MiocpdNode != in.not_found())
 		_maxIncreaseOrderCountPerDay = atoi(MiocpdNode->second.data().c_str());
 
-#pragma endregion
 
-#pragma region 一.检查Bin字段
+
+
 	auto BinNode = in.find("bin");
 	if (BinNode == in.not_found() || BinNode->second.data().size() == 0)
 		throw std::runtime_error("Invalid <bin>");
 	else
 		Bin = string(".") + FILE_PATH_SEPARATOR + BinNode->second.data() + STRATEGY_SUFFIX;
-#pragma endregion
 
-#pragma region 二.检查Archive字段
+
+
 	auto ArchiveNode = in.find("archive");
 	if (ArchiveNode == in.not_found())
 		Archive = "";
@@ -237,29 +237,29 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		if (false == ArchiveNode->second.data().empty())
 			Archive = ArchiveNode->second.data();
 	}
-#pragma endregion
 
-#pragma region 三.检查Param字段
+
+
 	auto ParamNode = in.find("param");
 	if (ParamNode != in.not_found())
 	{
 		for (auto & par : ParamNode->second)
 			_paramMap[par.first] = par.second.data();
 	}
-#pragma endregion
 
-#pragma region 四.检查DataID字段
+
+
 	auto DataIDNode = in.find("dataid");
 	if (DataIDNode == in.not_found())
 		throw std::runtime_error("Can not find <dataid>.");
-#pragma endregion
+
 
 	boost::shared_lock<boost::shared_mutex> rlock_MD(m_vecAllMarketDataSource.second, boost::defer_lock);
 	boost::shared_lock<boost::shared_mutex> rlock_TD(m_vecAllTradeSource.second, boost::defer_lock);
 	boost::unique_lock<boost::shared_mutex> wlock_ST(m_mtxAllStrategys, boost::defer_lock);
 	std::lock(rlock_MD, rlock_TD, wlock_ST);
 	
-#pragma region 五.解析DataID
+
 
 
 	for (auto & PerDataIdNode : DataIDNode->second)
@@ -269,7 +269,7 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		vector<PluginPtrType>::iterator tdsresult;
 		unordered_map<string, string> instrumentid;
 
-#pragma region 1.1解析行情配置
+
 		auto MarketDataSourceNode = PerDataIdNode.second.find("marketdatasource");
 		if (PerDataIdNode.second.not_found() != MarketDataSourceNode)
 		{
@@ -295,9 +295,9 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		}
 		else
 			throw std::runtime_error("Can not find <marketdatasource>.");
-#pragma endregion
 
-#pragma region 1.2解析交易配置
+
+
 		auto TradeSourceNode = PerDataIdNode.second.find("tradesource");
 		if (PerDataIdNode.second.not_found() != TradeSourceNode)
 		{
@@ -322,9 +322,9 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		else
 			throw std::runtime_error("Can not find <tradesource>.");
 
-#pragma endregion
 
-#pragma region 1.3解析合约配置
+
+
 		auto SymbolDefineNode = PerDataIdNode.second.find("symboldefine");
 		if (PerDataIdNode.second.not_found() != SymbolDefineNode)
 		{
@@ -334,33 +334,33 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		else
 			throw std::runtime_error("Can not find <symboldefine>.");
 
-#pragma endregion
+
 
 		_MD_DataChannelConfig[dataid] = make_pair(mdsresult, instrumentid);
 		_TD_DataChannelConfig[dataid] = make_pair(tdsresult, instrumentid);
 	}
 
-#pragma endregion
+
 	
-#pragma region 六.检查行情配置是否有效
+
 	for (auto & cfg : _MD_DataChannelConfig)
 		(*cfg.second.first)->CheckSymbolValidity(cfg.second.second);
-#pragma endregion
+
 	
-#pragma region 七.检查交易配置是否有效
+
 	for (auto & cfg : _TD_DataChannelConfig)
 		(*cfg.second.first)->CheckSymbolValidity(cfg.second.second);
-#pragma endregion
+
 	
-#pragma region 八.检查是否有空余的策略ID
-	for (;
-	(StrategyID <= (_MaxStrategyID)) && (nullptr != m_arrayAllStrategys[StrategyID].m_pStrategy);
+
+	for (;(StrategyID <= _MaxStrategyID) 
+        && (nullptr != m_arrayAllStrategys[StrategyID].m_pStrategy);
 		StrategyID++);
-		if (StrategyID > (_MaxStrategyID))
+		if (StrategyID > _MaxStrategyID)
 			throw std::runtime_error("Too many strategys MaxStrategyID.");
-#pragma endregion
+
 	
-#pragma region 九.检查策略是否能加载成功并且加载
+
 	_pBinHandle = LoadStrategyBin(Bin.c_str());
 	if (nullptr == _pBinHandle)
 		throw std::runtime_error("loadstrategybin failed.");
@@ -378,9 +378,9 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		UnLoadStrategyBin(_pBinHandle);
 		throw std::runtime_error("can not create strategy.");
 	}
-#pragma endregion
+
 	
-#pragma region 十.初始化策略
+
 	m_arrayAllStrategys[StrategyID].clear();
 	m_arrayAllStrategys[StrategyID].m_pBinHandle = _pBinHandle;
 	m_arrayAllStrategys[StrategyID].m_pStrategy = _pStrategy;
@@ -466,9 +466,9 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		throw std::runtime_error(error.c_str());
 	}
 
-#pragma endregion
+
 	
-#pragma region 十一.配置探针辅助信息
+
 	auto & ProbeInfo = m_arrayAllStrategys[StrategyID].m_vecProbeInfo;
 	TProbeStructType ProbeMatrix = m_arrayAllStrategys[StrategyID].m_pStrategy->GetProbeStruct();
 	if (nullptr != ProbeMatrix)
@@ -503,9 +503,9 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 			}
 		}
 	}
-#pragma endregion
+
 	
-#pragma region 十二.配置添加交易源
+
 	for (auto & cfg : _TD_DataChannelConfig)
 	{
 		m_arrayAllStrategys[StrategyID].m_mapDataid2TradeApi[cfg.first]
@@ -514,9 +514,9 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 				cfg.second.second);
 		(*cfg.second.first)->IncreaseRefCount();
 	}
-#pragma endregion
+
 	
-#pragma region 十三.配置行情源
+
 	for (auto & cfg : _MD_DataChannelConfig)
 	{
 		auto Source = dynamic_cast<MAtmMarketDataPluginInterface*>(cfg.second.first->get());
@@ -530,7 +530,7 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 		(*cfg.second.first)->IncreaseRefCount();
 	}
 
-#pragma endregion
+
 	
 	strategyid = StrategyID;
 }
@@ -575,7 +575,7 @@ void CTradeService::CancelStrategy(unsigned int StrategyID, string & sarchive, p
 	Strategy.clear();
 	sarchive = SArchiveFileName;
 }
-#pragma endregion
+
 
 void CTradeService::OnCommunicate(const ptree & in, ptree & out)
 {
@@ -621,7 +621,7 @@ string CTradeService::GetAddress()
 	ptree g_Config;
 	boost::property_tree::read_json(m_strConfigFile, g_Config);
 
-#pragma region Basic
+
 	if (g_Config.find("basic") != g_Config.not_found())
 	{
 		auto Basic = g_Config.find("basic");
@@ -638,10 +638,10 @@ string CTradeService::GetAddress()
 	}
 	else
 		throw std::runtime_error("[error]could not find 'basic' node.");
-#pragma endregion
+
 }
 
-#pragma region PackageHandler
+
 
 void CTradeService::ReqGetSupportedTypes(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
@@ -938,7 +938,7 @@ void CTradeService::ReqAllArchiveFile(PackageHandlerParamType param, const ptree
 
 }
 
-#pragma region 策略管理
+
 void CTradeService::ReqDeployNewStrategy(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
 	unsigned int StrategyID;
@@ -1044,9 +1044,9 @@ void CTradeService::ReqCancelRunningStrategies(PackageHandlerParamType param, co
 	out.put("result", Result);
 	out.put_child("redeploy", Config);
 }
-#pragma endregion
 
-#pragma region 图形监控数据获取
+
+
 void CTradeService::ReqGetProbe(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
 	//策略数组互斥:		读互斥
@@ -1107,7 +1107,7 @@ void CTradeService::ReqGetProbe(PackageHandlerParamType param, const ptree & in,
 	out.put_child("graph", allGraph);
 
 }
-#pragma endregion
+
 
 void CTradeService::ReqMeddle(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
@@ -1495,9 +1495,9 @@ void CTradeService::ReqStatus(PackageHandlerParamType, const ptree & in, ptree &
 	else
 		out.put("result", "unknown");
 }
-#pragma endregion
 
-#pragma region MStrategyContext
+
+
 bool CTradeService::Inquery(TStrategyIdType stid, MStrategyInquiryDataInterface * inquery)
 {
 	inquery->Release();
@@ -1741,9 +1741,9 @@ int CTradeService::GetRemainCancelAmount(TStrategyIdType stid, TMarketDataIdType
 	auto & API = m_arrayAllStrategys[stid].m_mapDataid2TradeApi[dataid];
 	return API.first->TDGetRemainAmountOfCancelChances(API.second["instrumentid"].c_str());
 }
-#pragma endregion
 
-#pragma region MTradePluginContextInterface
+
+
 void CTradeService::OnTrade(
 	TOrderRefIdType Ref, 
 	TOrderSysIdType Sys, 
@@ -1848,4 +1848,4 @@ void CTradeService::OnOrder(
 		<< " [" << to_iso_string(microsec_clock::universal_time()) << "]";
 		;
 }
-#pragma endregion
+

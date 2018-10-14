@@ -1,4 +1,4 @@
-#pragma once
+
 #include <string>
 #include <memory>
 #include "mysql_driver.h"
@@ -56,7 +56,7 @@ public:
 	virtual void SaveToFile(std::tr1::shared_ptr<ifstream> filein) = 0;
 };
 
-#pragma region 从数据库载入数据
+
 template<class T>
 void LoadFromDatabase(const char * jsonstring,vector<T> & m_vecTicks)
 {
@@ -597,7 +597,7 @@ void LoadFromDatabase<CTwsTick>(
 
 	}
 }
-#pragma endregion
+
 
 template<typename T>
 class CTickData :public MTickDataContainerInterface

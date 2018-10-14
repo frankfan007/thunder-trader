@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
-#pragma region ptree
+
 #ifndef BOOST_SPIRIT_THREADSAFE
 #define BOOST_SPIRIT_THREADSAFE
 #endif
@@ -13,7 +13,7 @@
 #include <boost/property_tree/json_parser.hpp> 
 using namespace boost::property_tree;
 using namespace std;
-#pragma endregion
+
 
 namespace http {
 namespace server2 {

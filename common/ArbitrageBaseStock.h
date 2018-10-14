@@ -13,7 +13,7 @@
 #include "FutureTick.h"
 using namespace std;
 
-#pragma region 宏定义
+
 #define Minuend_Yesterday 0
 #define Subtrahend_Yesterday 1
 #define Minuend_Today 2
@@ -33,9 +33,9 @@ using namespace std;
 						public:\
 						CParNode * GetParamStruct(){return CArbitrageBase::GetParamStruct();};
 #define NO_PARAMETER_ public:CParNode * GetParamStruct(){return CArbitrageBase::GetParamStruct();};
-#pragma endregion
 
-#pragma region 自定义数据结构
+
+
 enum TTradeSignalType {
 	TEnumBuyMinuend_SellSubtrahend,	//：价差太低，预测将来价差会升高->做多价差		增加仓位		发出此信号后系统将会做多被减数合约G，做空减数合约F LB1_BuyO
 	TEnumSellMinuend_BuySubtrahend,	//：价差已经升到正常水平       ->做空价差  	减少仓位		发出此信号后系统将会做空被减数合约G，做多减数合约F LB1_SellC
@@ -76,7 +76,7 @@ public:
 };
 
 
-#pragma endregion
+
 
 class CArbitrageBase : public MStrategy
 {
@@ -134,7 +134,7 @@ public:
 	END_PROBE_BIND
 
 	BEGIN_SERIALIZATION
-#pragma region 关键参数
+
 		SERIALIZATION(MinuendMinPriceTick)
 		SERIALIZATION(SubtrahendMinPriceTick)
 
@@ -144,15 +144,15 @@ public:
 		SERIALIZATION(SubtrahendYesterdayPosition)
 		SERIALIZATION(MinuendTodayPosition)
 		SERIALIZATION(SubtrahendTodayPosition)
-#pragma endregion
 
-#pragma region 全局变量区
+
+
 		SERIALIZATION(m_ptimeGlobalCurrentTime)
 		SERIALIZATION(m_datePositionTradeDay)
 		SERIALIZATION(m_mapPosition)
 		SERIALIZATION(m_tickData)
 		SERIALIZATION(m_boolHasInitialize)
-#pragma endregion
+
 	END_SERIALIZATION
 
 	BEGIN_PARAMETER_BIND
@@ -171,7 +171,7 @@ public:
 	tuple<int, int, int, int> GetPosition();
 
 	TPositionState GetPositionState();
-#pragma region 关键参数
+
 	double MinuendMinPriceTick = 0.001;
 	double SubtrahendMinPriceTick = 0.001;
 
@@ -181,16 +181,16 @@ public:
 	int SubtrahendYesterdayPosition = 0;
 	int MinuendTodayPosition = 0;
 	int SubtrahendTodayPosition = 0;
-#pragma endregion
 
-#pragma region 全局变量区
+
+
 	ptime m_ptimeGlobalCurrentTime;
 	date m_datePositionTradeDay;
 	map<date, int> m_mapPosition[2];
 	CStockTick m_tickData[2];
 	bool m_boolHasInitialize[2];
 	
-#pragma endregion
+
 
 
 };

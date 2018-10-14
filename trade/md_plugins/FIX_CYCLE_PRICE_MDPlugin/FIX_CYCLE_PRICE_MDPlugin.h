@@ -26,25 +26,25 @@ using namespace std;
 class CFixCyclePricePluginImp :
 	public MAtmMarketDataPluginInterface
 {
-#pragma region 日志属性
-	boost::log::sources::severity_logger< severity_levels > m_Logger;
-#pragma endregion
 
-#pragma region 定时器属性
+	boost::log::sources::severity_logger< severity_levels > m_Logger;
+
+
+
 	io_service  m_IOservice;
 	deadline_timer m_StartAndStopCtrlTimer;
 	std::future<bool> m_futTimerThreadFuture;
-#pragma endregion
+
 
 	string m_strCycleLen;
 	string m_strPrice;
 	
 
-#pragma region 观察者管理
+
 	boost::shared_mutex m_mapObserverStructProtector;
 	unordered_map<string, pair<CTick,list< tuple < MStrategy*, TMarketDataIdType, boost::shared_mutex*, atomic_uint_least64_t *> > > > m_mapInsid2Strategys;
 	unordered_map< MStrategy*, list<string> > m_mapStrategy2Insids;
-#pragma endregion
+
 
 public:
 	static const string s_strAccountKeyword;

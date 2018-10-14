@@ -45,18 +45,18 @@
 #include <future>
 #include <mutex>
 #include "TickDataContainer.h"
-#pragma region ptree
+
 #include <boost/property_tree/ptree.hpp>  
 #include <boost/property_tree/json_parser.hpp> 
 using namespace boost::property_tree;
-#pragma endregion
+
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 using namespace std;
 using namespace StrategyData;
 
 
-#pragma region 从数据库载入数据
+
 template<class T>
 void LoadFromDatabase(const char * jsonstring, const char * filename)
 {
@@ -832,6 +832,6 @@ void LoadFromDatabase<CTwsTick>(
 		oa & _tick;
 	}
 }
-#pragma endregion
+
 
 #endif

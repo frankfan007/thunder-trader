@@ -16,9 +16,9 @@
 #include "TradePluginContextInterface.h"
 
 
-#include "Femas/USTPFtdcTraderApi.h"
-#include "Femas/USTPFtdcUserApiDataType.h"
-#include "Femas/USTPFtdcUserApiStruct.h"
+#include "USTPFtdcTraderApi.h"
+#include "USTPFtdcUserApiDataType.h"
+#include "USTPFtdcUserApiStruct.h"
 
 
 #include "SeverityLevel.h"
@@ -33,22 +33,22 @@ class CFEMAS_FUTURE_TDPlugin :
 	public CUstpFtdcTraderSpi
 {
 
-#pragma region 日志属性
-	boost::log::sources::severity_logger< severity_levels > m_Logger;
-#pragma endregion
 
-#pragma region 定时器属性
+	boost::log::sources::severity_logger< severity_levels > m_Logger;
+
+
+
 	io_service  m_IOservice;
 	deadline_timer m_StartAndStopCtrlTimer;
 	std::future<bool> m_futTimerThreadFuture;
-#pragma endregion
 
-#pragma region 交易接口属性
+
+
 	MTradePluginContextInterface * m_pTradePluginContext = nullptr;
 	CUstpFtdcTraderApi * m_pUserApi = nullptr;//Init at Start()
-#pragma endregion
 
-#pragma region 账号线程关键属性
+
+
 	//在飞马中 Username与InvestorID不一样 investorid是“投资者帐号”，userid是“投资者帐号a”
 	string m_strServerAddress;//Init at TDInit
 	string m_strBrokerID;//Init at TDInit
@@ -61,22 +61,22 @@ class CFEMAS_FUTURE_TDPlugin :
 	unsigned int m_uIncreasePart = 0;//Init at OnRspUserLogin()
 	string m_strUserOrderLocalIDFixHead;//Init at OnRspUserLogin()
 	char m_bufOrderRefFormat[32];
-#pragma endregion
 
-#pragma region 登录登出同步
+
+
 	std::mutex m_mtxLoginSignal;
 	condition_variable m_cvLoginSignalCV;
 	std::mutex m_mtxLogoutSignal;
 	condition_variable m_cvLogoutSignalCV;
-#pragma endregion
 
-#pragma region 撤单次数控制
+
+
 	date GetTradeday(ptime _Current);
 	date m_dateTradeDay;
 	boost::shared_mutex m_mtxProtectCancelAmount;
 	map<string, int> m_mapCancelAmount;
 	int m_intInitAmountOfCancelChancesPerDay;
-#pragma endregion
+
 	
 public:
 	static const string s_strAccountKeyword;
@@ -116,7 +116,7 @@ private:
 	void ShowMessage(severity_levels, const char * fmt, ...);
 	void TimerHandler(boost::asio::deadline_timer* timer, const boost::system::error_code& err);
 
-#pragma region CThostFtdcTraderSpi
+
 	virtual void OnFrontConnected();
 	virtual void OnFrontDisconnected(int nReason);
 	virtual void OnHeartBeatWarning(int nTimeLapse);
@@ -132,7 +132,7 @@ private:
 	virtual void OnErrRtnOrderInsert(CUstpFtdcInputOrderField *pInputOrder, CUstpFtdcRspInfoField *pRspInfo);
 	virtual void OnErrRtnOrderAction(CUstpFtdcOrderActionField *pOrderAction, CUstpFtdcRspInfoField *pRspInfo);
 	virtual void OnRspSubscribeTopic(CUstpFtdcDisseminationField *pDissemination, CUstpFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
-#pragma endregion
+
 };
 #endif
 

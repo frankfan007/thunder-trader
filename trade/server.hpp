@@ -37,6 +37,7 @@ public:
 	  CCommuModForServSpi * spi_handler,
 	  std::size_t io_service_pool_size);
 
+  virtual ~server();
   /// Run the server's io_service loop.
   void run();
   virtual bool StartListen();

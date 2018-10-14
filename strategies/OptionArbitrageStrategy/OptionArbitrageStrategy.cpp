@@ -49,7 +49,7 @@ public:
 			SERIALIZATION(m_intVolumePerCopy)
 		END_SERIALIZATION
 
-#pragma region 自定义数据
+
 #define MinuendCall 0
 #define MinuendPut 1
 #define SubtrahendCall 2
@@ -95,7 +95,7 @@ public:
 		SHOW_INT(m_intInitBetDropPosition)
 		SHOW_INT(m_intVolumePerCopy)
 	END_SHOW
-#pragma endregion
+
 
 	BEGIN_PARAMETER_BIND
 		PARAMETER("m_dbFixedUpperLine", LB1_DoubleType, &m_dbFixedUpperLine)
@@ -292,7 +292,7 @@ void COptionArbitrageStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDe
 		}
 
 	}
-#pragma region 干预策略
+
 	char buf[1024];
 	if (true == MEDDLE(buf, 1024))
 	{
@@ -351,7 +351,7 @@ void COptionArbitrageStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDe
 		}
 
 	}
-#pragma endregion
+
 	m_adbFixedUpperLine.store(m_dbFixedUpperLine);
 	m_adbFixedLowerLine.store(m_dbFixedLowerLine);
 	m_adbUpperSpread.store(UpperSpread);

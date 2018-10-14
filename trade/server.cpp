@@ -70,6 +70,11 @@ void server::run()
   io_service_pool_.run();
 }
 
+void server::run()
+{
+  io_service_pool_.run();
+}
+
 bool server::StartListen()
 {
 	run();

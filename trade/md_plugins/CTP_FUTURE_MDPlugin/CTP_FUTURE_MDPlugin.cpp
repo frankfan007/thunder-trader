@@ -268,7 +268,7 @@ void CCTP_FUTURE_MDPlugin::Stop()
 		}
 		if (0 != m_pUserApi->UnSubscribeMarketData(ppInstrumentID, InstrumentCount))
 			ShowMessage(severity_levels::error, "send unsubscribemarketdata failed.");
-		for (auto i = 0;i < InstrumentCount;i++)
+		for (unsigned int i = 0;i < InstrumentCount;i++)
 			delete[] ppInstrumentID[i];
 		delete[] ppInstrumentID;
 	}
@@ -288,7 +288,7 @@ void CCTP_FUTURE_MDPlugin::MDUnload()
 {
 	
 	Stop();
-	auto Count=m_StartAndStopCtrlTimer.cancel();
+	m_StartAndStopCtrlTimer.cancel();
 	m_IOservice.stop();
 	m_futTimerThreadFuture.get();
 	
@@ -333,7 +333,7 @@ void CCTP_FUTURE_MDPlugin::MDAttachStrategy(
 	{
 		m_mapInsid2Strategys[InstrumentID].second.push_back(make_tuple(strategy, dataid, &mtx, updatetime));
 		auto & tick = m_mapInsid2Strategys[InstrumentID].first;
-		#pragma region ³õÊ¼»¯tick
+		
 		memset(tick.m_strInstrumentID, 0, sizeof(TInstrumentIDType));
 		tick.m_datetimeUTCDateTime = not_a_date_time;
 		tick.m_dbLastPrice=0;
@@ -358,7 +358,7 @@ void CCTP_FUTURE_MDPlugin::MDAttachStrategy(
 		tick.m_dbClosePrice = 0;
 		tick.m_dbPreSettlementPrice = 0;
 		tick.m_dbPreClosePrice = 0;
-		#pragma endregion	
+		
 		if (m_boolIsOnline)
 		{
 			typedef char * NAME;
@@ -425,7 +425,7 @@ void CCTP_FUTURE_MDPlugin::MDDetachStrategy(MStrategy * strategy)
 
 }
 
-#pragma region CThostFtdcMdSpi
+
 
 void CCTP_FUTURE_MDPlugin::OnFrontConnected()
 {
@@ -503,7 +503,7 @@ void CCTP_FUTURE_MDPlugin::OnRspUserLogin(CThostFtdcRspUserLoginField *pRspUserL
 			if (0 != m_pUserApi->SubscribeMarketData(ppInstrumentID, InstrumentCount))
 				ShowMessage(severity_levels::error, "send subscribemarketdata failed.");
 
-			for (auto i = 0;i < InstrumentCount;i++)
+			for (unsigned int i = 0;i < InstrumentCount;i++)
 				delete[] ppInstrumentID[i];
 			delete[] ppInstrumentID;
 		}
@@ -649,4 +649,4 @@ void CCTP_FUTURE_MDPlugin::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *
 void CCTP_FUTURE_MDPlugin::OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp)
 {}
 
-#pragma endregion
+

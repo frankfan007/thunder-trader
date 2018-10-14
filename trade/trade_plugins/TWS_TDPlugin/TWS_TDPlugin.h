@@ -33,22 +33,22 @@ class CTWS_TDPlugin :
 	public CTwsSpi
 {
 
-#pragma region 日志属性
-	boost::log::sources::severity_logger< severity_levels > m_Logger;
-#pragma endregion
 
-#pragma region 定时器属性
+	boost::log::sources::severity_logger< severity_levels > m_Logger;
+
+
+
 	io_service  m_IOservice;
 	deadline_timer m_StartAndStopCtrlTimer;
 	std::future<bool> m_futTimerThreadFuture;
-#pragma endregion
 
-#pragma region 交易接口属性
+
+
 	MTradePluginContextInterface * m_pTradePluginContext = nullptr;
 	MTwsApi * m_pUserApi = nullptr;//Init at Start()
-#pragma endregion
 
-#pragma region 账号线程关键属性
+
+
 	string m_strServerAddress;//Init at Start()
 	unsigned int m_uPort;//Init at Start()
 	unsigned int m_uClientID;//Init at Start()
@@ -59,22 +59,22 @@ class CTWS_TDPlugin :
 	TTwsOrderIdType m_intNextValidId;//Init at OnRspUserLogin()
 	TTwsTimeType m_LongServerTime;//Init at OnRspUserLogin()
 	char m_strManagedAccounts[64];//Init at OnRspUserLogin()
-#pragma endregion
 
-#pragma region 登录登出同步
+
+
 	std::mutex m_mtxLoginSignal;
 	condition_variable m_cvLoginSignalCV;
 	std::mutex m_mtxLogoutSignal;
 	condition_variable m_cvLogoutSignalCV;
-#pragma endregion
 
-#pragma region 撤单次数控制
+
+
 	date GetTradeday(ptime _Current);
 	date m_dateTradeDay;
 	boost::shared_mutex m_mtxProtectCancelAmount;
 	map<string, int> m_mapCancelAmount;
 	int m_intInitAmountOfCancelChancesPerDay;
-#pragma endregion
+
 	
 public:
 	static const string s_strAccountKeyword;
@@ -115,13 +115,13 @@ private:
 	void ShowMessage(severity_levels, const char * fmt, ...);
 	void TimerHandler(boost::asio::deadline_timer* timer, const boost::system::error_code& err);
 
-#pragma region CThostFtdcTraderSpi
+
 	virtual void OnRspUserLogin(CTwsRspUserLoginField * loginField, bool IsSucceed);
 	virtual void OnRspError(int ErrID, int ErrCode, const char * ErrMsg);
 	virtual void OnDisconnected();
 	virtual void OnRtnOrder(CTwsOrderField *);
 	virtual void OnRtnTrade(CTwsTradeField *);
-#pragma endregion
+
 };
 #endif
 

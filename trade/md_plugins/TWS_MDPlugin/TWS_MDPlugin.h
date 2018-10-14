@@ -34,39 +34,39 @@ class CTWS_MDPlugin :
 	public CTwsSpi
 {
 
-#pragma region 日志属性
-	boost::log::sources::severity_logger< severity_levels > m_Logger;
-#pragma endregion
 
-#pragma region 定时器属性
+	boost::log::sources::severity_logger< severity_levels > m_Logger;
+
+
+
 	io_service  m_IOservice;
 	deadline_timer m_StartAndStopCtrlTimer;
 	std::future<bool> m_futTimerThreadFuture;
-#pragma endregion
+
 
 	string m_strServerAddress;
 	unsigned int m_uPort;
 	unsigned int m_uClientID;
 
-#pragma region 接口属性
-	std::shared_ptr<MTwsApi> m_pUserApi;
-#pragma endregion
 
-#pragma region 账号线程关键属性
+	std::shared_ptr<MTwsApi> m_pUserApi;
+
+
+
 	unsigned int m_uRequestID = 0;
 	bool m_boolIsOnline = false;
-#pragma endregion
 
-#pragma region 登录登出同步
+
+
 	std::mutex m_mtxLoginSignal;
 	condition_variable m_cvLoginSignalCV;
-#pragma endregion
 
-#pragma region 观察者管理
+
+
 	boost::shared_mutex m_mapObserverStructProtector;
 	unordered_map<string, pair<CTwsTick,list< tuple < MStrategy*, TMarketDataIdType, boost::shared_mutex*, atomic_uint_least64_t *> > > > m_mapInsid2Strategys;
 	unordered_map< MStrategy*, list<string> > m_mapStrategy2Insids;
-#pragma endregion
+
 
 public:
 	static const string s_strAccountKeyword;
@@ -102,12 +102,12 @@ private:
 	void Stop();
 	void ShowMessage(severity_levels,const char * fmt, ...);
 	void TimerHandler(boost::asio::deadline_timer* timer, const boost::system::error_code& err);
-#pragma region CThostFtdcMdSpi
+
 	virtual void OnRspUserLogin(CTwsRspUserLoginField * loginField, bool IsSucceed);
 	virtual void OnRtnDepthMarketData(CTwsDepthMarketDataField * pDepthMarketData);
 	virtual void OnRspError(int ErrID, int ErrCode, const char * ErrMsg);
 	virtual void OnDisconnected();
-#pragma endregion
+
 };
 #endif
 

@@ -1,4 +1,4 @@
-#pragma once
+
 //#include "stdafx.h"
 #include "StrategyContext.h"
 #include "StrategyData.h"
@@ -7,12 +7,12 @@
 #include <vector>
 #include "ReportStructs.h"
 #include <unordered_map>
-#pragma region ptree
+
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/property_tree/ptree.hpp>  
 #include <boost/property_tree/json_parser.hpp> 
 using namespace boost::property_tree;
-#pragma endregion
+
 #include "BackTestResult.h"
 using namespace std::tr1;
 using namespace std;

@@ -19,7 +19,7 @@
 
 //#define FEMAS_FUTURE_MDPlugin
 #include "public.h"
-#pragma region 插件
+
 
 #ifdef CTP_FUTURE_MDPlugin
 #include "CTP_FUTURE_MDPlugin/CTP_FUTURE_MDPlugin.h"
@@ -68,7 +68,7 @@
 #ifdef TWS_TDPlugin
 #include "TWS_TDPlugin/TWS_TDPlugin.h"
 #endif
-#pragma endregion
+
 #include <functional>
 #include <list>
 #include <memory>
@@ -86,11 +86,11 @@
 #include "TradePluginContextInterface.h"
 #include "OrderRefResolve.h"
 #include "StrategyContext.h"
-#pragma region filesystem
+
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem.hpp>
-#pragma endregion
+
 
 
 #include "SeverityLevel.h"
@@ -253,22 +253,22 @@ class CTradeService :
 	std::string m_strConfigFile;
 	unsigned int m_uSystemNumber = 0;
 	//仅一下三个数据结构需要互斥:策略数组\行情源数组\交易源数组
-#pragma region 管理所有策略
+
 	//策略数组:保存所有策略，该数据结构需要互斥保护
 	boost::shared_mutex m_mtxAllStrategys;
 	CStrategyNode m_arrayAllStrategys[(_MaxStrategyID+1)];
-#pragma endregion
+
 	
-#pragma region 管理所有的行情源与交易源
+
 	//管理所有行情源与交易源，这两个数据结构需要互斥保护
 	pair<vector<PluginPtrType>, boost::shared_mutex> m_vecAllMarketDataSource;//行情源数组
 	pair<vector<PluginPtrType>, boost::shared_mutex> m_vecAllTradeSource;//交易源数组
-#pragma endregion
 
-#pragma region 系统环境共享变量
+
+
 	boost::shared_mutex m_mtxSharedValue;
 	unordered_map<TSharedIndexType, double> m_mapSharedValue;
-#pragma endregion
+
 public:
 	CTradeService(std::string configFile,unsigned int sysnum);
 	~CTradeService();
@@ -282,16 +282,16 @@ private:
 	
 	MCommuModForServInterface * m_pApi = nullptr;
 
-#pragma region 功能函数
+
 	void DeployStrategy(const ptree &, unsigned int & strategyid);
 	void CancelStrategy(unsigned int strategyid, string & sarchive,ptree & config);
-#pragma endregion
 
-#pragma region CCommuModForServSpi
+
+
 	virtual void OnCommunicate(const ptree & in, ptree & out);
-#pragma endregion
 
-#pragma region PackageHandler
+
+
 #define PACKAGE_HANDLER(fun_name) void fun_name (PackageHandlerParamType,const ptree & in, ptree &out);
 	PACKAGE_HANDLER(ReqGetSupportedTypes)
 	PACKAGE_HANDLER(ReqGetAllSource)
@@ -315,9 +315,9 @@ private:
 	PACKAGE_HANDLER(ReqGetCustomInfo)
 	PACKAGE_HANDLER(ReqGetFloatingProfit)
 	PACKAGE_HANDLER(ReqStatus)
-#pragma endregion
 
-#pragma region MStrategyContext
+
+
 	virtual bool Inquery(TStrategyIdType stid, MStrategyInquiryDataInterface *);
 
 	virtual bool MeddleResponse(TStrategyIdType, const char *, ...);
@@ -353,9 +353,9 @@ private:
 	virtual bool SetSharedValue(TSharedIndexType i, double newvalue, function<bool(double)>);
 
 	virtual int  GetRemainCancelAmount(TStrategyIdType, TMarketDataIdType);
-#pragma endregion
 
-#pragma region MTradePluginContextInterface
+
+
 	virtual void OnTrade(
 		TOrderRefIdType,
 		TOrderSysIdType,
@@ -369,6 +369,6 @@ private:
 		TTradedVolumeType,
 		TRemainVolumeType
 		);
-#pragma endregion
+
 };
 #endif

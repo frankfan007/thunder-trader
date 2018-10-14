@@ -2,14 +2,14 @@
 #define _COMPRETRADESYSTEMHEADERS_MATMPLUGINMANAGEINTERFACE_H_
 #include <string>
 #include <unordered_map>
-#pragma region ptree
+
 #ifndef BOOST_SPIRIT_THREADSAFE
 #define BOOST_SPIRIT_THREADSAFE
 #endif
 #include <boost/property_tree/ptree.hpp>  
 #include <boost/property_tree/json_parser.hpp> 
 using namespace boost::property_tree;
-#pragma endregion
+
 
 using namespace std;
 class MAtmPluginInterface

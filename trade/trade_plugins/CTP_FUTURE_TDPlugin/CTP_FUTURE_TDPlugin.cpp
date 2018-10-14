@@ -481,7 +481,7 @@ TLastErrorIdType CCTP_FUTURE_TDPlugin::TDBasicCancelOrder(TOrderRefIdType Ref, u
 	Req.ActionFlag = THOST_FTDC_AF_Delete;
 	Req.FrontID = m_intFrontID;
 	Req.SessionID = m_intSessionID;
-	snprintf(Req.OrderRef, sizeof(Req.OrderRef), "%.12d", static_cast<long>(Ref));
+	snprintf(Req.OrderRef, sizeof(Req.OrderRef), "%.12ld", static_cast<long>(Ref));
 	Req.OrderActionRef =  _OrderIncreasePart2OrderRefPart(++m_uIncreasePart) +
 		_AccountNumberPart2OrderRefPart(m_uAccountNumber);
 	if (Ref > MaxOrderRef)
@@ -522,7 +522,7 @@ int CCTP_FUTURE_TDPlugin::TDGetRemainAmountOfCancelChances(const char * ins)
 	
 }
 
-#pragma region CThostFtdcTraderSpi
+
 void CCTP_FUTURE_TDPlugin::OnFrontConnected()
 {
 	CThostFtdcReqUserLoginField req;
@@ -736,5 +736,5 @@ void CCTP_FUTURE_TDPlugin::OnErrRtnOrderAction(CThostFtdcOrderActionField * pOrd
 	}
 
 }
-#pragma endregion
+
 

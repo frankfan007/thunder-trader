@@ -14,15 +14,15 @@
 #include <boost/log/common.hpp>
 
 #ifdef WIN32
-#include "CTPForWin32/ThostFtdcMdApi.h"
-#include "CTPForWin32/ThostFtdcTraderApi.h"
-#include "CTPForWin32/ThostFtdcUserApiDataType.h"
-#include "CTPForWin32/ThostFtdcUserApiStruct.h"
+#include "ThostFtdcMdApi.h"
+#include "ThostFtdcTraderApi.h"
+#include "ThostFtdcUserApiDataType.h"
+#include "ThostFtdcUserApiStruct.h"
 #else
-#include "CTPForLinux32/ThostFtdcMdApi.h"
-#include "CTPForLinux32/ThostFtdcTraderApi.h"
-#include "CTPForLinux32/ThostFtdcUserApiDataType.h"
-#include "CTPForLinux32/ThostFtdcUserApiStruct.h"
+#include "ThostFtdcMdApi.h"
+#include "ThostFtdcTraderApi.h"
+#include "ThostFtdcUserApiDataType.h"
+#include "ThostFtdcUserApiStruct.h"
 #endif
 
 #include "SeverityLevel.h"
@@ -39,40 +39,40 @@ class CCTP_FUTURE_MDPlugin :
 	public CThostFtdcMdSpi
 {
 
-#pragma region 日志属性
-	boost::log::sources::severity_logger< severity_levels > m_Logger;
-#pragma endregion
 
-#pragma region 定时器属性
+	boost::log::sources::severity_logger< severity_levels > m_Logger;
+
+
+
 	io_service  m_IOservice;
 	deadline_timer m_StartAndStopCtrlTimer;
 	std::future<bool> m_futTimerThreadFuture;
-#pragma endregion
+
 
 	string m_strServerAddress;
 	string m_strBrokerID;
 	string m_strUsername;
 	string m_strPassword;
 
-#pragma region 接口属性
-	std::shared_ptr<CThostFtdcMdApi> m_pUserApi;
-#pragma endregion
 
-#pragma region 账号线程关键属性
+	std::shared_ptr<CThostFtdcMdApi> m_pUserApi;
+
+
+
 	unsigned int m_uRequestID = 0;
 	bool m_boolIsOnline = false;
-#pragma endregion
 
-#pragma region 登录登出同步
+
+
 	std::mutex m_mtxLoginSignal;
 	condition_variable m_cvLoginSignalCV;
-#pragma endregion
 
-#pragma region 观察者管理
+
+
 	boost::shared_mutex m_mapObserverStructProtector;
 	unordered_map<string, pair<CFutureTick,list< tuple < MStrategy*, TMarketDataIdType, boost::shared_mutex*,atomic_uint_least64_t *> > > > m_mapInsid2Strategys;
 	unordered_map< MStrategy*, list<string> > m_mapStrategy2Insids;
-#pragma endregion
+
 
 public:
 	static const string s_strAccountKeyword;
@@ -108,7 +108,7 @@ private:
 	void Stop();
 	void ShowMessage(severity_levels,const char * fmt, ...);
 	void TimerHandler(boost::asio::deadline_timer* timer, const boost::system::error_code& err);
-#pragma region CThostFtdcMdSpi
+
 	virtual void OnFrontConnected();
 	virtual void OnFrontDisconnected(int nReason);
 	virtual void OnHeartBeatWarning(int nTimeLapse);
@@ -121,7 +121,7 @@ private:
 	virtual void OnRspUnSubForQuoteRsp(CThostFtdcSpecificInstrumentField *pSpecificInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast);
 	virtual void OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData);
 	virtual void OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp);
-#pragma endregion
+
 };
 #endif
 

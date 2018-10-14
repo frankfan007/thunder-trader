@@ -13,7 +13,7 @@
 #include "FutureTick.h"
 using namespace std;
 
-#pragma region 宏定义
+
 #define PresupposedPosition_Default 2
 #define PresupposedPosition_MinuendLong_SubtrahendShort 1
 #define PresupposedPosition_NoPosition 0
@@ -37,9 +37,9 @@ using namespace std;
 						public:\
 						CParNode * GetParamStruct(){return CArbitrageBase::GetParamStruct();};
 #define NO_PARAMETER_ public:CParNode * GetParamStruct(){return CArbitrageBase::GetParamStruct();};
-#pragma endregion
 
-#pragma region 自定义数据结构
+
+
 enum TTradeSignalType {
 	TEnumBuyMinuend_SellSubtrahend_Increase,	//：价差太低，预测将来价差会升高->做多价差		增加仓位		发出此信号后系统将会做多被减数合约G，做空减数合约F LB1_BuyO
 	TEnumSellMinuend_BuySubtrahend_Descrease,	//：价差已经升到正常水平       ->做空价差  	减少仓位		发出此信号后系统将会做空被减数合约G，做多减数合约F LB1_SellC
@@ -193,7 +193,7 @@ struct CStrategyPositionStatus
 		m_dbShortTurnover = 0;
 	}
 };
-#pragma endregion
+
 
 
 #define FEE_TYPE_FIX 0
@@ -290,7 +290,7 @@ public:
 	END_PROBE_BIND
 
 	BEGIN_SERIALIZATION
-#pragma region 关键参数
+
 		SERIALIZATION(WriteCsv)
 		SERIALIZATION(MakeOrderType)
 		SERIALIZATION(OrderWaitTime)
@@ -306,9 +306,9 @@ public:
 		SERIALIZATION(m_dbFeeRatio)
 		SERIALIZATION(m_intLog)
 		SERIALIZATION(m_intSharedValueIndex)
-#pragma endregion
 
-#pragma region 全局变量区
+
+
 		SERIALIZATION(m_datePositionTradeDay)
 		SERIALIZATION(m_Position)
 		SERIALIZATION(m_ptimeGlobalCurrentTime)
@@ -318,7 +318,7 @@ public:
 		SERIALIZATION(m_boolHasInitialize)
 		SERIALIZATION(m_lstTradedLog)
 		SERIALIZATION(m_uLockedCopies)
-#pragma endregion
+
 	END_SERIALIZATION
 
 	BEGIN_PARAMETER_BIND
@@ -357,7 +357,7 @@ public:
 private:
 	date GetTradeday(ptime _Current);
 
-#pragma region 关键参数
+
 	int WriteCsv = 1;
 	int MakeOrderType = static_cast<int>(LB1_NormalLimitOrderType);
 	int OrderWaitTime = 1000;//ms 订单等待时间。
@@ -373,9 +373,9 @@ private:
 	double m_dbFeeRatio[LB1_UnknownOffset][2] = { { 0.0,0.0 },{ 0.0,0.0 },{ 0.0,0.0 },{ 0.0,0.0 } };//开仓手续费
 	int m_intLog=1;
 	int m_intSharedValueIndex = 0;
-#pragma endregion
 
-#pragma region 全局变量区
+
+
 	date m_datePositionTradeDay;
 	CPosition m_Position[2];//该成员只有在OnTrade中才有权改变
 	ptime m_ptimeGlobalCurrentTime;
@@ -394,7 +394,7 @@ private:
 		list< pair<TPriceType, TVolumeType> >
 	> m_lstTradedLog[2];
 	unsigned int m_uLockedCopies = 0;
-#pragma endregion
+
 
 
 };

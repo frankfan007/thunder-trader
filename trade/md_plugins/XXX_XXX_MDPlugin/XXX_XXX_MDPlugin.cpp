@@ -317,7 +317,7 @@ void CMDPluginImp::MDDetachStrategy(MStrategy * strategy)
 
 }
 
-#pragma region CThostFtdcMdSpi
+
 
 void CMDPluginImp::OnFrontConnected()
 {
@@ -506,4 +506,4 @@ void CMDPluginImp::OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMa
 void CMDPluginImp::OnRtnForQuoteRsp(CThostFtdcForQuoteRspField *pForQuoteRsp)
 {}
 
-#pragma endregion
+

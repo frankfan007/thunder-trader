@@ -282,7 +282,7 @@ void CQT_STOCK_MDPlugin::MDAttachStrategy(
 	{
 		m_mapInsid2Strategys[InstrumentID].second.push_back(make_tuple(strategy, dataid, &mtx, updatetime));
 		auto & tick = m_mapInsid2Strategys[InstrumentID].first;
-#pragma region ≥ı ºªØtick
+
 		memset(tick.m_strInstrumentID, 0, sizeof(TInstrumentIDType));
 		tick.m_datetimeUTCDateTime = not_a_date_time;
 		tick.m_dbLastPrice = 0;
@@ -301,7 +301,7 @@ void CQT_STOCK_MDPlugin::MDAttachStrategy(
 		tick.m_dbHighestPrice = 0;
 		tick.m_dbLowestPrice = 0;
 		tick.m_dbPreClosePrice = 0;
-#pragma endregion
+
 		if (m_boolIsOnline)
 		{
 			
@@ -363,7 +363,7 @@ void CQT_STOCK_MDPlugin::MDDetachStrategy(MStrategy * strategy)
 
 }
 
-#pragma region CThostFtdcMdSpi
+
 
 void CQT_STOCK_MDPlugin::OnRspError(const char * errormsg)
 {
@@ -434,4 +434,4 @@ void CQT_STOCK_MDPlugin::OnRtnDepthMarketData(const CStockTick * pDepthMarketDat
 
 }
 
-#pragma endregion
+

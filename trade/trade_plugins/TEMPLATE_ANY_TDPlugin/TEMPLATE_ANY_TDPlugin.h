@@ -26,17 +26,17 @@ class CTEMPLATE_ANY_TDPlugin :
 	public MAtmTradePluginInterface
 {
 
-#pragma region 日志属性
-	boost::log::sources::severity_logger< severity_levels > m_Logger;
-#pragma endregion
 
-#pragma region 撤单次数控制
+	boost::log::sources::severity_logger< severity_levels > m_Logger;
+
+
+
 	date GetTradeday(ptime _Current);
 	date m_dateTradeDay;
 	boost::shared_mutex m_mtxProtectCancelAmount;
 	map<string, int> m_mapCancelAmount;
 	int m_intInitAmountOfCancelChancesPerDay;
-#pragma endregion
+
 	
 public:
 	static const string s_strAccountKeyword;

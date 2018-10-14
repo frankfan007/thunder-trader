@@ -391,7 +391,7 @@ int CDFITC_SOP_TDPlugin::TDGetRemainAmountOfCancelChances(const char * ins)
 	return (std::numeric_limits<int>::max)();
 }
 
-#pragma region DFITCSECTraderSpi
+
 void CDFITC_SOP_TDPlugin::OnFrontConnected()
 {
 	DFITCSECReqUserLoginField req;
@@ -574,4 +574,4 @@ void CDFITC_SOP_TDPlugin::OnRspError(DFITCSECRspInfoField *pRspInfo)
 			pRspInfo->errorMsg);
 	}
 }
-#pragma endregion
+
