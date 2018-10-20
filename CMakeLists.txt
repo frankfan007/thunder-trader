@@ -1,5 +1,13 @@
 project(auto_trade_machine)
+set (Tutorial_VERSION_MAJOR 1)
+set (Tutorial_VERSION_MINOR 0)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+message(${PROJECT_SOURCE_DIR})
+message(${PROJECT_BINARY_DIR})
+configure_file (
+  "${PROJECT_SOURCE_DIR}/common/config.h.in"
+  "${PROJECT_BINARY_DIR}/common/config.h"
+  )
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-Bsymbolic")
     set(BOOST_THREAD "boost_thread-mt")
 else()
@@ -41,55 +49,76 @@ add_library(trade_service trade/connection.cpp trade/io_service_pool.cpp trade/s
 #add_library(server trade/server.cpp)
 #add_library(trade_service trade/trade_service.cpp)
 #target_link_libraries(trade_service server io_service_pool connection)
+option (CTP_FUTURE_MDPlugin "Support CTP quotation" ON) 
+option (CTP_FUTURE_TDPlugin "Support CTP trade" ON) 
+
+option (DFITC_SOP_MDPlugin "Support DFITC quotation" ON) 
+option (DFITC_SOP_TDPlugin "Support DFITC trade" ON) 
+
+option (FEMAS_FUTURE_MDPlugin "Support FEMAS quotation" OFF) 
+option (FEMAS_FUTURE_TDPlugin "Support FEMAS trade" OFF) 
 
 add_library(autopend STATIC  common/AutoPend.cpp)
 
-###################### CTP ##########################################
+    ###################### CTP ##########################################
 include_directories("${PROJECT_SOURCE_DIR}/third/CTPForLinux32/")
 link_directories("${PROJECT_SOURCE_DIR}/third/CTPForLinux32/")
+    
+if (CTP_FUTURE_MDPlugin)
+    #add_definitions(-DCTP_FUTURE_MDPlugin)
+    set(ctp_md_plugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/CTP_FUTURE_MDPlugin")
+    include_directories("${ctp_md_plugpath}")
+    add_library(ctp_future_mdplugin ${ctp_md_plugpath}/CTP_FUTURE_MDPlugin.cpp )
+    target_link_libraries(ctp_future_mdplugin thostmduserapi)
+endif (CTP_FUTURE_MDPlugin)
+    
+if (CTP_FUTURE_TDPlugin)
+    #add_definitions(-DCTP_FUTURE_TDPlugin)
+    set(ctp_td_plugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/CTP_FUTURE_TDPlugin")
+    include_directories("${ctp_td_plugpath}")
+    add_library(ctp_future_tdplugin ${ctp_td_plugpath}/CTP_FUTURE_TDPlugin.cpp)
+    target_link_libraries(ctp_future_tdplugin thosttraderapi)
+endif (CTP_FUTURE_TDPlugin)
 
-add_definitions(-DCTP_FUTURE_MDPlugin)
-set(ctp_md_plugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/CTP_FUTURE_MDPlugin")
-include_directories("${ctp_md_plugpath}")
-add_library(ctp_future_mdplugin ${ctp_md_plugpath}/CTP_FUTURE_MDPlugin.cpp )
-target_link_libraries(ctp_future_mdplugin thostmduserapi)
-
-add_definitions(-DCTP_FUTURE_TDPlugin)
-set(ctp_td_plugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/CTP_FUTURE_TDPlugin")
-include_directories("${ctp_td_plugpath}")
-add_library(ctp_future_tdplugin ${ctp_td_plugpath}/CTP_FUTURE_TDPlugin.cpp)
-target_link_libraries(ctp_future_tdplugin thosttraderapi)
-
-####################### DFITC ########################################
+    ####################### DFITC ########################################
 include_directories("${PROJECT_SOURCE_DIR}/third/DfitcForLinux64/")
 link_directories("${PROJECT_SOURCE_DIR}/third/DfitcForLinux64")
+    
+if (DFITC_SOP_MDPlugin)
+    #add_definitions(-DDFITC_SOP_MDPlugin)
+    set(dfitc_sop_mdplugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/DFITC_SOP_MDPlugin")
+    include_directories("${dfitc_sop_mdplugpath}")
+    add_library(dfitc_sop_mdplugin ${dfitc_sop_mdplugpath}/DFITC_SOP_MDPlugin.cpp)
+    target_link_libraries(dfitc_sop_mdplugin DFITCSECMdApi)
+endif (DFITC_SOP_MDPlugin)
+    
+if (DFITC_SOP_TDPlugin)
+    #add_definitions(-DDFITC_SOP_TDPlugin)
+    set(dfitc_sop_tdplugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/DFITC_SOP_TDPlugin")
+    include_directories("${dfitc_sop_tdplugpath}")
+    add_library(dfitc_sop_tdplugin ${dfitc_sop_tdplugpath}/DFITC_SOP_TDPlugin.cpp)
+    target_link_libraries(dfitc_sop_tdplugin DFITCSECTraderApi)
+endif (DFITC_SOP_TDPlugin)
 
-add_definitions(-DDFITC_SOP_MDPlugin)
-set(dfitc_sop_mdplugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/DFITC_SOP_MDPlugin")
-include_directories("${dfitc_sop_mdplugpath}")
-add_library(dfitc_sop_mdplugin ${dfitc_sop_mdplugpath}/DFITC_SOP_MDPlugin.cpp)
-target_link_libraries(dfitc_sop_mdplugin DFITCSECMdApi)
-
-add_definitions(-DDFITC_SOP_TDPlugin)
-set(dfitc_sop_tdplugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/DFITC_SOP_TDPlugin")
-include_directories("${dfitc_sop_tdplugpath}")
-add_library(dfitc_sop_tdplugin ${dfitc_sop_tdplugpath}/DFITC_SOP_TDPlugin.cpp)
-target_link_libraries(dfitc_sop_tdplugin DFITCSECTraderApi)
-
-####################### FEMAS ##########################################
-#include_directories("${PROJECT_SOURCE_DIR}third/Femas/")
-
-#add_definitions(-DFEMAS_FUTURE_MDPlugin) 
-#set(femas_future_mdplugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/FEMAS_FUTURE_MDPlugin")
-#include_directories("${femas_future_mdplugpath}")
-#add_library(femas_future_mdplugin STATIC ${femas_future_mdplugpath}/FEMAS_FUTURE_MDPlugin.cpp)
-#target_link_libraries(femas_future_mdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPmduserapi.so")
-
-#add_definitions(-DFEMAS_FUTURE_TDPlugin)
-#set(femas_future_tdplugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/FEMAS_FUTURE_TDPlugin")
-#include_directories("${femas_future_tdplugpath}")
-#add_library(femas_future_tdplugin STATIC ${femas_future_tdplugpath}/FEMAS_FUTURE_TDPlugin.cpp)
-#target_link_libraries(femas_future_tdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPtraderapi.so")
+    ####################### FEMAS ##########################################
+include_directories("${PROJECT_SOURCE_DIR}third/Femas/")
+link_directories("${PROJECT_SOURCE_DIR}/third/Femas/")
+    
+if (FEMAS_FUTURE_MDPlugin)
+    #add_definitions(-DFEMAS_FUTURE_MDPlugin) 
+    set(femas_future_mdplugpath "${PROJECT_SOURCE_DIR}/trade/md_plugins/FEMAS_FUTURE_MDPlugin")
+    include_directories("${femas_future_mdplugpath}")
+    add_library(femas_future_mdplugin STATIC ${femas_future_mdplugpath}/FEMAS_FUTURE_MDPlugin.cpp)
+    target_link_libraries(femas_future_mdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPmduserapi.so")
+endif (FEMAS_FUTURE_MDPlugin)
+    
+if (FEMAS_FUTURE_TDPlugin)
+    #add_definitions(-DFEMAS_FUTURE_TDPlugin)
+    set(femas_future_tdplugpath "${PROJECT_SOURCE_DIR}/trade/trade_plugins/FEMAS_FUTURE_TDPlugin")
+    include_directories("${femas_future_tdplugpath}")
+    add_library(femas_future_tdplugin STATIC ${femas_future_tdplugpath}/FEMAS_FUTURE_TDPlugin.cpp)
+    target_link_libraries(femas_future_tdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPtraderapi.so")
+endif (FEMAS_FUTURE_TDPlugin)
 
 #################### thunder-trader
 add_executable(thunder-trader "${PROJECT_SOURCE_DIR}/trade/main.cpp")
