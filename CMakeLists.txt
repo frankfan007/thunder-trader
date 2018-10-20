@@ -4,6 +4,8 @@ set (Tutorial_VERSION_MINOR 0)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 message(${PROJECT_SOURCE_DIR})
 message(${PROJECT_BINARY_DIR})
+set (VERSION_MAJOR 1)
+set (VERSION_MINOR 0)
 configure_file (
   "${PROJECT_SOURCE_DIR}/common/config.h.in"
   "${PROJECT_BINARY_DIR}/common/config.h"
@@ -132,4 +134,3 @@ target_link_libraries(thunder-trader ${libs} trade_service ctp_future_mdplugin c
 
 
 install (TARGETS thunder-trader DESTINATION bin)
-install (FILES MathFunctions.h DESTINATION include)
