@@ -70,6 +70,7 @@ if (CTP_FUTURE_MDPlugin)
     include_directories("${ctp_md_plugpath}")
     add_library(ctp_future_mdplugin ${ctp_md_plugpath}/CTP_FUTURE_MDPlugin.cpp )
     target_link_libraries(ctp_future_mdplugin thostmduserapi)
+    install(FILES "${PROJECT_SOURCE_DIR}/third/CTPForLinux32/libthostmduserapi.so" DESTINATION bin)
 endif (CTP_FUTURE_MDPlugin)
     
 if (CTP_FUTURE_TDPlugin)
@@ -78,6 +79,7 @@ if (CTP_FUTURE_TDPlugin)
     include_directories("${ctp_td_plugpath}")
     add_library(ctp_future_tdplugin ${ctp_td_plugpath}/CTP_FUTURE_TDPlugin.cpp)
     target_link_libraries(ctp_future_tdplugin thosttraderapi)
+    install(FILES "${PROJECT_SOURCE_DIR}/third/CTPForLinux32/libthosttraderapi.so" DESTINATION bin)
 endif (CTP_FUTURE_TDPlugin)
 
     ####################### DFITC ########################################
@@ -90,6 +92,7 @@ if (DFITC_SOP_MDPlugin)
     include_directories("${dfitc_sop_mdplugpath}")
     add_library(dfitc_sop_mdplugin ${dfitc_sop_mdplugpath}/DFITC_SOP_MDPlugin.cpp)
     target_link_libraries(dfitc_sop_mdplugin DFITCSECMdApi)
+    install(FILES "${PROJECT_SOURCE_DIR}/third/DfitcForLinux64/libDFITCSECMdApi.so" DESTINATION bin)
 endif (DFITC_SOP_MDPlugin)
     
 if (DFITC_SOP_TDPlugin)
@@ -98,6 +101,7 @@ if (DFITC_SOP_TDPlugin)
     include_directories("${dfitc_sop_tdplugpath}")
     add_library(dfitc_sop_tdplugin ${dfitc_sop_tdplugpath}/DFITC_SOP_TDPlugin.cpp)
     target_link_libraries(dfitc_sop_tdplugin DFITCSECTraderApi)
+    install(FILES "${PROJECT_SOURCE_DIR}/third/DfitcForLinux64/libDFITCSECTraderApi.so" DESTINATION bin)
 endif (DFITC_SOP_TDPlugin)
 
     ####################### FEMAS ##########################################
@@ -110,6 +114,7 @@ if (FEMAS_FUTURE_MDPlugin)
     include_directories("${femas_future_mdplugpath}")
     add_library(femas_future_mdplugin STATIC ${femas_future_mdplugpath}/FEMAS_FUTURE_MDPlugin.cpp)
     target_link_libraries(femas_future_mdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPmduserapi.so")
+    install(FILES "${PROJECT_SOURCE_DIR}/third/Femas/libUSTPmduserapi.so" DESTINATION bin)
 endif (FEMAS_FUTURE_MDPlugin)
     
 if (FEMAS_FUTURE_TDPlugin)
@@ -118,9 +123,13 @@ if (FEMAS_FUTURE_TDPlugin)
     include_directories("${femas_future_tdplugpath}")
     add_library(femas_future_tdplugin STATIC ${femas_future_tdplugpath}/FEMAS_FUTURE_TDPlugin.cpp)
     target_link_libraries(femas_future_tdplugin "${PROJECT_SOURCE_DIR}third/Femas/libUSTPtraderapi.so")
+    install(FILES "${PROJECT_SOURCE_DIR}/third/Femas/libUSTPtraderapi.so" DESTINATION bin)
 endif (FEMAS_FUTURE_TDPlugin)
 
 #################### thunder-trader
 add_executable(thunder-trader "${PROJECT_SOURCE_DIR}/trade/main.cpp")
 target_link_libraries(thunder-trader ${libs} trade_service ctp_future_mdplugin ctp_future_tdplugin dfitc_sop_mdplugin dfitc_sop_tdplugin autopend)
 
+
+install (TARGETS thunder-trader DESTINATION bin)
+install (FILES MathFunctions.h DESTINATION include)
