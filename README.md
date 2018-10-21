@@ -19,9 +19,9 @@ make
 
 Software running screenshots:<br>
 The Monitor:
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=500>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png' width=500>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png' width=500>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor4.png' width=500>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=600><br><br>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png' width=600><br><br>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png' width=600><br><br>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor4.png' width=600><br><br>
 The strategy research1 platform:<br>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=500>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=600><br><br>
