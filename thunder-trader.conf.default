@@ -8,7 +8,7 @@
     "logconfig": {
     "logtype": "syslog|file|console",
         "syslog": {
-            "serveraddress": "101.200.203.40",
+            "serveraddress": "127.0.0.1",
             "port": "514"
         },
         "file": {

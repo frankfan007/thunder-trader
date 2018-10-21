@@ -13,15 +13,27 @@ And welcome to my [personal blog](http://180.76.118.4/). There are detailed intr
 
 Usage:
 ```
-cmake .
-make
+>cmake .
+>make
+>make install
+>export LD_LIBRARY_PATH=/opt/gcc72/lib64:$LD_LIBRARY_PATH ; ./thunder-trader thunder-trader.conf.default 1 
+Run.SystemNumber=1 [20181021T062516.546639]
 ```
+Then you can use the Monitor to connect the thunder-trader.
 
-Software running screenshots:<br>
-The Monitor:<br>
+If you encounter an 
+```
+^C*** Error in `./thunder-trader': double free or corruption (!prev): 0x0000000001e32bb0 ***
+```
+like error, don't worry. This is a bug in CTPLibrary that usually appears at the end of the program, 
+but does not affect the normal operation of the program.
+
+<p><b>Software running screenshots:</b><br>
+The Monitor(Coming soon):<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=600><br><br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png' width=600><br><br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png' width=600><br><br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor4.png' width=600><br><br>
-The strategy research1 platform:<br>
+The strategy research platform(Coming soon):<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=600><br><br>
+</p>
