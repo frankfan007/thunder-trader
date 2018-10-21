@@ -8,8 +8,8 @@ Based on C++ 11, this project implements a quantitative trading system supportin
 
 And welcome to my [personal blog](http://180.76.118.4/). There are detailed introductory manuals.
 
-> * [1.Introductory](http://180.76.118.4/HFT-start.html)
-> * [2.Prepare](http://180.76.118.4/HFT-prepare.html)
+> * [Introductory](http://180.76.118.4/HFT-start.html)
+> * [Prepare](http://180.76.118.4/HFT-prepare.html)
 
 Usage:
 ```
