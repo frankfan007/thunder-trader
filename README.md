@@ -6,6 +6,11 @@ Based on C++ 11, this project implements a quantitative trading system supportin
 > * Supporting the "intervention" of the strategy, by predefining some intervention actions, to achieve a fixed operation in the transaction process.
 > * C/S architecture
 
+And welcome to my [personal blog](http://180.76.118.4/). There are detailed introductory manuals.
+
+> * [1.Introductory](http://180.76.118.4/HFT-start.html)
+> * [2.Prepare](http://180.76.118.4/HFT-prepare.html)
+
 Usage:
 ```
 cmake .
@@ -14,9 +19,9 @@ make
 
 Software running screenshots:<br>
 The Monitor:
-![monitor-1](https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png)
-![monitor-2](https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png)
-![monitor-3](https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png)
-![monitor-4](https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor4.png)
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=500>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png' width=500>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png' width=500>
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor4.png' width=500>
 The strategy research1 platform:<br>
-![hft-research1.png](https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png)
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=500>
