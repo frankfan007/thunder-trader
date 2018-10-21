@@ -16,17 +16,10 @@ Usage:
 >cmake .
 >make
 >make install
->export LD_LIBRARY_PATH=/opt/gcc72/lib64:$LD_LIBRARY_PATH ; ./thunder-trader thunder-trader.conf.default 1 
+>export LD_LIBRARY_PATH=/opt/gcc72/lib64:$LD_LIBRARY_PATH ; /path/to/thunder-trader thunder-trader.conf.default 1 [daemon]
 Run.SystemNumber=1 [20181021T062516.546639]
 ```
 Then you can use the Monitor to connect the thunder-trader.
-
-If you encounter an 
-```
-^C*** Error in `./thunder-trader': double free or corruption (!prev): 0x0000000001e32bb0 ***
-```
-like error, don't worry. This is a bug in CTPLibrary that usually appears at the end of the program, 
-but does not affect the normal operation of the program.
 
 <p><b>Software running screenshots:</b><br>
 The Monitor(Coming soon):<br>
@@ -37,3 +30,10 @@ The Monitor(Coming soon):<br>
 The strategy research platform(Coming soon):<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=600><br><br>
 </p>
+
+If you encounter an 
+```
+^C*** Error in `./thunder-trader': double free or corruption (!prev): 0x0000000001e32bb0 ***
+```
+like error when run thunder-trader, don't worry. This is a bug in CTPLibrary that usually appears at the end of the program, 
+but does not affect the normal operation of the program.
