@@ -9,3 +9,6 @@ Based on C++ 11, this project implements a quantitative trading system supportin
 Usage:
 cmake .
 make
+
+
+![monitor-1](https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png)
