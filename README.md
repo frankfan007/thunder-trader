@@ -1,5 +1,4 @@
 # Thunder Trader
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/thunder-trader.png' width=200><br>
 
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://180.76.118.4/HFT-start.html)
 [![Documentation Status](https://img.shields.io/badge/中文文档-最新-brightgreen.svg)](http://180.76.118.4/HFT-start.html)
@@ -7,6 +6,7 @@
 
 ## Features
 
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/thunder-trader.png' width=100><br>
 Based on C++ 11, this project implements a quantitative trading system supporting high-frequency transactions. The system supports the following characteristics:
 - **Flexibility**
 
