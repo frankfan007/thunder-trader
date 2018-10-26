@@ -1,16 +1,32 @@
 # Thunder Trader
-## Feature
-Based on C++ 11, this project implements a quantitative trading system supporting high-frequency transactions. The system supports the following characteristics:
-> * Using plug-ins to support different quotations and trading interfaces, such as CTP, Femas, Dfitc and TWS in China.
-> * Support multiple accounts and multiple strategies. Each strategy can use multiple quotes, and can place orders for multiple accounts.
-> * The real-time tracing of the variables in the policy can be realized by "probe" and the display mode of the data can be customized.
-> * Supporting the "intervention" of the strategy, by predefining some intervention actions, to achieve a fixed operation in the transaction process.
-> * C/S architecture
 
-And welcome to my [personal blog](http://180.76.118.4/). There are detailed introductory manuals.
+## Features
+
+Based on C++ 11, this project implements a quantitative trading system supporting high-frequency transactions. The system supports the following characteristics:
+- **Flexibility**
+
+    Using plug-ins to support different quotations and trading interfaces, such as CTP, Femas, Dfitc and TWS in China.
+    Support multiple accounts and multiple strategies. Each strategy can use multiple quotes, and can place orders for multiple accounts.
+
+- **Easy to use**
+    Support both linux and windows
+    C/S architecture
+    Client with graphical interface
+    The real-time tracing of the variables in the policy can be realized by "probe" and the display mode of the data can be customized.
+    Supporting the "intervention" of the strategy, by predefining some intervention actions, to achieve a fixed operation in the transaction process.
+
+- **Efficiency**
+    C++ implementation
+    Asynchronous event driven
+
+## Documentation 
+
+Welcome to my [personal blog](http://180.76.118.4/). There are detailed introductory manuals.
 
 > * [Introductory](http://180.76.118.4/HFT-start.html)
 > * [Prepare](http://180.76.118.4/HFT-prepare.html)
+
+
 ## Quit start
 This preject is tested in following environment:
 > * gcc 7.2
@@ -26,6 +42,7 @@ Usage:
 Run.SystemNumber=1 [20181021T062516.546639]
 ```
 Then you can use the Monitor to connect the thunder-trader.
+
 ## Screenshots
 <p><b>Software running screenshots:</b><br>
 The Monitor(Coming soon):<br>
@@ -48,3 +65,11 @@ but does not affect the normal operation of the program.Turn off the ctp option,
 
 If you like this project, give me a star ^_^<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/star.jpeg' width=30>
 
+## Ask Questions
+
+You are welcome to submit questions and bug reports as [Github Issues](https://github.com/solopointer/thunder-trader/issues).
+or mail to solopointer@qq.com
+
+
+## Copyright and License
+Thunder-trader is provided under the [Apache-2.0 license](LICENSE).
