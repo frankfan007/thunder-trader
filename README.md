@@ -11,6 +11,11 @@ And welcome to my [personal blog](http://180.76.118.4/). There are detailed intr
 > * [Introductory](http://180.76.118.4/HFT-start.html)
 > * [Prepare](http://180.76.118.4/HFT-prepare.html)
 
+This preject is tested in following environment:
+> * gcc 7.2
+> * boost 1.68.0
+> * centos7
+
 Usage:
 ```
 >cmake .
