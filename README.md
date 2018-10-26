@@ -1,4 +1,5 @@
 # Thunder Trader
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/thunder-trader.png' width=200><br>
 
 [![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://180.76.118.4/HFT-start.html)
 [![Documentation Status](https://img.shields.io/badge/中文文档-最新-brightgreen.svg)](http://180.76.118.4/HFT-start.html)
