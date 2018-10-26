@@ -16,7 +16,7 @@ Usage:
 >cmake .
 >make
 >make install
->export LD_LIBRARY_PATH=/opt/gcc72/lib64:$LD_LIBRARY_PATH ; /path/to/thunder-trader thunder-trader.conf.default 1 [daemon]
+>export LD_LIBRARY_PATH=/opt/gcc72/lib64:$LD_LIBRARY_PATH ; /path/to/thunder-trader thunder-trader.conf.default 1
 Run.SystemNumber=1 [20181021T062516.546639]
 ```
 Then you can use the Monitor to connect the thunder-trader.
