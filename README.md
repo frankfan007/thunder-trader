@@ -61,6 +61,13 @@ The strategy research platform(Coming soon):<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=600><br><br>
 </p>
 
+
+
+## Ask Questions
+
+You are welcome to submit questions and bug reports as [Github Issues](https://github.com/solopointer/thunder-trader/issues).
+or mail to solopointer@qq.com
+
 Particular attention:
 If you encounter an 
 ```
@@ -68,13 +75,6 @@ If you encounter an
 ```
 like error when run thunder-trader, don't worry. This is a bug in CTPLibrary that usually appears when the process exit, 
 but does not affect the normal operation of the program.Turn off the ctp option, or tell me how to avoid this error if you knows please.
-
-
-
-## Ask Questions
-
-You are welcome to submit questions and bug reports as [Github Issues](https://github.com/solopointer/thunder-trader/issues).
-or mail to solopointer@qq.com
 
 If you like this project, give me a star ^_^<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/star.jpeg' width=20>
 
