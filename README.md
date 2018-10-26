@@ -1,4 +1,5 @@
 # Thunder Trader
+## Feature
 Based on C++ 11, this project implements a quantitative trading system supporting high-frequency transactions. The system supports the following characteristics:
 > * Using plug-ins to support different quotations and trading interfaces, such as CTP, Femas, Dfitc and TWS in China.
 > * Support multiple accounts and multiple strategies. Each strategy can use multiple quotes, and can place orders for multiple accounts.
@@ -10,7 +11,7 @@ And welcome to my [personal blog](http://180.76.118.4/). There are detailed intr
 
 > * [Introductory](http://180.76.118.4/HFT-start.html)
 > * [Prepare](http://180.76.118.4/HFT-prepare.html)
-
+## Quit start
 This preject is tested in following environment:
 > * gcc 7.2
 > * boost 1.68.0
@@ -25,7 +26,7 @@ Usage:
 Run.SystemNumber=1 [20181021T062516.546639]
 ```
 Then you can use the Monitor to connect the thunder-trader.
-
+## Screenshots
 <p><b>Software running screenshots:</b><br>
 The Monitor(Coming soon):<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=600><br><br>
