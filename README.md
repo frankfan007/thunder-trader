@@ -31,13 +31,14 @@ The strategy research platform(Coming soon):<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=600><br><br>
 </p>
 
-
-<center><font color=red>If you like this project, give me a star ^_^
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/star.jpeg' width=30></font><center>
-
+Particular attention:
 If you encounter an 
 ```
 ^C*** Error in `./thunder-trader': double free or corruption (!prev): 0x0000000001e32bb0 ***
 ```
-like error when run thunder-trader, don't worry. This is a bug in CTPLibrary that usually appears at the end of the program, 
-but does not affect the normal operation of the program.
+like error when run thunder-trader, don't worry. This is a bug in CTPLibrary that usually appears when the process exit, 
+but does not affect the normal operation of the program.Turn off the ctp option, or tell me how to avoid this error if you knows please.
+
+
+If you like this project, give me a star ^_^<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/star.jpeg' width=30>
+
