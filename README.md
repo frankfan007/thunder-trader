@@ -1,7 +1,7 @@
 # Thunder Trader
 
-[![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://180.76.118.4/HFT-start.html)
-[![Documentation Status](https://img.shields.io/badge/中文文档-最新-brightgreen.svg)](http://180.76.118.4/HFT-start.html)
+[![Documentation Status](https://img.shields.io/badge/docs-latest-brightgreen.svg?style=flat)](http://www.huyifeng.net/HFT-start.html)
+[![Documentation Status](https://img.shields.io/badge/中文文档-最新-brightgreen.svg)](http://www.huyifeng.net/HFT-start.html)
 [![License](https://img.shields.io/badge/license-Apache%202-blue.svg)](LICENSE)
 
 ## Features
@@ -28,10 +28,10 @@ Based on C++ 11, this project implements a quantitative trading system supportin
 
 ## Documentation 
 
-Welcome to my [personal blog](http://180.76.118.4/). There are detailed introductory manuals.
+Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed introductory manuals.
 
-> * [Introductory](http://180.76.118.4/HFT-start.html)
-> * [Prepare](http://180.76.118.4/HFT-prepare.html)
+> * [Introductory](http://www.huyifeng.net/HFT-start.html)
+> * [Prepare](http://www.huyifeng.net/HFT-prepare.html)
 
 
 ## Quit start
