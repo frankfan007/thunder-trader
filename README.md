@@ -32,6 +32,8 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed intr
 
 > * [Introductory](http://www.huyifeng.net/HFT-start.html)
 > * [Prepare](http://www.huyifeng.net/HFT-prepare.html)
+> **  [Strategy template](http://www.huyifeng.net/HFT-strategy.html)
+> **  [A arbitrage strategy](http://www.huyifeng.net/HFT-arbitrage.html)
 
 
 ## Quit start
