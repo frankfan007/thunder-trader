@@ -1380,7 +1380,9 @@ void CTradeService::ReqGetFloatingProfit(PackageHandlerParamType, const ptree & 
     {
         const std::regex pattern_search(R"(([0-9]+),)");
         for (std::sregex_iterator p(StrategiesList.cbegin(), StrategiesList.cend(), pattern_search), q; p != q; ++p)
+        {
             strategids_vec.push_back(atoi(p->format("$1").c_str()));
+        }
     }
     else
         throw std::runtime_error("strategyid list error.");

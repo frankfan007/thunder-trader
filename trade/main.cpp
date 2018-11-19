@@ -1,4 +1,5 @@
 #include <string>
+#include <sys/stat.h>
 #include <iostream>
 #include <memory>
 #include <boost/date_time/posix_time/posix_time.hpp>
