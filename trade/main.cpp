@@ -1,4 +1,5 @@
 #include <string>
+#include <sys/stat.h>
 #include <iostream>
 #include <memory>
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -176,7 +177,7 @@ int main(int argc,char *argv[])
         else if (pc>0)
             exit(0);
         setsid();
-        chdir(".");
+        cout<<chdir(".")<<endl;;
         umask(0);
 
     }    

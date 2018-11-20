@@ -121,8 +121,8 @@ public:
             m_queueMeddleResponseQueue.pop();
     }
     date m_dateActionDate;
-    atomic_uint64_t m_uMaxIncreaseOrderCountPerDay;
-    atomic_uint64_t m_uRemainIncreaseOrderCountPerDay;
+    std::atomic<std::uint64_t> m_uMaxIncreaseOrderCountPerDay;
+    std::atomic<std::uint64_t> m_uRemainIncreaseOrderCountPerDay;
     unsigned int m_uStrategyID;
     ptree m_treeConfig;
     boost::filesystem::path m_pathStrategyPath;

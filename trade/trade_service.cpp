@@ -6,7 +6,7 @@
 #include <exception>
 #include <sstream>
 #include <algorithm>
-#include <regex>
+#include <boost/regex.hpp>
 #include "public.h"
 #include "OrderRefResolve.h"
 
@@ -1370,20 +1370,19 @@ void CTradeService::ReqGetCustomInfo(PackageHandlerParamType, const ptree & in, 
 
 void CTradeService::ReqGetFloatingProfit(PackageHandlerParamType, const ptree & in, ptree & out)
 {
-    string StrategiesList = GetNodeData("strategyid", in).c_str();
+    std::string StrategiesList = GetNodeData("strategyid", in).c_str();
     vector<int> strategids_vec;
-    const std::regex pattern_match(R"((([0-9]+),)+)");
-    
-    std::match_results<std::string::const_iterator> result;
-
-    if (std::regex_search(StrategiesList, result, pattern_match))
+    const boost::regex check_format_reg("([0-9]+,?)+");
+    boost::cmatch what;
+    if (boost::regex_match(StrategiesList.c_str(), what, check_format_reg))
     {
-        const std::regex pattern_search(R"(([0-9]+),)");
-        for (std::sregex_iterator p(StrategiesList.cbegin(), StrategiesList.cend(), pattern_search), q; p != q; ++p)
-            strategids_vec.push_back(atoi(p->format("$1").c_str()));
+        const boost::regex digit_reg("(\\d+),?");
+        for(boost::sregex_iterator it(StrategiesList.begin(), StrategiesList.end(), digit_reg), end; it != end; ++it)
+           strategids_vec.push_back(atoi((*it)[1].str().c_str()));
     }
     else
         throw std::runtime_error("strategyid list error.");
+
     boost::shared_lock<boost::shared_mutex> rlock1(m_mtxAllStrategys, boost::try_to_lock);
     if (rlock1.owns_lock())
     {

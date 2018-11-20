@@ -1,7 +1,7 @@
 {
     "basic": {
     "address": "0.0.0.0",
-        "listenport": "3848",
+        "listenport": "8800",
         "nethandlerthreadcount": "2",
     "strategybinroot": ".."
     },
