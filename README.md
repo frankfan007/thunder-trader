@@ -35,6 +35,10 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed intr
 > * Strategy
 > 	*  [Strategy template](http://www.huyifeng.net/HFT-strategy.html)
 > 	*  [A arbitrage strategy](http://www.huyifeng.net/HFT-arbitrage.html)
+> * Trade server 
+> * Usage 
+> 	*  [Monitor](http://www.huyifeng.net/HFT-monitor.html)
+
 
 
 ## Quit start
