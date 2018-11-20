@@ -44,7 +44,7 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed intr
 ## Quit start
 This preject is tested in following environment:
 > * gcc 7.2 or 4.8.4
-> * boost 1.68.0
+> * boost 1.58.0
 > * centos7
 
 Usage:
