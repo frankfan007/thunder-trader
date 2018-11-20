@@ -177,7 +177,7 @@ int main(int argc,char *argv[])
         else if (pc>0)
             exit(0);
         setsid();
-        chdir(".");
+        cout<<chdir(".")<<endl;;
         umask(0);
 
     }    

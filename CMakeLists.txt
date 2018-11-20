@@ -17,8 +17,8 @@ else()
 endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
-set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb -std=c++11")
-set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -std=c++11")
+set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb -std=c++11 -fno-strict-aliasing")
+set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -std=c++11 -fno-strict-aliasing")
 set(CMAKE_BUILD_TYPE "Release")
 
 include_directories("${PROJECT_SOURCE_DIR}/common")
@@ -27,13 +27,10 @@ include_directories("${PROJECT_SOURCE_DIR}/trade/md_plugins")
 include_directories("${PROJECT_SOURCE_DIR}/trade/trade_plugins")  
 include_directories("${PROJECT_SOURCE_DIR}/common/tick")  
 
-set(libs dl boost_system boost_filesystem pthread boost_thread boost_date_time boost_serialization boost_log_setup boost_log)
-add_definitions(-DBOOST_SPIRIT_THREADSAFE)
-add_definitions(-DBOOST_ALL_DYN_LINK)
 
 message(STATUS "${BOOST_THREAD}")
 add_definitions(-DBOOST_SPIRIT_THREADSAFE)
-find_package(Boost REQUIRED COMPONENTS filesystem regex system thread serialization date_time)
+find_package(Boost REQUIRED COMPONENTS filesystem regex system thread serialization date_time log log_setup)
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
@@ -42,15 +39,15 @@ if(NOT Boost_FOUND)
 endif()
 message(STATUS "Found Boost IncPath ${Boost_INCLUDE_DIRS}")
 message(STATUS "Found Boost LibPath ${Boost_LIBRARY_DIRS}")
+
+set(libs dl pthread boost_system boost_filesystem boost_thread boost_regex boost_date_time boost_serialization boost_log_setup boost_log)
+
+add_definitions(-DBOOST_SPIRIT_THREADSAFE)
+add_definitions(-DBOOST_ALL_DYN_LINK)
+
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories(${Boost_LIBRARY_DIRS})
 
-include_directories(${PROJECT_SOURCE_DIR}/trade)
-add_library(trade_service trade/connection.cpp trade/io_service_pool.cpp trade/server.cpp trade/trade_service.cpp)
-#add_library(io_service_pool trade/io_service_pool.cpp)
-#add_library(server trade/server.cpp)
-#add_library(trade_service trade/trade_service.cpp)
-#target_link_libraries(trade_service server io_service_pool connection)
 option (CTP_FUTURE_MDPlugin "Support CTP quotation" ON) 
 option (CTP_FUTURE_TDPlugin "Support CTP trade" ON) 
 
@@ -61,6 +58,7 @@ option (FEMAS_FUTURE_MDPlugin "Support FEMAS quotation" OFF)
 option (FEMAS_FUTURE_TDPlugin "Support FEMAS trade" OFF) 
 
 add_library(autopend STATIC  common/AutoPend.cpp)
+
 
     ###################### CTP ##########################################
 include_directories("${PROJECT_SOURCE_DIR}/third/CTPForLinux32/")
@@ -128,9 +126,11 @@ if (FEMAS_FUTURE_TDPlugin)
     install(FILES "${PROJECT_SOURCE_DIR}/third/Femas/libUSTPtraderapi.so" DESTINATION bin)
 endif (FEMAS_FUTURE_TDPlugin)
 
-#################### thunder-trader
-add_executable(thunder-trader "${PROJECT_SOURCE_DIR}/trade/main.cpp")
-target_link_libraries(thunder-trader ${libs} trade_service ctp_future_mdplugin ctp_future_tdplugin dfitc_sop_mdplugin dfitc_sop_tdplugin autopend)
 
+#################### trade_service 
+include_directories(${PROJECT_SOURCE_DIR}/trade)
+add_executable(thunder-trader trade/main.cpp trade/connection.cpp trade/io_service_pool.cpp trade/server.cpp trade/trade_service.cpp)
+target_link_libraries(thunder-trader ${libs} ctp_future_mdplugin ctp_future_tdplugin dfitc_sop_mdplugin dfitc_sop_tdplugin autopend)
 
 install (TARGETS thunder-trader DESTINATION bin)
+install (FILES thunder-trader.conf.default DESTINATION bin RENAME thunder-trader.conf)
