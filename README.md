@@ -26,6 +26,12 @@ Based on C++ 11, this project implements a quantitative trading system supportin
     - C++ implementation
     - Asynchronous event driven
 
+## User's guide
+Welcome to my [personal blog](http://www.huyifeng.net/). There are User's guide.
+> * [Launch thunder-trader](http://www.huyifeng.net/HFT-thunder-trader.html)
+> * [Use Monitor](http://www.huyifeng.net/HFT-monitor.html)
+
+
 ## Documentation 
 
 Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed introductory manuals.
@@ -36,10 +42,6 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed intr
 > 	*  [Strategy template](http://www.huyifeng.net/HFT-strategy.html)
 > 	*  [A arbitrage strategy](http://www.huyifeng.net/HFT-arbitrage.html)
 > * Trade server 
-> * Usage 
-> 	*  [Monitor](http://www.huyifeng.net/HFT-monitor.html)
-
-
 
 ## Quit start
 This preject is tested in following environment:
@@ -65,7 +67,7 @@ The usage of thunder-trader is `./thunder-trader config_file.conf system_number`
 
 The reason of use a system_number will be illustrated in the document.
 
-Then you can use the Monitor to connect the thunder-trader.
+Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to connect the thunder-trader.
 
 ## Update log
 * 2018.11.20 : Support gcc 4.8.4
