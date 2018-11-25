@@ -1,0 +1,8 @@
+{
+    "type": "reqaddtradesource",
+    "sourcetype": "ctp",
+    "brokerid": "6000",
+    "password": "123456",
+    "serveraddress": "tcp:\/\/11.22.33.44:55",
+    "username": "12345678"
+}
