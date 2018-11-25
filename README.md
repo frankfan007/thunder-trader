@@ -28,8 +28,11 @@ Based on C++ 11, this project implements a quantitative trading system supportin
 
 ## User's guide
 Welcome to my [personal blog](http://www.huyifeng.net/). There are User's guide.
-> * [Launch thunder-trader](http://www.huyifeng.net/HFT-usage.html#启动交易服务)
-> * [Use Monitor](http://www.huyifeng.net/HFT-usage.html#使用Monitor)
+> * [Launch thunder-trader](http://www.huyifeng.net/HFT-usage.html#start_thunder_trader)
+> * [Use Monitor](http://www.huyifeng.net/HFT-usage.html#use_monitor)
+>   * [TradeServer](http://www.huyifeng.net/HFT-usage.html#TradeServer)
+>   * [UIStyle](http://www.huyifeng.net/HFT-usage.html#UIStyle)
+>   * [SymbolDefine](http://www.huyifeng.net/HFT-usage.html#SymbolDefine)
 
 
 ## Documentation 
