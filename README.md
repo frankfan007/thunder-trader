@@ -43,8 +43,10 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed intr
 > * [Prepare](http://www.huyifeng.net/HFT-prepare.html)
 > * Strategy
 > 	*  [Strategy template](http://www.huyifeng.net/HFT-strategy.html)
-> 	*  [A arbitrage strategy](http://www.huyifeng.net/HFT-arbitrage.html)
+> 	*  [An arbitrage strategy implementation](http://www.huyifeng.net/HFT-arbitrage.html)
 > * Trade server 
+> * Monitor
+> * Research platform
 
 ## Quit start
 This preject is tested in following environment:
