@@ -26,6 +26,15 @@ Based on C++ 11, this project implements a quantitative trading system supportin
     - C++ implementation
     - Asynchronous event driven
 
+## User's guide
+Welcome to my [personal blog](http://www.huyifeng.net/). There are User's guide.
+> * [Launch thunder-trader](http://www.huyifeng.net/HFT-usage.html#start_thunder_trader)
+> * [Use Monitor](http://www.huyifeng.net/HFT-usage.html#use_monitor)
+>   * [TradeServer](http://www.huyifeng.net/HFT-usage.html#TradeServer)
+>   * [UIStyle](http://www.huyifeng.net/HFT-usage.html#UIStyle)
+>   * [SymbolDefine](http://www.huyifeng.net/HFT-usage.html#SymbolDefine)
+
+
 ## Documentation 
 
 Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed introductory manuals.
@@ -34,13 +43,15 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed intr
 > * [Prepare](http://www.huyifeng.net/HFT-prepare.html)
 > * Strategy
 > 	*  [Strategy template](http://www.huyifeng.net/HFT-strategy.html)
-> 	*  [A arbitrage strategy](http://www.huyifeng.net/HFT-arbitrage.html)
-
+> 	*  [An arbitrage strategy implementation](http://www.huyifeng.net/HFT-arbitrage.html)
+> * Trade server 
+> * Monitor
+> * Research platform
 
 ## Quit start
 This preject is tested in following environment:
-> * gcc 7.2
-> * boost 1.68.0
+> * gcc 7.2 or 4.8.4
+> * boost 1.58.0
 > * centos7
 
 Usage:
@@ -48,10 +59,23 @@ Usage:
 >cmake .
 >make
 >make install
->export LD_LIBRARY_PATH=/opt/gcc72/lib64:$LD_LIBRARY_PATH ; /path/to/thunder-trader thunder-trader.conf.default 1
+>export LD_LIBRARY_PATH=/path/to/gcc/lib/:/path/to/boost/lib:$LD_LIBRARY_PATH ; /path/to/thunder-trader /path/to/thunder-trader.conf 1
+
+Then will see output like: 
 Run.SystemNumber=1 [20181021T062516.546639]
 ```
-Then you can use the Monitor to connect the thunder-trader.
+If you use a customed gcc path, you should specify the /path/to/gcc/lib/, such as /opt/gcc7/lib64.
+
+As the same, if you use a customed boost path, you should specify the /path/to/boost/lib, such as /opt/boost/lib.
+
+The usage of thunder-trader is `./thunder-trader config_file.conf system_number`, .e.g. `./thunder-trader thunder-trader.conf 1`, the system_number is a customed int that indicate the process by onlyself. You should make sure that different thunder-trader process has different system_number. 
+
+The reason of use a system_number will be illustrated in the document.
+
+Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to connect the thunder-trader.
+
+## Update log
+* 2018.11.20 : Support gcc 4.8.4
 
 ## Screenshots
 <p><b>Software running screenshots:</b><br>
