@@ -76,6 +76,7 @@ Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to conn
 
 ## Update log
 * 2018.11.20 : Support gcc 4.8.4
+* 2018.12.04 : Update arbitrage_strategy & simple_strategy
 
 ## Screenshots
 <p><b>Software running screenshots:</b><br>
