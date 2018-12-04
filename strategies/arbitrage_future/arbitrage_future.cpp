@@ -1,5 +1,3 @@
-
-//#include "stdafx.h"
 #include "ArbitrageBaseFuture.h"
 #include <numeric>
 #include <tuple>
@@ -78,7 +76,7 @@ public:
 	};
 
 	BEGIN_SERIALIZATION 
-#pragma region 参数
+// 参数
 		SERIALIZATION(BarTypeSecond)
 		SERIALIZATION(m_intMinuendVolumePerCopy)
 		SERIALIZATION(m_intSubtrahendVolumePerCopy)
@@ -94,9 +92,9 @@ public:
 		SERIALIZATION(m_tdAfternoonPeriodEnd)
 		SERIALIZATION(m_tdNightPeriodBegin)
 		SERIALIZATION(m_tdNightPeriodEnd)
-#pragma endregion
 
-#pragma region ForBar
+
+// ForBar
 		SERIALIZATION(m_intLastBarCycleNumber)
 		SERIALIZATION(m_barUpperSpreadBar)
 		SERIALIZATION(m_barLowerSpreadBar)
@@ -104,14 +102,14 @@ public:
 		SERIALIZATION(m_dateCurrentDate)
 		SERIALIZATION(m_uBarCount_Overall)
 		SERIALIZATION(m_uBarCount_Inday)
-#pragma endregion
 
-#pragma region 全局变量
+
+// 全局变量
 		SERIALIZATION(m_deqHisteryBars)
 		SERIALIZATION(m_intbarCount)
 		SERIALIZATION(m_ptimeGlobalCurrentTime)
 		SERIALIZATION(m_boolStrategyOnOff)
-#pragma endregion
+
 	END_SERIALIZATION
 
 	BEGIN_PARAMETER_BIND
@@ -143,7 +141,7 @@ public:
 	END_PROBE_BIND_
 
 	BEGIN_SHOW(Show)
-#pragma region 参数
+// 参数
 		SHOW_UINT(BarTypeSecond)
 		SHOW_INT(m_intMinuendVolumePerCopy)
 		SHOW_INT(m_intSubtrahendVolumePerCopy)
@@ -161,20 +159,20 @@ public:
 		SHOW_STRING(to_simple_string(m_tdAfternoonPeriodEnd).c_str())
 		SHOW_STRING(to_simple_string(m_tdNightPeriodBegin).c_str())
 		SHOW_STRING(to_simple_string(m_tdNightPeriodEnd).c_str())
-#pragma endregion
 
-#pragma region ForBar
+
+// ForBar
 		SHOW_INT(m_intLastBarCycleNumber)
 		SHOW_UINT(m_uBarCount_Overall)
 		SHOW_UINT(m_uBarCount_Inday)
-#pragma endregion
 
-#pragma region 全局变量
+
+// 全局变量
 		SHOW_UINT(m_deqHisteryBars.size())
 		SHOW_INT(m_intbarCount)
 		SHOW_STRING(to_simple_string(m_ptimeGlobalCurrentTime).c_str())
 		SHOW_INT(m_boolStrategyOnOff)
-#pragma endregion
+
 	END_SHOW
 
 
@@ -183,7 +181,7 @@ public:
 	TLastErrorIdType OnInit(ptime);
 	void OnTick(TMarketDataIdType, const CTick *);
 
-#pragma region 参数
+// 参数
 	int BarTypeSecond = 60;
 	int m_intMinuendVolumePerCopy = 1;
 	int m_intSubtrahendVolumePerCopy = 1;
@@ -202,9 +200,9 @@ public:
 	time_duration m_tdNightPeriodBegin		=	time_duration(13, 2,  0,  0);
 	time_duration m_tdNightPeriodEnd		=	time_duration(18, 28, 0,  0);
 	
-#pragma endregion
 
-#pragma region ForBar
+
+// ForBar
 	int m_intLastBarCycleNumber;
 	CBar m_barUpperSpreadBar;
 	CBar m_barLowerSpreadBar;
@@ -212,15 +210,15 @@ public:
 	date m_dateCurrentDate;
 	unsigned int m_uBarCount_Overall;
 	unsigned int m_uBarCount_Inday;
-#pragma endregion
 
-#pragma region 全局变量
+
+// 全局变量
 	double m_dbCurrentMiddleWidth = 0;
 	deque<tuple<CBar, CBar, CBar>> m_deqHisteryBars;
 	int m_intbarCount = -1;
 	ptime m_ptimeGlobalCurrentTime;
 	bool m_boolStrategyOnOff = true;
-#pragma endregion
+
 
 private:
 	atomic<double> m_adbUpperSpread_Close;
@@ -308,11 +306,11 @@ CMyStrategy::CMyStrategy(MStrategyContext* context, TStrategyIdType strategyid):
 
 TLastErrorIdType CMyStrategy::OnInit(ptime CurrentTime)
 {
-#pragma region 参数合法性检查
+// 参数合法性检查
 	
-#pragma endregion
 
-#pragma region ForBar
+
+// ForBar
 	m_intLastBarCycleNumber = -1;//当前周期编号：当前时间距离凌晨0：0：0的总秒数除以Bar周期并且取整,当值为-1时表示未初始化
 	m_barUpperSpreadBar.Init(BarTypeSecond);
 	m_barLowerSpreadBar.Init(BarTypeSecond);
@@ -320,16 +318,16 @@ TLastErrorIdType CMyStrategy::OnInit(ptime CurrentTime)
 	
 	m_uBarCount_Overall = 0;
 	m_uBarCount_Inday = 0;
-#pragma endregion
 
-#pragma region 全局变量
+
+// 全局变量
 	m_dbCurrentMiddleWidth = m_dbInitMiddleWidth;
 	m_deqHisteryBars.clear();
 	m_deqHisteryBars.push_back(tuple<CBar, CBar, CBar>());
 	m_intbarCount = -1;
 	m_dateCurrentDate = m_ptimeGlobalCurrentTime.date();
 	m_boolStrategyOnOff = true;
-#pragma endregion
+
 	
 	m_adbUpper.store(PROBE_NULL_VALUE);
 	m_adbMiddle.store(PROBE_NULL_VALUE);
@@ -350,7 +348,7 @@ void CMyStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDepthMarketData
 	if (IsTwoLegHasInited() == false)
 		return;
 	
-	#pragma region 更新K线
+	// 更新K线
 	m_barUpperSpreadBar.m_dbClose =
 		GetMinuendTick().m_dbAskPrice[0] * m_intMinuendVolumePerCopy*GetMinuendMultipNumber()
 		-
@@ -443,7 +441,7 @@ void CMyStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDepthMarketData
 		if (m_barLastSpreadBar.m_dbClose<m_barLastSpreadBar.m_dbLowest)
 			m_barLastSpreadBar.m_dbLowest = m_barLastSpreadBar.m_dbClose;
 	}
-	#pragma endregion
+	
 
 	m_adbUpper.store(PROBE_NULL_VALUE);
 	m_adbMiddle.store(PROBE_NULL_VALUE);
@@ -455,19 +453,19 @@ void CMyStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDepthMarketData
 	m_adbLowerSpread_Close.store(m_barLowerSpreadBar.m_dbClose);
 	//m_adbLastSpread_Close.store(m_barLastSpreadBar.m_dbClose);
 
-	#pragma region 保存HisteryBarLength根历史bar
-	if (m_intbarCount != m_uBarCount_Overall
+	// 保存HisteryBarLength根历史bar
+	if (m_intbarCount != static_cast<int>(m_uBarCount_Overall)
 		&&
 		-1 != m_intbarCount)
 	{
 		m_deqHisteryBars.push_front(make_tuple(m_barUpperSpreadBar, m_barLowerSpreadBar, m_barLastSpreadBar));
-		if (m_deqHisteryBars.size()> m_intWindowsLen)
+		if (m_deqHisteryBars.size()> static_cast<size_t>(m_intWindowsLen))
 			m_deqHisteryBars.pop_back();
 	}
 	else
 		m_deqHisteryBars.front() = make_tuple(m_barUpperSpreadBar, m_barLowerSpreadBar, m_barLastSpreadBar);
 	m_intbarCount = m_uBarCount_Overall;
-	#pragma endregion
+	
 
 	auto res = m_vecAlgorithms[m_intAlgorithmType%m_vecAlgorithms.size()]();
 	double UpperLine = get<0>(res);
@@ -480,7 +478,7 @@ void CMyStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDepthMarketData
 	m_HasRisenSoClear.store(MiddleLine - m_dbCurrentMiddleWidth);
 	m_HasDroppedSoClear.store(MiddleLine + m_dbCurrentMiddleWidth);
 
-	if (m_boolStrategyOnOff&&m_deqHisteryBars.size() >= m_intWindowsLen)
+	if (m_boolStrategyOnOff&&m_deqHisteryBars.size() >= static_cast<size_t>(m_intWindowsLen))
 	{
 		bool IsNearLimitPrice = 
 			GetMinuendTick().m_dbLastPrice > static_cast<CFutureTick*>(&GetMinuendTick())->m_dbUpperLimitPrice - GetMinuendMinPriceTick() * 10
@@ -542,7 +540,7 @@ void CMyStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDepthMarketData
 
 	}
 
-	#pragma region 干预策略
+	// 干预策略
 	char buf[1024];
 	if (true == MEDDLE(buf, 1024))
 	{
@@ -694,10 +692,10 @@ void CMyStrategy::OnTick(TMarketDataIdType dataid, const CTick *pDepthMarketData
 			m_dbCurrentMiddleWidth = m_dbInitMiddleWidth;
 		}
 	}
-	#pragma endregion
+	
 }
 
-#pragma region 导出函数
+// 导出函数
 extern "C" {
 	STRATEGY_INTERFACE  MStrategy * CreateStrategyObject(MStrategyContext*context, TStrategyIdType stid)\
 	{
@@ -713,4 +711,4 @@ extern "C" {
 		return ret;
 	}
 }
-#pragma endregion
+
