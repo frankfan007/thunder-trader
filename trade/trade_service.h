@@ -214,16 +214,16 @@ class CTradeService :
 
 
     const unordered_map<string, function<void(const ptree & in, ptree &out)>> m_mapString2PackageHandlerType = {
-        //»ñÈ¡Ô´ÀàĞÍ
+        //è·å–æºç±»å‹
         { "reqgetsupportedmdtypes",        HANDLER(ReqGetSupportedTypes,        MarketData)},
         { "reqgetsupportedtdtypes",        HANDLER(ReqGetSupportedTypes,        Trade) },
-        //»ñÈ¡ÏÖÓĞµÄÔ´
+        //è·å–ç°æœ‰çš„æº
         { "reqgetallmarketdatasource",    HANDLER(ReqGetAllSource,            MarketData)},
         { "reqgetalltradesource",        HANDLER(ReqGetAllSource,            Trade) },
-        //Ôö¼ÓÔ´
+        //å¢åŠ æº
         { "reqaddmarketdatasource",        HANDLER(ReqAddSource,                MarketData) },
         { "reqaddtradesource",            HANDLER(ReqAddSource,                Trade) },
-        //É¾³ıÔ´
+        //åˆ é™¤æº
         { "reqdelmarketdatasource",        HANDLER(ReqDelSource,                MarketData) },
         { "reqdeltradesource",            HANDLER(ReqDelSource,                Trade) },
         
@@ -252,17 +252,17 @@ class CTradeService :
     boost::log::sources::severity_logger< severity_levels > m_Logger;
     std::string m_strConfigFile;
     unsigned int m_uSystemNumber = 0;
-    //½öÒ»ÏÂÈı¸öÊı¾İ½á¹¹ĞèÒª»¥³â:²ßÂÔÊı×é\ĞĞÇéÔ´Êı×é\½»Ò×Ô´Êı×é
+    //ä»…ä¸€ä¸‹ä¸‰ä¸ªæ•°æ®ç»“æ„éœ€è¦äº’æ–¥:ç­–ç•¥æ•°ç»„\è¡Œæƒ…æºæ•°ç»„\äº¤æ˜“æºæ•°ç»„
 
-    //²ßÂÔÊı×é:±£´æËùÓĞ²ßÂÔ£¬¸ÃÊı¾İ½á¹¹ĞèÒª»¥³â±£»¤
+    //ç­–ç•¥æ•°ç»„:ä¿å­˜æ‰€æœ‰ç­–ç•¥ï¼Œè¯¥æ•°æ®ç»“æ„éœ€è¦äº’æ–¥ä¿æŠ¤
     boost::shared_mutex m_mtxAllStrategys;
     CStrategyNode m_arrayAllStrategys[(_MaxStrategyID+1)];
 
     
 
-    //¹ÜÀíËùÓĞĞĞÇéÔ´Óë½»Ò×Ô´£¬ÕâÁ½¸öÊı¾İ½á¹¹ĞèÒª»¥³â±£»¤
-    pair<vector<PluginPtrType>, boost::shared_mutex> m_vecAllMarketDataSource;//ĞĞÇéÔ´Êı×é
-    pair<vector<PluginPtrType>, boost::shared_mutex> m_vecAllTradeSource;//½»Ò×Ô´Êı×é
+    //ç®¡ç†æ‰€æœ‰è¡Œæƒ…æºä¸äº¤æ˜“æºï¼Œè¿™ä¸¤ä¸ªæ•°æ®ç»“æ„éœ€è¦äº’æ–¥ä¿æŠ¤
+    pair<vector<PluginPtrType>, boost::shared_mutex> m_vecAllMarketDataSource;//è¡Œæƒ…æºæ•°ç»„
+    pair<vector<PluginPtrType>, boost::shared_mutex> m_vecAllTradeSource;//äº¤æ˜“æºæ•°ç»„
 
 
 
