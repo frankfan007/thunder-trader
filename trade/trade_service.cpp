@@ -126,6 +126,28 @@ void CTradeService::Join()
 #endif
 }
 
+std::string CTradeService::GetStrategyBinPath()
+{
+    ptree g_Config;
+    boost::property_tree::read_json(m_strConfigFile, g_Config);
+    
+
+    if (g_Config.find("basic") != g_Config.not_found())
+    {
+        auto Basic = g_Config.find("basic");
+        if (Basic->second.find("strategy_path") != Basic->second.not_found())
+        {
+            std::string _strategy_path  = Basic->second.find("strategy_path")->second.data();
+            return _strategy_path;
+        }
+        else
+            throw std::runtime_error("[error]could not find 'basic.strategy_path' node.");
+    }
+    else
+        throw std::runtime_error("[error]could not find 'basic' node.");
+
+}
+
 unsigned short CTradeService::GetListenPort()
 {
     ptree g_Config;
@@ -200,7 +222,7 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
     if (BinNode == in.not_found() || BinNode->second.data().size() == 0)
         throw std::runtime_error("Invalid <bin>");
     else
-        Bin = string(".") + FILE_PATH_SEPARATOR + BinNode->second.data() + STRATEGY_SUFFIX;
+        Bin = string(GetStrategyBinPath()) + FILE_PATH_SEPARATOR + BinNode->second.data() + STRATEGY_SUFFIX;
 
     auto ArchiveNode = in.find("archive");
     if (ArchiveNode == in.not_found())
@@ -813,7 +835,8 @@ void CTradeService::ReqAllStrategyBin(PackageHandlerParamType param, const ptree
     //行情源数组互斥:        不需要
     //交易源数组互斥:        不需要
     namespace fs = boost::filesystem;
-    fs::path fullpath(".");
+    std::string strategy_path = GetStrategyBinPath();
+    fs::path fullpath(strategy_path);
     fs::directory_iterator item_begin(fullpath);
     fs::directory_iterator item_end;
     unsigned int count = 0;
@@ -860,7 +883,8 @@ void CTradeService::ReqAllArchiveFile(PackageHandlerParamType param, const ptree
         throw std::runtime_error("can not find <strategyname>");
     string strategyName = StrategyNameNode->second.data();
     namespace fs = boost::filesystem;
-    fs::path fullpath(".");
+    std::string strategy_path = GetStrategyBinPath();
+    fs::path fullpath(strategy_path);
     fs::directory_iterator item_begin(fullpath);
     fs::directory_iterator item_end;
     unsigned int count = 0;
@@ -1119,7 +1143,7 @@ void CTradeService::ReqStrategyParams(PackageHandlerParamType, const ptree & in,
         throw std::runtime_error("Can not find <strategybin>");
     else
     {
-        string strategypath = string(".") + FILE_PATH_SEPARATOR + StrategyBinNode->second.data()+ STRATEGY_SUFFIX;
+        string strategypath = string(GetStrategyBinPath()) + FILE_PATH_SEPARATOR + StrategyBinNode->second.data()+ STRATEGY_SUFFIX;
         CDynamicLinkLibraryRAII DynamicLinkLib(strategypath.c_str());
         if (nullptr == DynamicLinkLib.GetHandle())
             throw std::runtime_error("Can not open this strategy bin.");

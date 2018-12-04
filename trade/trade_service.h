@@ -278,6 +278,7 @@ private:
     void MakeError(ptree & out, const char * fmt,...);
     string GetAddress();
     unsigned short GetListenPort();
+    std::string GetStrategyBinPath();
     size_t GetNetHandlerThreadCount();
     
     MCommuModForServInterface * m_pApi = nullptr;
