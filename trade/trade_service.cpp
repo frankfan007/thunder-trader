@@ -135,13 +135,13 @@ std::string CTradeService::GetStrategyBinPath()
     if (g_Config.find("basic") != g_Config.not_found())
     {
         auto Basic = g_Config.find("basic");
-        if (Basic->second.find("strategy_path") != Basic->second.not_found())
+        if (Basic->second.find("strategypath") != Basic->second.not_found())
         {
-            std::string _strategy_path  = Basic->second.find("strategy_path")->second.data();
-            return _strategy_path;
+            std::string _strategypath  = Basic->second.find("strategypath")->second.data();
+            return _strategypath;
         }
         else
-            throw std::runtime_error("[error]could not find 'basic.strategy_path' node.");
+            throw std::runtime_error("[error]could not find 'basic.strategypath' node.");
     }
     else
         throw std::runtime_error("[error]could not find 'basic' node.");
@@ -835,8 +835,8 @@ void CTradeService::ReqAllStrategyBin(PackageHandlerParamType param, const ptree
     //行情源数组互斥:        不需要
     //交易源数组互斥:        不需要
     namespace fs = boost::filesystem;
-    std::string strategy_path = GetStrategyBinPath();
-    fs::path fullpath(strategy_path);
+    std::string strategypath = GetStrategyBinPath();
+    fs::path fullpath(strategypath);
     fs::directory_iterator item_begin(fullpath);
     fs::directory_iterator item_end;
     unsigned int count = 0;
@@ -883,8 +883,8 @@ void CTradeService::ReqAllArchiveFile(PackageHandlerParamType param, const ptree
         throw std::runtime_error("can not find <strategyname>");
     string strategyName = StrategyNameNode->second.data();
     namespace fs = boost::filesystem;
-    std::string strategy_path = GetStrategyBinPath();
-    fs::path fullpath(strategy_path);
+    std::string strategypath = GetStrategyBinPath();
+    fs::path fullpath(strategypath);
     fs::directory_iterator item_begin(fullpath);
     fs::directory_iterator item_end;
     unsigned int count = 0;
