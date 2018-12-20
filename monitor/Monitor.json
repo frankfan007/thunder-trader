@@ -1,0 +1,43 @@
+{
+  "TradeServer": [
+    {
+      "Name": "10.255.83.34",
+      "IP": "10.255.83.34",
+      "Port": "8800"
+    },
+    {
+      "Name": "一号行情服务器",
+      "IP": "123.57.238.225",
+      "Port": "3847"
+    },
+    {
+      "Name": "二号行情服务器",
+      "IP": "101.200.203.40",
+      "Port": "3847"
+    }
+  ],
+  "UIStyle": {
+    "OutLookBarStyle": "NewStyle",
+    "OutLookBarTabStyle": "STYLE_3D_ONENOTE"
+  },
+  "SymbolDefine":{
+	"IF1601":{
+	"type":"ctp",
+	"instrumentid":"IF1601",
+	"exchangeid":"CFFEX"
+	},
+	"11000497":{
+	"type":"dfitc",
+	"instrumentid":"11000497",
+	"exchangeid":"SH"
+	},
+	"XINA50201601":{
+	"type":"TWS",
+	"symbol":"XINA50",
+	"secType":"FUT",
+	"expiry":"201601",
+	"exchange":"SGX",
+	"currency":"USD"
+	}
+  }
+}

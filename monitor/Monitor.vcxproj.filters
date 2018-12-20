@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="header\View&amp;Frame&amp;Doc">
+      <UniqueIdentifier>{65fbff79-d462-4827-b988-219ee92258df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header\View&amp;Frame&amp;Doc\Graph">
+      <UniqueIdentifier>{3bb3d9f0-b4cf-442a-bc6f-a968a39185ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header\View&amp;Frame&amp;Doc\Meddle">
+      <UniqueIdentifier>{c1627b3a-3d75-4459-a120-458a86440467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\View&amp;Frame&amp;Doc">
+      <UniqueIdentifier>{96663f03-f015-4580-81e7-781e803e46ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\View&amp;Frame&amp;Doc\Graph">
+      <UniqueIdentifier>{f8fb6018-0db5-4b3b-893b-58c2a587a47e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\View&amp;Frame&amp;Doc\Meddle">
+      <UniqueIdentifier>{2c59f0a4-a824-4968-950f-bfbc01118f0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\Dialog">
+      <UniqueIdentifier>{73558d9f-5695-4777-9de9-428ee4487a48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header\Dialog">
+      <UniqueIdentifier>{7a44b77a-faef-493f-be2d-7faa10c77a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header\Interface">
+      <UniqueIdentifier>{d34608c2-0f3e-48f7-b4ba-e66804dbc6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source\View&amp;Frame&amp;Doc\FloatingProfit">
+      <UniqueIdentifier>{bea181ac-3528-4a38-87c6-dccd779ba7a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="header\View&amp;Frame&amp;Doc\FloatingProfit">
+      <UniqueIdentifier>{c14de5ad-8a54-45b5-9053-da88aa7f56fc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Monitor.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputWnd.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="TradeServerPanel.h">
+      <Filter>header</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphView.h">
+      <Filter>header\View&amp;Frame&amp;Doc\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphFrm.h">
+      <Filter>header\View&amp;Frame&amp;Doc\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="MeddleView.h">
+      <Filter>header\View&amp;Frame&amp;Doc\Meddle</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphDoc.h">
+      <Filter>header\View&amp;Frame&amp;Doc\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="MeddleFrame.h">
+      <Filter>header\View&amp;Frame&amp;Doc\Meddle</Filter>
+    </ClInclude>
+    <ClInclude Include="MeddleDoc.h">
+      <Filter>header\View&amp;Frame&amp;Doc\Meddle</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgAddSource.h">
+      <Filter>header\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgDeployNewStrategy.h">
+      <Filter>header\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgMeddle.h">
+      <Filter>header\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgSetShareValue.h">
+      <Filter>header\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgUpdateOrderTicket.h">
+      <Filter>header\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="DlgUpdateStrategyBin.h">
+      <Filter>header\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="RemoteFetchInterface.h">
+      <Filter>header\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="RequiryDataCallbackInterface.h">
+      <Filter>header\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingProfitDoc.h">
+      <Filter>header\View&amp;Frame&amp;Doc\FloatingProfit</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingProfitFrm.h">
+      <Filter>header\View&amp;Frame&amp;Doc\FloatingProfit</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingProfitView.h">
+      <Filter>header\View&amp;Frame&amp;Doc\FloatingProfit</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Monitor.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputWnd.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="TradeServerPanel.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphView.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphFrm.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="MeddleView.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\Meddle</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphDoc.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="MeddleFrame.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\Meddle</Filter>
+    </ClCompile>
+    <ClCompile Include="MeddleDoc.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\Meddle</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgAddSource.cpp">
+      <Filter>source\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgDeployNewStrategy.cpp">
+      <Filter>source\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgMeddle.cpp">
+      <Filter>source\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgSetShareValue.cpp">
+      <Filter>source\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgUpdateOrderTicket.cpp">
+      <Filter>source\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgUpdateStrategyBin.cpp">
+      <Filter>source\Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="CommunicationModuleForClient.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingProfitDoc.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\FloatingProfit</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingProfitFrm.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\FloatingProfit</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingProfitView.cpp">
+      <Filter>source\View&amp;Frame&amp;Doc\FloatingProfit</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Monitor.reg" />
+    <None Include="res\ribbon.mfcribbon-ms">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="res\Monitor.rc2">
+      <Filter>resource</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Monitor.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\output_wnd.ico">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\output_wnd_hc.ico">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\nav_large.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\nav_large_hc.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\pages.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\pages_hc.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\pages_small.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\pages_small_hc.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\buttons.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\filelarge.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\filesmall.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\main.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\writelarge.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\writesmall.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\MonitorDoc.ico">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\Monitor.ico">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
+      <Filter>resource</Filter>
+    </Image>
+    <Image Include="res\GraphDoc.ico">
+      <Filter>resource</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
