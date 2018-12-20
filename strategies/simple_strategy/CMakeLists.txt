@@ -1,0 +1,16 @@
+project(simple_strategy)
+if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+    message(${PROJECT_SOURCE_DIR})
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-Bsymbolic")
+    set(BOOST_THREAD "boost_thread-mt")
+else()
+    set(BOOST_THREAD "boost_thread")
+endif()
+
+message("[${PROJECT_NAME}]project source dir: ${PROJECT_SOURCE_DIR}")
+message("[${PROJECT_NAME}]libs: ${libs}")
+
+add_library(simple_strategy SHARED "${PROJECT_SOURCE_DIR}/simple_strategy.cpp")
+target_link_libraries(simple_strategy ${libs})
+set_target_properties(simple_strategy PROPERTIES PREFIX "strategy_")
+install (TARGETS simple_strategy DESTINATION bin/strategies)

@@ -126,6 +126,28 @@ void CTradeService::Join()
 #endif
 }
 
+std::string CTradeService::GetStrategyBinPath()
+{
+    ptree g_Config;
+    boost::property_tree::read_json(m_strConfigFile, g_Config);
+    
+
+    if (g_Config.find("basic") != g_Config.not_found())
+    {
+        auto Basic = g_Config.find("basic");
+        if (Basic->second.find("strategypath") != Basic->second.not_found())
+        {
+            std::string _strategypath  = Basic->second.find("strategypath")->second.data();
+            return _strategypath;
+        }
+        else
+            throw std::runtime_error("[error]could not find 'basic.strategypath' node.");
+    }
+    else
+        throw std::runtime_error("[error]could not find 'basic' node.");
+
+}
+
 unsigned short CTradeService::GetListenPort()
 {
     ptree g_Config;
@@ -179,9 +201,9 @@ size_t CTradeService::GetNetHandlerThreadCount()
 
 void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
 {
-    //²ßÂÔÊı×é»¥³â:        Ğ´»¥³â
-    //ĞĞÇéÔ´Êı×é»¥³â:        ¶Á»¥³â
-    //½»Ò×Ô´Êı×é»¥³â:        ¶Á»¥³â
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        å†™äº’æ–¥
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
     string Bin, Archive, ParFile;
     unordered_map<TMarketDataIdType, pair<vector<PluginPtrType>::iterator, unordered_map<string, string> > > _MD_DataChannelConfig;
     unordered_map<TMarketDataIdType, pair<vector<PluginPtrType>::iterator, unordered_map<string, string> > > _TD_DataChannelConfig;
@@ -200,7 +222,7 @@ void CTradeService::DeployStrategy(const ptree & in,unsigned int & strategyid)
     if (BinNode == in.not_found() || BinNode->second.data().size() == 0)
         throw std::runtime_error("Invalid <bin>");
     else
-        Bin = string(".") + FILE_PATH_SEPARATOR + BinNode->second.data() + STRATEGY_SUFFIX;
+        Bin = string(GetStrategyBinPath()) + FILE_PATH_SEPARATOR + BinNode->second.data() + STRATEGY_SUFFIX;
 
     auto ArchiveNode = in.find("archive");
     if (ArchiveNode == in.not_found())
@@ -589,7 +611,7 @@ string CTradeService::GetAddress()
 
 void CTradeService::ReqGetSupportedTypes(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //Ö»·ÃÎÊ³£Á¿Êı¾İ½á¹¹£¬²»ĞèÒª»¥³â
+    //åªè®¿é—®å¸¸é‡æ•°æ®ç»“æ„ï¼Œä¸éœ€è¦äº’æ–¥
     const unordered_map<string, pair<TPluginFactory, string> > * target=nullptr;
     if (PackageHandlerParamType::MarketData == param)
     {
@@ -608,9 +630,9 @@ void CTradeService::ReqGetSupportedTypes(PackageHandlerParamType param, const pt
 
 void CTradeService::ReqGetAllSource(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ²»ĞèÒª
-    //ĞĞÇéÔ´Êı×é»¥³â:        ĞèÒª(Ö»¶Á)
-    //½»Ò×Ô´Êı×é»¥³â:        ĞèÒª(Ö»¶Á)
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        éœ€è¦(åªè¯»)
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        éœ€è¦(åªè¯»)
     pair<vector<PluginPtrType>, boost::shared_mutex> * target=nullptr;
     if (PackageHandlerParamType::MarketData == param)
         target = &m_vecAllMarketDataSource;
@@ -630,9 +652,9 @@ void CTradeService::ReqGetAllSource(PackageHandlerParamType param, const ptree &
 
 void CTradeService::ReqAddSource(PackageHandlerParamType param, const ptree & in, ptree &out)
 {
-    //²ßÂÔÊı×é»¥³â:        ²»ĞèÒª
-    //ĞĞÇéÔ´Êı×é»¥³â:        ĞèÒª(Ğ´)
-    //½»Ò×Ô´Êı×é»¥³â:        ĞèÒª(Ğ´)
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        éœ€è¦(å†™)
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        éœ€è¦(å†™)
     const unordered_map<string, pair<TPluginFactory, string> > * tarFactoryMap = nullptr;
     pair<vector<PluginPtrType>, boost::shared_mutex> * tarContainer = nullptr;
     if (PackageHandlerParamType::MarketData == param)
@@ -684,7 +706,7 @@ void CTradeService::ReqAddSource(PackageHandlerParamType param, const ptree & in
                 {
                     MAtmTradePluginInterface * tdObjectPlugin
                         = dynamic_cast<MAtmTradePluginInterface*>(FindResult->get());
-                    //ÒÑ¾­»ñÈ¡ÁË½»Ò×Ô´ÁĞ±íµÄËø
+                    //å·²ç»è·å–äº†äº¤æ˜“æºåˆ—è¡¨çš„é”
                     boost::shared_lock<boost::shared_mutex> rlock_MD(m_vecAllMarketDataSource.second, boost::defer_lock);
                     boost::unique_lock<boost::shared_mutex> wlock_ST(m_mtxAllStrategys, boost::defer_lock);
                     std::lock(rlock_MD, wlock_ST);
@@ -749,9 +771,9 @@ void CTradeService::ReqAddSource(PackageHandlerParamType param, const ptree & in
 
 void CTradeService::ReqDelSource(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ²»ĞèÒª
-    //ĞĞÇéÔ´Êı×é»¥³â:        ĞèÒª(Ğ´)
-    //½»Ò×Ô´Êı×é»¥³â:        ĞèÒª(Ğ´)
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        éœ€è¦(å†™)
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        éœ€è¦(å†™)
     pair<vector<PluginPtrType>, boost::shared_mutex> * tarContainer = nullptr;
     if (PackageHandlerParamType::MarketData == param)
         tarContainer = &m_vecAllMarketDataSource;
@@ -809,11 +831,12 @@ void CTradeService::ReqDelSource(PackageHandlerParamType param, const ptree & in
 
 void CTradeService::ReqAllStrategyBin(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ²»ĞèÒª
-    //ĞĞÇéÔ´Êı×é»¥³â:        ²»ĞèÒª
-    //½»Ò×Ô´Êı×é»¥³â:        ²»ĞèÒª
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
     namespace fs = boost::filesystem;
-    fs::path fullpath(".");
+    std::string strategypath = GetStrategyBinPath();
+    fs::path fullpath(strategypath);
     fs::directory_iterator item_begin(fullpath);
     fs::directory_iterator item_end;
     unsigned int count = 0;
@@ -852,15 +875,16 @@ void CTradeService::ReqAllStrategyBin(PackageHandlerParamType param, const ptree
 
 void CTradeService::ReqAllArchiveFile(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ²»ĞèÒª
-    //ĞĞÇéÔ´Êı×é»¥³â:        ²»ĞèÒª
-    //½»Ò×Ô´Êı×é»¥³â:        ²»ĞèÒª
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
     auto StrategyNameNode = in.find("strategyname");
     if(in.not_found()==StrategyNameNode)
         throw std::runtime_error("can not find <strategyname>");
     string strategyName = StrategyNameNode->second.data();
     namespace fs = boost::filesystem;
-    fs::path fullpath(".");
+    std::string strategypath = GetStrategyBinPath();
+    fs::path fullpath(strategypath);
     fs::directory_iterator item_begin(fullpath);
     fs::directory_iterator item_end;
     unsigned int count = 0;
@@ -893,9 +917,9 @@ void CTradeService::ReqDeployNewStrategy(PackageHandlerParamType param, const pt
 
 void CTradeService::ReqGetAllRunningStrategies(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ¶Á»¥³â
-    //ĞĞÇéÔ´Êı×é»¥³â:        ²»ĞèÒª
-    //½»Ò×Ô´Êı×é»¥³â:        ²»ĞèÒª
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
     boost::shared_lock<boost::shared_mutex> rlock_ST(m_mtxAllStrategys);
     for (unsigned int i = 0;i <= (_MaxStrategyID);i++)
     {
@@ -939,9 +963,9 @@ void CTradeService::ReqGetAllRunningStrategies(PackageHandlerParamType param, co
 
 void CTradeService::ReqCancelRunningStrategies(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        Ğ´»¥³â
-    //ĞĞÇéÔ´Êı×é»¥³â:        ¶Á»¥³â
-    //½»Ò×Ô´Êı×é»¥³â:        ¶Á»¥³â
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        å†™äº’æ–¥
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
     auto StrategyNode = in.find("strategyid");
     if (in.not_found() == StrategyNode)
         throw std::runtime_error("can not find <strategyid>");
@@ -993,9 +1017,9 @@ void CTradeService::ReqCancelRunningStrategies(PackageHandlerParamType param, co
 
 void CTradeService::ReqGetProbe(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ¶Á»¥³â
-    //ĞĞÇéÔ´Êı×é»¥³â:        ²»ĞèÒª
-    //½»Ò×Ô´Êı×é»¥³â:        ²»ĞèÒª
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
     auto StrategyIDnode = in.find("strategyid");
     if (in.not_found() == StrategyIDnode)
         throw std::runtime_error("Can not find <strategyid>");
@@ -1055,9 +1079,9 @@ void CTradeService::ReqGetProbe(PackageHandlerParamType param, const ptree & in,
 
 void CTradeService::ReqMeddle(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ¶Á»¥³â
-    //ĞĞÇéÔ´Êı×é»¥³â:        ²»ĞèÒª
-    //½»Ò×Ô´Êı×é»¥³â:        ²»ĞèÒª
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
     auto StrategyIDnode = in.find("strategyid");
     if (in.not_found() == StrategyIDnode)
         throw std::runtime_error("Can not find <strategyid>");
@@ -1081,9 +1105,9 @@ void CTradeService::ReqMeddle(PackageHandlerParamType param, const ptree & in, p
 
 void CTradeService::ReqGetMeddleResponse(PackageHandlerParamType param, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ¶Á»¥³â
-    //ĞĞÇéÔ´Êı×é»¥³â:        ²»ĞèÒª
-    //½»Ò×Ô´Êı×é»¥³â:        ²»ĞèÒª
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        è¯»äº’æ–¥
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
     auto StrategyIDnode = in.find("strategyid");
     if (in.not_found() == StrategyIDnode)
         throw std::runtime_error("Can not find <strategyid>");
@@ -1111,15 +1135,15 @@ void CTradeService::ReqGetMeddleResponse(PackageHandlerParamType param, const pt
 
 void CTradeService::ReqStrategyParams(PackageHandlerParamType, const ptree & in, ptree & out)
 {
-    //²ßÂÔÊı×é»¥³â:        ²»ĞèÒª
-    //ĞĞÇéÔ´Êı×é»¥³â:        ²»ĞèÒª
-    //½»Ò×Ô´Êı×é»¥³â:        ²»ĞèÒª
+    //ç­–ç•¥æ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //è¡Œæƒ…æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
+    //äº¤æ˜“æºæ•°ç»„äº’æ–¥:        ä¸éœ€è¦
     auto StrategyBinNode = in.find("strategybin");
     if (in.not_found() == StrategyBinNode)
         throw std::runtime_error("Can not find <strategybin>");
     else
     {
-        string strategypath = string(".") + FILE_PATH_SEPARATOR + StrategyBinNode->second.data()+ STRATEGY_SUFFIX;
+        string strategypath = string(GetStrategyBinPath()) + FILE_PATH_SEPARATOR + StrategyBinNode->second.data()+ STRATEGY_SUFFIX;
         CDynamicLinkLibraryRAII DynamicLinkLib(strategypath.c_str());
         if (nullptr == DynamicLinkLib.GetHandle())
             throw std::runtime_error("Can not open this strategy bin.");
@@ -1254,7 +1278,7 @@ void CTradeService::ReqUpdateStrategyBin(PackageHandlerParamType, const ptree & 
 
 void CTradeService::ReqModifySharedValue(PackageHandlerParamType, const ptree & in, ptree & out)
 {
-    //Ğ´Ëø
+    //å†™é”
     unsigned int ValueId = 0;
     double NewValue = 0.0;
     auto ValueIdNode = in.find("valueid");
@@ -1275,7 +1299,7 @@ void CTradeService::ReqModifySharedValue(PackageHandlerParamType, const ptree & 
 
 void CTradeService::ReqAllSharedValue(PackageHandlerParamType, const ptree & in, ptree & out)
 {
-    //¶ÁËø
+    //è¯»é”
     boost::shared_lock<boost::shared_mutex> rlock(m_mtxSharedValue,boost::try_to_lock);
     if (rlock.owns_lock())
     {
@@ -1542,7 +1566,7 @@ TOrderRefIdType CTradeService::MakeOrder(
         return LB1_NullOrderRef;
     }
     if (LB1_Increase == offset)
-    {//·ç¿Ø
+    {//é£æ§
         if (second_clock::universal_time().date() != m_arrayAllStrategys[stid].m_dateActionDate)
         {
             m_arrayAllStrategys[stid].m_uRemainIncreaseOrderCountPerDay.store(m_arrayAllStrategys[stid].m_uMaxIncreaseOrderCountPerDay.load());

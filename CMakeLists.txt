@@ -135,3 +135,7 @@ target_link_libraries(thunder-trader ${libs} ctp_future_mdplugin ctp_future_tdpl
 
 install (TARGETS thunder-trader DESTINATION bin)
 install (FILES thunder-trader.conf.default DESTINATION bin RENAME thunder-trader.conf)
+
+
+add_subdirectory(/root/huyifeng/thunder-trader/strategies/arbitrage_future)
+add_subdirectory(/root/huyifeng/thunder-trader/strategies/simple_strategy)

@@ -83,7 +83,7 @@ TLastErrorIdType CArbitrageBase::OnInit(ptime currentTime)
 		return TLastErrorIdType::LB1_INVALID_VAL;
 	}
 	LOG("Strategy:%d-Valid Copies=%lf",g_StrategyId ,Value);
-#pragma region 全局变量区
+// 全局变量区
 	m_datePositionTradeDay = ptime(not_a_date_time).date();
 	/*m_Position[Subtrahend_Index].Init();
 	m_Position[Minuend_Index].Init();*/
@@ -94,7 +94,7 @@ TLastErrorIdType CArbitrageBase::OnInit(ptime currentTime)
 	m_Order[Minuend_Index].Init();
 	m_booIsPedding = false;
 	m_boolHasInitialize[0] = m_boolHasInitialize[1] = false;
-#pragma endregion
+
 	ShowPosition();
 	SetPresupposedPosition(currentTime,PresupposedPositionType,PresupposedPositionTradeDayType);
 	return LB1_NO_ERROR;
@@ -574,7 +574,7 @@ void CArbitrageBase::OnTick(TMarketDataIdType dataid, const CTick * pDepthMarket
 		return;
 	m_ptimeGlobalCurrentTime = max(m_ptimeGlobalCurrentTime, pDepthMarketData->m_datetimeUTCDateTime);
 
-	#pragma region 撤单!!
+	// 撤单!!
 	if (
 		(m_Order[Subtrahend_Index].tradeState == T_OI_W)
 		&&
@@ -607,9 +607,9 @@ void CArbitrageBase::OnTick(TMarketDataIdType dataid, const CTick * pDepthMarket
 		(m_Order[Minuend_Index].outSysID.size() > 0)
 		)
 			CANCEL(m_Order[Minuend_Index].outRef,(char*)m_Order[Minuend_Index].outSysID.c_str(), 1);
-	#pragma endregion
+	
 
-	# pragma region 结算重置
+	//结算重置
 	if (
 		m_Order[Subtrahend_Index].tradeState == T_OI_F
 		&&
@@ -698,10 +698,10 @@ void CArbitrageBase::OnTick(TMarketDataIdType dataid, const CTick * pDepthMarket
 			m_Position[Subtrahend_Index].m_dbAccuFee[3];
 
 		ptime MinuendBetTime = get<TrR_BetTime>(m_lstTradedLog[Minuend_Index]);
-		ptime SubtrahendBetTime = get<TrR_BetTime>(m_lstTradedLog[Subtrahend_Index]);
+		//ptime SubtrahendBetTime = get<TrR_BetTime>(m_lstTradedLog[Subtrahend_Index]);
 		ptime MinuendClearTime = get<TrR_ClearTime>(m_lstTradedLog[Minuend_Index]);
-		ptime SubtrahendClearTime = get<TrR_ClearTime>(m_lstTradedLog[Subtrahend_Index]);
-#pragma region 入场价格
+		//ptime SubtrahendClearTime = get<TrR_ClearTime>(m_lstTradedLog[Subtrahend_Index]);
+// 入场价格
 		TPriceType MinuendBetTarPrice = get<TrR_BetTarPrice>(m_lstTradedLog[Minuend_Index]);
 		TPriceType SubtrahendBetTarPrice = get<TrR_BetTarPrice>(m_lstTradedLog[Subtrahend_Index]);
 
@@ -745,10 +745,10 @@ void CArbitrageBase::OnTick(TMarketDataIdType dataid, const CTick * pDepthMarket
 			return a + b.first*static_cast<double>(b.second);
 		})
 			/ SubtrahendBetTradedVolume;
-#pragma endregion
 
 
-#pragma region 出场价格
+
+// 出场价格
 		TPriceType MinuendClearTarPrice = get<TrR_ClearTarPrice>(m_lstTradedLog[Minuend_Index]);
 		TPriceType SubtrahendClearTarPrice = get<TrR_ClearTarPrice>(m_lstTradedLog[Subtrahend_Index]);
 
@@ -790,7 +790,7 @@ void CArbitrageBase::OnTick(TMarketDataIdType dataid, const CTick * pDepthMarket
 			return a + b.first*static_cast<double>(b.second);
 		})
 			/ SubtrahendClearTradedVolume;
-#pragma endregion
+
 		//表头:操作类型,净利润,损益,M手续费,S手续费,M入场滑点,S入场滑点,M出场滑点,S出场滑点,
 		//M入场时间,M出场时间,M手数,S手数,M入场盘口,M入场均价,S入场盘口,S入场均价,M出场盘口,M出场均价,S出场盘口,S出场均价
 		char buf[2048];
@@ -832,7 +832,7 @@ void CArbitrageBase::OnTick(TMarketDataIdType dataid, const CTick * pDepthMarket
 		
 		INQUIRY(new CInquiryMarkNetCurvePoint());
 	}
-	#pragma endregion
+	
 
 }
 

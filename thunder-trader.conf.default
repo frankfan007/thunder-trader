@@ -1,9 +1,9 @@
 {
     "basic": {
-    "address": "0.0.0.0",
+        "address": "0.0.0.0",
         "listenport": "8800",
         "nethandlerthreadcount": "2",
-    "strategybinroot": ".."
+        "strategypath": "/usr/local/bin/strategies"
     },
     "logconfig": {
     "logtype": "syslog|file|console",
