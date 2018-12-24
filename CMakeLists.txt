@@ -137,5 +137,5 @@ install (TARGETS thunder-trader DESTINATION bin)
 install (FILES thunder-trader.conf.default DESTINATION bin RENAME thunder-trader.conf)
 
 
-add_subdirectory(/root/huyifeng/thunder-trader/strategies/arbitrage_future)
-add_subdirectory(/root/huyifeng/thunder-trader/strategies/simple_strategy)
+add_subdirectory("${PROJECT_SOURCE_DIR}/strategies/arbitrage_future")
+add_subdirectory("${PROJECT_SOURCE_DIR}/strategies/simple_strategy")
