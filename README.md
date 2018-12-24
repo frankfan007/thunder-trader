@@ -80,7 +80,7 @@ Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to conn
 
 ## Screenshots
 <p><b>Software running screenshots:</b><br>
-The Monitor(Coming soon):<br>
+The Monitor:<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=600><br><br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png' width=600><br><br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png' width=600><br><br>
