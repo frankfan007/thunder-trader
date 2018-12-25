@@ -77,10 +77,11 @@ Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to conn
 ## Update log
 * 2018.11.20 : Support gcc 4.8.4
 * 2018.12.04 : Update arbitrage_strategy & simple_strategy
+* 2018.12.20 : Commit the Monitor v0.1
 
 ## Screenshots
 <p><b>Software running screenshots:</b><br>
-The Monitor(Coming soon):<br>
+The Monitor:<br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=600><br><br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png' width=600><br><br>
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png' width=600><br><br>
