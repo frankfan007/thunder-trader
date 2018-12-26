@@ -77,15 +77,11 @@ Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to conn
 For Monitor,you can either [download the binary .exe](http://www.huyifeng.net/download/monitor.tar.gz)  or compile by source.
 
 Compile steps: 
->1.Open the [monitor/monitor.sln](https://github.com/solopointer/thunder-trader/blob/master/monitor/monitor.sln) using Microsoft visual stdio 2013 or above.
-
->2.Open the property page of project, and switch to the VC++ directory, set the boost root to the correct install path of your boost. 
-
->3.Build it.
-
->4.Put the Monitor.exe and [monitor/Monitor.json](https://github.com/solopointer/thunder-trader/blob/master/monitor/Monitor.json) and [monitor/PEGRP32E.DLL](https://github.com/solopointer/thunder-trader/blob/master/monitor/PEGRP32E.DLL) together in a directory.
-
->5.Run Monitor.exe.
+* 1.Open the [monitor/monitor.sln](https://github.com/solopointer/thunder-trader/blob/master/monitor/monitor.sln) using Microsoft visual stdio 2013 or above.
+* 2.Open the property page of project, and switch to the VC++ directory, set the boost root to the correct install path of your boost. 
+* 3.Build it.
+* 4.Put the Monitor.exe and [monitor/Monitor.json](https://github.com/solopointer/thunder-trader/blob/master/monitor/Monitor.json) and [monitor/PEGRP32E.DLL](https://github.com/solopointer/thunder-trader/blob/master/monitor/PEGRP32E.DLL) together in a directory.
+* 5.Run Monitor.exe.
 
 ## Update log
 * 2018.11.20 : Support gcc 4.8.4
