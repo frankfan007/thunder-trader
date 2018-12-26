@@ -238,7 +238,7 @@ void CMySimulateKernel::StartBackTest(
 
 	unsigned int m_uCurrentTickIndex = 0;
 
-#pragma region ¶ÁÈ¡ÅäÖÃ
+#pragma region è¯»å–é…ç½®
 	auto SimulateKernelNode = config.find("SimulateKernel");
 	if (config.not_found() != SimulateKernelNode)
 	{
@@ -295,7 +295,7 @@ void CMySimulateKernel::StartBackTest(
 
 	
 	if (flags&Simulate_HasOnTickTimeConsuming)
-		QueryPerformanceFrequency(&Freq); // »ñÈ¡Ê±ÖÓÖÜÆÚ
+		QueryPerformanceFrequency(&Freq); // è·å–æ—¶é’Ÿå‘¨æœŸ
 
 	
 	for (size_t i = 0;i < tickFiles.size();i++)
@@ -397,7 +397,7 @@ void CMySimulateKernel::StartBackTest(
 		}
 		catch (std::exception & err)
 		{
-			AfxMessageBox(L"ÔØÈëÎÄµµ´íÎó");
+			AfxMessageBox(L"è½½å…¥æ–‡æ¡£é”™è¯¯");
 		}
 		if (TLastErrorIdType::LB1_NO_ERROR != pStrategy->OnInit_FromArchive(InitTime - microseconds(100)))
 			throw std::exception("OnInit_FromArchive Failed.");
@@ -411,7 +411,7 @@ void CMySimulateKernel::StartBackTest(
 			m_pLastTick_Global = m_pCurrentTop->GetTick();
 			string temp = to_iso_string(m_pLastTick_Global->m_datetimeUTCDateTime) + " " + m_pLastTick_Global->m_strInstrumentID;
 
-#pragma region ÍÆËÍ¸ø²ßÂÔ
+#pragma region æ¨é€ç»™ç­–ç•¥
 			if (flags&Simulate_HasOnTickTimeConsuming)
 				QueryPerformanceCounter(&WinBegin);
 			pStrategy->OnTick(
@@ -439,7 +439,7 @@ void CMySimulateKernel::StartBackTest(
 #pragma endregion	
 
 			for (auto ord : m_listOrdersTobeHandle)
-			{//¼ì²é´ı´¦ÀíÁĞ±íÀïÊÇ·ñÓĞ±¨µ¥±»¼¤»î
+			{//æ£€æŸ¥å¾…å¤„ç†åˆ—è¡¨é‡Œæ˜¯å¦æœ‰æŠ¥å•è¢«æ¿€æ´»
 				if (
 					false == ord->m_boolActived
 					&&
@@ -488,9 +488,9 @@ void CMySimulateKernel::StartBackTest(
 						case LB1_StatusNoTradeQueueing:
 						{
 							if (
-								((*ord)->m_boolActived)//Èç¹û±¨µ¥ÒÑ¾­±»¼¤»î
+								((*ord)->m_boolActived)//å¦‚æœæŠ¥å•å·²ç»è¢«æ¿€æ´»
 								&&
-								((*ord)->m_uDataId == m_pLastTick_Global->m_uDataID)//Èç¹ûµ±Ç°tickÓë¸Ã±¨µ¥µÄDataIDÒ»ÖÂ
+								((*ord)->m_uDataId == m_pLastTick_Global->m_uDataID)//å¦‚æœå½“å‰tickä¸è¯¥æŠ¥å•çš„DataIDä¸€è‡´
 								)
 							{
 								CTick * DeterminantTick_Channel = m_pLastTick_Global;
@@ -530,17 +530,17 @@ void CMySimulateKernel::StartBackTest(
 									{
 									case TradePrice_FixPrice:
 									{
-										TrPriThisTime = (*ord)->m_LimitPrice;//³É½»¼Û¸ñ¾ÍÊÇÏÂµ¥µÄ¼Û¸ñ
+										TrPriThisTime = (*ord)->m_LimitPrice;//æˆäº¤ä»·æ ¼å°±æ˜¯ä¸‹å•çš„ä»·æ ¼
 										if (LB1_Buy == (*ord)->m_enumDirection)
 											TrVolThisTime = min(
 												(*ord)->m_Volume - (*ord)->m_TradedVolume,
 												DeterminantTick_Channel->m_intAskVolume[0]
-												);//³É½»Á¿°´ÕÕµÚÒ»µµ³É½»
+												);//æˆäº¤é‡æŒ‰ç…§ç¬¬ä¸€æ¡£æˆäº¤
 										else
 											TrVolThisTime = min(
 												(*ord)->m_Volume - (*ord)->m_TradedVolume,
 												DeterminantTick_Channel->m_intBidVolume[0]
-												);//³É½»Á¿°´ÕÕµÚÒ»µµ³É½»
+												);//æˆäº¤é‡æŒ‰ç…§ç¬¬ä¸€æ¡£æˆäº¤
 									}
 									break;
 									case TradePrice_BestPrice:
@@ -707,7 +707,7 @@ void CMySimulateKernel::StartBackTest(
 		}
 		catch (std::exception & err)
 		{
-			AfxMessageBox(L"±£´æ´íÎó");
+			AfxMessageBox(L"ä¿å­˜é”™è¯¯");
 		}
 	}
 	char buf[128];
@@ -719,7 +719,7 @@ void CMySimulateKernel::StartBackTest(
 		double AverageConsume = SumConsume / m_vecOnTickTimeConsuming.size();
 		
 		sprintf_s(buf, "%lf", AverageConsume);
-		m_Out->m_mapCriterions["OnTickº¯ÊıºÄÊ±Æ½¾ùÖµ(Î¢Ãë)"] = buf;
+		m_Out->m_mapCriterions["OnTickå‡½æ•°è€—æ—¶å¹³å‡å€¼(å¾®ç§’)"] = buf;
 	}
 
 	double PositiveSlip = 0;
@@ -732,9 +732,9 @@ void CMySimulateKernel::StartBackTest(
 			CancelCount++;
 	}
 	sprintf_s(buf, "%lf", PositiveSlip);
-	m_Out->m_mapCriterions["ÓĞÀû»¬µã"] = buf;
+	m_Out->m_mapCriterions["æœ‰åˆ©æ»‘ç‚¹"] = buf;
 	sprintf_s(buf, "%d", CancelCount);
-	m_Out->m_mapCriterions["³·µ¥´ÎÊı"] = buf;
+	m_Out->m_mapCriterions["æ’¤å•æ¬¡æ•°"] = buf;
 	m_environment->OnUpdateProgress(m_Out->m_uSerialLength, m_Out->m_uSerialLength);
 	m_environment->OnBackTestFinished();
 
@@ -792,12 +792,12 @@ TOrderRefIdType CMySimulateKernel::MakeOrder(
 	m_boolNewOrder = true;
 	COrder ord;
 	ord.m_boolActived = false;
-	ord.m_u64TradeUTCDateTime = not_a_date_time;//³É½»Ê±¼ä
+	ord.m_u64TradeUTCDateTime = not_a_date_time;//æˆäº¤æ—¶é—´
 	ord.m_enumOrderStatus = LB1_StatusUnknown;
 	ord.m_u64TryCancelUTCDateTime = not_a_date_time;
 	ord.m_u64CanceledUTCDateTime = not_a_date_time;
-	ord.m_TradeLimitPrice = -1;//Êµ¼Ê³É½»
-	ord.m_TradedVolume = 0;//Êµ¼Ê³É½»ÊÖÊı
+	ord.m_TradeLimitPrice = -1;//å®é™…æˆäº¤
+	ord.m_TradedVolume = 0;//å®é™…æˆäº¤æ‰‹æ•°
 	ord.m_enumOrderType = LB1_NormalLimitOrderType;
 	ord.m_enumDirection = direction;
 	ord.m_enumOffset = offset;
@@ -837,7 +837,7 @@ TLastErrorIdType CMySimulateKernel::CancelOrder(
 {
 	m_boolNewCancel = true;
 	if (mapSysId2OrderRef.find(sysid) == mapSysId2OrderRef.end())
-		return LB1_INVALID_VAL;//Èç¹û²ßÂÔ³·ÏúÒ»¸ö²»´æÔÚµÄµ¥×Ó£¬Ôò·µ»ØÎŞĞ§
+		return LB1_INVALID_VAL;//å¦‚æœç­–ç•¥æ’¤é”€ä¸€ä¸ªä¸å­˜åœ¨çš„å•å­ï¼Œåˆ™è¿”å›æ— æ•ˆ
 
 	if (
 		find_if(
@@ -847,11 +847,11 @@ TLastErrorIdType CMySimulateKernel::CancelOrder(
 	{
 		return ord->m_strOrderSysID == string(sysid);
 	}) == m_listOrdersTobeHandle.end()
-		)//Èç¹û²ßÂÔ³·ÏúÒ»¸öÒÑ¾­ÎÈ¶¨µÄµ¥×Ó£¬ÔòºöÂÔ
+		)//å¦‚æœç­–ç•¥æ’¤é”€ä¸€ä¸ªå·²ç»ç¨³å®šçš„å•å­ï¼Œåˆ™å¿½ç•¥
 		return LB1_NO_ERROR;
 
 	if (LB1_StatusCanceled == m_Out->m_mapOrders[mapSysId2OrderRef[sysid]].m_enumOrderStatus)
-		return LB1_NO_ERROR;//Èç¹û²ßÂÔ³·ÏúÒ»¸öÒÑ¾­±»³·Ïû¹ıÒ»´ÎµÄµ¥×Ó£¬ÔòºöÂÔ
+		return LB1_NO_ERROR;//å¦‚æœç­–ç•¥æ’¤é”€ä¸€ä¸ªå·²ç»è¢«æ’¤æ¶ˆè¿‡ä¸€æ¬¡çš„å•å­ï¼Œåˆ™å¿½ç•¥
 
 	m_Out->m_mapOrders[mapSysId2OrderRef[sysid]].m_u64TryCancelUTCDateTime = m_pCurrentTop->GetTick()->m_datetimeUTCDateTime;
 	m_Out->m_mapOrders[mapSysId2OrderRef[sysid]].m_enumOrderStatus = LB1_StatusCanceled;
@@ -865,7 +865,7 @@ TLastErrorIdType CMySimulateKernel::CancelOrder(
 
 void CMySimulateKernel::UpdateChart()
 {
-#pragma region È¡Ì½ÕëÊı¾İ
+#pragma region å–æ¢é’ˆæ•°æ®
 	if (Simulate_HasProbes&m_uFlags)
 	{
 		m_Out->m_uSerialLength++;

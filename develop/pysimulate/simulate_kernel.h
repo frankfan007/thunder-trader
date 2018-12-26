@@ -1,4 +1,4 @@
-// SimulateKernel.cpp : ¶¨Òå DLL µÄ³õÊ¼»¯Àı³Ì¡£
+// SimulateKernel.cpp : å®šä¹‰ DLL çš„åˆå§‹åŒ–ä¾‹ç¨‹ã€‚
 //
 
 #include "StrategyData.h"
@@ -55,9 +55,8 @@ public:
 	vector<TProbeNodeType> m_vecProbeUpdateList;
 	bool m_boolAutoUpdateChart = true;
 	unsigned int m_uFlags = Simulate_HasMessage | Simulate_HasProbes | Simulate_HasOnTickTimeConsuming;
-#pragma region ±£´æÊä³öĞÅÏ¢Ö¸Õë
+// ä¿å­˜è¾“å‡ºä¿¡æ¯æŒ‡é’ˆ
 	CBackTestResult * m_Out;
-#pragma endregion
 	MSimulateKernelEnvironment * m_environment;
 	CTick * m_pLastTick_Global;
 	CMySimulateKernel(MSimulateKernelEnvironment *_env);
@@ -73,7 +72,7 @@ public:
 		CBackTestResult * /*OUT*/
 		);
 
-	#pragma region StrategyContext
+	// StrategyContext
 	virtual bool Inquery(TStrategyIdType stid, MStrategyInquiryDataInterface *);
 	virtual bool MeddleResponse(TStrategyIdType, const char *, ...);
 	virtual bool ShowMessage(TStrategyIdType, const char *, ...);
@@ -104,6 +103,5 @@ public:
 	virtual bool SetSharedValue(TSharedIndexType i, double newvalue, function<bool(double)>);
 
 	virtual int  GetRemainCancelAmount(TStrategyIdType, TMarketDataIdType);
-	#pragma  endregion
 
 };
