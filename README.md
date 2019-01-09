@@ -110,6 +110,7 @@ or mail to solopointer@qq.com
 Or
 
 QQ Group:628409183
+
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/thunder-trader-group.jpeg' width=200><br><br>
 
 Particular attention:
