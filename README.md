@@ -107,6 +107,11 @@ The strategy research platform(Coming soon):<br>
 You are welcome to submit questions and bug reports as [Github Issues](https://github.com/solopointer/thunder-trader/issues).
 or mail to solopointer@qq.com
 
+Or
+
+QQ Group:628409183
+<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/thunder-trader-group.jpeg'><br><br>
+
 Particular attention:
 If you encounter an 
 ```
