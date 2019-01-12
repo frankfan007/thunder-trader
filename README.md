@@ -54,7 +54,7 @@ This preject is tested in following environment:
 > * boost 1.58.0
 > * centos7
 
-Usage:
+Build:
 ```
 >cmake .
 >make
@@ -73,6 +73,12 @@ The usage of thunder-trader is `./thunder-trader config_file.conf system_number`
 The reason of use a system_number will be illustrated in the document.
 
 Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to connect the thunder-trader.
+
+And if the cmake cannot find the boost, you should set the BOOST_ROOT to the custom boost install path.In the CMakeLists.txt,it should be like this: 
+
+```
+set(BOOST_ROOT /usr/local/install/boost/install/path)
+```
 
 For Monitor,you can either [download the binary .exe](http://www.huyifeng.net/download/monitor.tar.gz)  or compile by source.
 
