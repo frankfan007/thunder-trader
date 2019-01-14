@@ -1,6 +1,6 @@
 {
     "type": "reqaddmarketdatasource",
-    "sourcetype": "ctp",
+    "sourcetype": "future",
     "brokerid": "6000",
     "password": "123456",
     "serveraddress": "tcp:\/\/11.22.33.44:55",
