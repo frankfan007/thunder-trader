@@ -354,7 +354,7 @@ afx_msg LRESULT CTradeServerPanel::OnMsgTabChanged(WPARAM wParam, LPARAM lParam)
     }
     catch (std::exception & err)
     {
-        ShowMessage("Communicate with remote thunder-trader fails. Please check your network[%s:%u] and try again.[%s]", 
+        ShowMessage("Communicate with remote thunder-trader[%s:%u] fails. Please check your network and try again.[%s]", 
             m_strIp.c_str(), m_uPort, err.what());
         return 0;
     }
