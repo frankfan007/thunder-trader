@@ -1,19 +1,14 @@
 {
   "TradeServer": [
     {
-      "Name": "10.255.83.34",
+      "Name": "Trade server #1",
       "IP": "10.255.83.34",
       "Port": "8800"
     },
     {
-      "Name": "一号行情服务器",
-      "IP": "123.57.238.225",
-      "Port": "3847"
-    },
-    {
-      "Name": "二号行情服务器",
-      "IP": "101.200.203.40",
-      "Port": "3847"
+      "Name": "Trade server #2",
+      "IP": "10.255.83.35",
+      "Port": "8800"
     }
   ],
   "UIStyle": {
@@ -22,22 +17,37 @@
   },
   "SymbolDefine":{
 	"Stock Index Futures 1601":{
-	"type":"ctp",
-	"instrumentid":"IF1601",
-	"exchangeid":"CFFEX"
+	  "type":"ctp",
+	  "instrumentid":"IF1601",
+	  "exchangeid":"CFFEX"
+	},
+	"Ribbed Bars 1901":{
+	  "type":"ctp",
+	  "instrumentid":"rb1901",
+	  "exchangeid":"SHFE"
+	},
+	"Corn 1901":{
+	  "type":"ctp",
+	  "instrumentid":"c1901",
+	  "exchangeid":"DCE"
+	},
+	"Cotton 901":{
+	  "type":"ctp",
+	  "instrumentid":"CF901",
+	  "exchangeid":"CZCE"
 	},
 	"11000497":{
-	"type":"dfitc",
-	"instrumentid":"11000497",
-	"exchangeid":"SH"
+	  "type":"dfitc",
+	  "instrumentid":"11000497",
+	  "exchangeid":"SH"
 	},
 	"XINA50201601":{
-	"type":"TWS",
-	"symbol":"XINA50",
-	"secType":"FUT",
-	"expiry":"201601",
-	"exchange":"SGX",
-	"currency":"USD"
+	  "type":"TWS",
+	  "symbol":"XINA50",
+	  "secType":"FUT",
+	  "expiry":"201601",
+	  "exchange":"SGX",
+	  "currency":"USD"
 	}
   }
 }
