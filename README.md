@@ -43,7 +43,7 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed intr
 > * [Prepare](http://www.huyifeng.net/HFT-prepare.html)
 > * Strategy
 > 	*  [Strategy template](http://www.huyifeng.net/HFT-strategy.html)
-> 	*  [An arbitrage strategy implementation](http://www.huyifeng.net/HFT-arbitrage.html)
+> 	*  [An arbitrage strategy implementation](https://github.com/solopointer/thunder-trader/tree/master/strategies/arbitrage_future)
 > * Trade server 
 > * Monitor
 > * Research platform
