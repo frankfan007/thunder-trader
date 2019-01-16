@@ -18,7 +18,7 @@ Based on C++ 11, this project implements a quantitative trading system supportin
     - Support both linux and windows
     - C/S architecture
     - Client with graphical interface
-    - The real-time tracing of the variables in the policy can be realized by "probe" and the display mode of the data can be customized.
+    - The real-time tracing of the variables in the strategy can be supported by "probe", and the display mode of the "probe" can be customized.
     - Supporting the "intervention" of the strategy, by predefining some intervention actions, to achieve a fixed operation in the transaction process.
 
 - **Efficiency**
