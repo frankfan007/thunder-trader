@@ -95,27 +95,10 @@ Compile steps:
 * 2018.12.04 : Update arbitrage_strategy & simple_strategy
 * 2018.12.20 : Commit the Monitor v0.1
 
-## Screenshots
-<p><b>Software running screenshots:</b><br>
-The Monitor:<br>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor1.png' width=600><br><br>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor2.png' width=600><br><br>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor3.png' width=600><br><br>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-monitor4.png' width=600><br><br>
-The strategy research platform(Coming soon):<br>
-<img src='https://github.com/solopointer/thunder-trader/blob/master/assets/hft-research1.png' width=600><br><br>
-</p>
-
-
 
 ## Ask Questions
 
-You are welcome to submit questions and bug reports as [Github Issues](https://github.com/solopointer/thunder-trader/issues).
-or mail to solopointer@qq.com
-
-Or
-
-QQ Group:628409183
+E-mail:solopointer@qq.com or QQ Group:628409183
 
 <img src='https://github.com/solopointer/thunder-trader/blob/master/assets/thunder-trader-group.jpeg' width=200><br><br>
 
