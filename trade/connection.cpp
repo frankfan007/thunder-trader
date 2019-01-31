@@ -98,7 +98,7 @@ void connection::handle_read(const boost::system::error_code& e,
             strcpy(write_buffer_ + sizeof(int32_t), ss_error.str().c_str());
             write_buffer_[ss_error.str().size() + sizeof(int32_t)] = 0;
         }
-        boost::asio::async_write(socket_, boost::asio::buffer(write_buffer_),
+        boost::asio::async_write(socket_, boost::asio::buffer(write_buffer_, *((int32_t*)write_buffer_)),
             boost::bind(&connection::handle_write, shared_from_this(),
                 boost::asio::placeholders::error));
     }  
