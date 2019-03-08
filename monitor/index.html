@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ThunderTrader</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="page">
+      <!-- Main Navbar-->
+      <header class="header">
+        <nav class="navbar">
+          <!-- Search Box-->
+          <div class="search-box">
+            <button class="dismiss"><i class="icon-close"></i></button>
+            <form id="searchForm" action="#" role="search">
+              <input type="search" placeholder="What are you looking for..." class="form-control">
+            </form>
+          </div>
+          <div class="container-fluid">
+            <div class="navbar-holder d-flex align-items-center justify-content-between">
+              <!-- Navbar Header-->
+              <div class="navbar-header">
+                <!-- Navbar Brand --><a href="index.html" class="navbar-brand d-none d-sm-inline-block">
+                  <div class="brand-text d-none d-lg-inline-block"><span>ThunderTrader </span><strong>Dashboard</strong></div>
+                  <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div></a>
+                <!-- Toggle Button--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+              </div>
+              <!-- Navbar Menu -->
+              <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Search-->
+                <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                <!-- Notifications-->
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">*</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
+                          <div class="notification-time"><small>4 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
+                        <div class="notification">
+                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                          <div class="notification-time"><small>10 minutes ago</small></div>
+                        </div></a></li>
+                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+          <!-- Sidebar Header-->
+          <div class="sidebar-header d-flex align-items-center">
+            <div class="avatar"><img src="img/thunder.png" alt="..." class="img-fluid rounded-circle"></div>
+            <div class="title">
+              <h1 class="h4">Monitor</h1>
+              <p>Thunder Trader</p>
+            </div>
+          </div>
+          <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+          <ul class="list-unstyled">
+                    <li><a href="#StrategyDropdown" aria-expanded="false" data-toggle="collapse" onclick="strategy_click()"> <i class="icon-interface-windows"></i>Strategy</a>
+                      <ul id="StrategyDropdown" class="collapse list-unstyled ">
+                        <li><a href="#">Strategy1</a></li>
+                        <li><a href="#">Strategy2</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#TdDropdown" aria-expanded="false" data-toggle="collapse" onclick="source_click('reqgetalltradesource', '#TdDropdown','reqdeltradesource','reqaddtradesource', 'reqgetsupportedtdtypes')"> <i class="icon-interface-windows"></i>Trade Source</a>
+                      <ul id="TdDropdown" class="collapse list-unstyled ">
+                      </ul>
+                    </li>
+                    <li><a href="#MdDropdown" aria-expanded="false" data-toggle="collapse" onclick="source_click('reqgetallmarketdatasource', '#MdDropdown', 'reqdelmarketdatasource','reqaddmarketdatasource', 'reqgetsupportedmdtypes')"> <i class="icon-interface-windows"></i>Marketdata Source</a>
+                      <ul id="MdDropdown" class="collapse list-unstyled ">
+                      </ul>
+                    </li>
+                    <li><a href="#SharedValueDropdown" aria-expanded="false" data-toggle="collapse" onclick="sharedvalue_click()"> <i class="icon-interface-windows"></i>Shared Value</a>
+                      <ul id="SharedValueDropdown" class="collapse list-unstyled ">
+                        <li><a href="#">Add New Shared Value</a></li>
+                        <li><a href="#">Strategy1</a></li>
+                        <li><a href="#">Strategy2</a></li>
+                      </ul>
+                    </li>
+                    <li><a onclick="return show_raw_submit(this);"> <i class="icon-home"></i>Raw submit</a></li>
+          </ul><span class="heading">Extras</span>
+          <ul class="list-unstyled">
+            <li> <a href="https://github.com/solopointer/thunder-trader"> <i class="icon-flask"></i>Github</a></li>
+            <li> <a href="https://author.baidu.com/home/1623609620401219"> <i class="icon-screen"></i>百家号</a></li>
+            <li> <a href="mailto:solopointer@qq.com"> <i class="icon-mail"></i>E-mail</a></li>
+          </ul>
+        </nav>
+        <div class="content-inner">
+            <iframe id="main_dashboard" src="strategy.html?id=1" frameborder="false" scrolling="auto"  width="100%" height="100%" allowtransparency="true"></iframe>
+        <div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script type="text/javascript">
+    function strategy_click()
+    {
+         $.post("/thunder-trader", 
+             JSON.stringify({type:"reqgetallrunningstrategies"}),
+             function(data){
+                 var list_html = "<li><a href=\"#\" onclick=\"deploy_strategy()\">Add New</a></li>  ";
+                 var strategy_list = JSON.parse(data);
+                 for(var s in strategy_list)
+                 {
+                     list_html+='<li><a href="#" onclick="show_strategy('+s+')">'+strategy_list[s]["comment"]+'</a></li>';
+                 }
+                 
+                 $("#StrategyDropdown").html(list_html);
+                 },"text"
+         );
+    };
+
+    
+    function sharedvalue_click() {
+         $.post("/thunder-trader", 
+             JSON.stringify({type: "reqallsharedvalue"}),
+             function(data){
+                 var sv_list = JSON.parse(data);
+                 var sv_html = "<li><a href=\"#\" onclick=\"modify_sharedvalue()\">New/Modify</a></li>";
+                 for(var sv in sv_list['values'])
+                 {
+                     sv_html += "<li><a href=\"#\">"+sv+"->"+sv_list['values'][sv]+"</a></li>";
+                 }
+                 
+                 $("#SharedValueDropdown").html(sv_html);
+                 },"text"
+         );
+    };
+    function source_click(req_str, id_str, del_str, add_str, getsupport_str) {
+         $.post("/thunder-trader", 
+             JSON.stringify({type:req_str}),
+             function(data){
+                 td_list = JSON.parse(data);
+                 var list_html = "<li><a href=\"#\" onclick=\"add_source('"+add_str+"','"+getsupport_str+"')\">Add New</a></li>  ";
+                 for(var td in td_list)
+                 {
+                     var info = JSON.stringify(td_list[td]);
+                     list_html+='<li><a href="#" sname="'+window.btoa(td)+'" info="'+window.btoa(info)+'" sdel="'+window.btoa(del_str)+'"onclick="show_source_info(this)">'+td+'</a></li>';
+                 }
+                 
+                 $(id_str).html(list_html);
+                 },"text"
+         );
+    };
+    function show_strategy(id)
+    {
+        $('#main_dashboard').attr('src','strategy.html?'+id);
+
+    }
+    function modify_sharedvalue()
+    {
+        $('#main_dashboard').attr('src','modify_sharedvalue.html');
+    };
+    function deploy_strategy()
+    {
+        $('#main_dashboard').attr('src','deploy_strategy.html');
+    };
+    function add_source(add_str, getsupport_str)
+    {
+        $('#main_dashboard').attr('src','add_source.html?'+add_str+'&'+getsupport_str);
+    };
+    function show_raw_submit(obj) {
+        $('#main_dashboard').attr('src','raw_submit.html');
+    };
+    function show_source_info(obj) {
+        $('#main_dashboard').attr('src','source_info.html?'+$(obj).attr('sname')+'&'+$(obj).attr('info')+'&'+$(obj).attr('sdel'));
+    };
+
+    </script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="js/charts-custom.js"></script>
+    <!-- Main File-->
+    <script src="js/front.js"></script>
+  </body>
+</html>

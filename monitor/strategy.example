@@ -1,0 +1,42 @@
+{
+    "rawdatetime": "20190222150031434",
+    "graph": {
+        "0": {
+            "style": "Line",
+            "serials": {
+                "m_adbUpperSpread_close": {
+                    "name": "m_adbUpperSpread_close",
+                    "color": "1",
+                    "value": "131020"
+                },
+                "m_adbLowerSpread_close": {
+                    "name": "m_adbLowerSpread_close",
+                    "color": "2",
+                    "value": "129560"
+                },
+                "m_adbUpper": {
+                    "name": "m_adbUpper",
+                    "color": "3",
+                    "value": "129483"
+                },
+                "m_HasRisenSoClear": {
+                    "name": "m_HasRisenSoClear",
+                    "color": "11",
+                    "value": "129411"
+                },
+                "m_HasDroppedSoClear": {
+                    "name": "m_HasDroppedSoClear",
+                    "color": "10",
+                    "value": "129411"
+                },
+                "m_adbLower": {
+                    "name": "m_adbLower",
+                    "color": "3",
+                    "value": "129340"
+                }
+            }
+        }
+    }
+}
+
+

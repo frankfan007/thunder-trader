@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin by Bootstrapious.com</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Strategy</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item active">Strategy            </li>
+            </ul>
+          </div>
+          <section class="tables">   
+            <div class="container-fluid">
+              <div id="all_supports" class="row">
+                  <div class="col-lg-8">
+                   <div class="card">
+                    <div class="card-close">
+                     <button id="add_source" type="button" class="btn btn-primary" onclick="add_sharedvalue()">ADD</button>
+                    </div>
+                    <div id="main_chart" style="width: 600px;height:800px;"></div>
+                   </div>
+                  </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script type="text/javascript">
+    window.data = [[],[],[],[]];
+    function randomData() {
+        window.now = new Date();
+        window.value = Math.random() * 21 - 10;
+        return {
+            name: now.toString(),
+            value: [
+                [window.now.getFullYear(), window.now.getMonth() + 1, window.now.getDate()].join('/'),
+                Math.round(Math.random() * 21 - 10)
+            ]
+        }
+    }
+
+    window.onload = function(){ 
+        var href = window.location.href;
+        var parts = href.split("?");
+        if(parts[0] == href)
+            return;
+        window.sid = parts[1];
+        window.series = []; 
+        $.post("/thunder-trader", 
+            JSON.stringify({"type": "reqgetprobe", "strategyid": window.sid}),
+            function(rsp_data){
+                var data_obj = JSON.parse(rsp_data);
+                var option = {};
+                option['xAxis'] = [];
+                option['yAxis'] = [];
+                option['grid'] = [];
+                var cnt_graph = Object.keys(data_obj['graph']).length;
+                var graph_height = 100.0/cnt_graph;
+
+                $.each(data_obj['graph'], function(index, value){
+                    option['xAxis'].push({gridIndex: index, type: 'time',splitLine: {show: false}});
+                    option['yAxis'].push({gridIndex: index, type: 'value', splitLine: {show: false}, scale: true});
+                    option['grid'].push({x:'2%',y: (index*graph_height), height: (graph_height-2).toString()+'%'});
+                    window.series.push({});
+                    $.each(data_obj['graph'][index]['serials'], function(sindex,svalue)
+                    {
+                        window.series[window.series.length-1][sindex] = [];
+                    });
+                });
+                alert(JSON.stringify(window.series));
+                window.myChart = echarts.init(document.getElementById('main_chart'));
+                window.myChart.setOption(option);
+                },"text"
+        );
+
+
+        setInterval(function () {
+            $.post("/thunder-trader", 
+                JSON.stringify({"type": "reqgetprobe", "strategyid": window.sid}),
+                function(rsp_data){
+                    var data_obj = JSON.parse(rsp_data);
+                    var rdt = data_obj['rawdatetime'];
+                    var dt_year = parseInt(rdt.substr(0,4));
+                    var dt_month = parseInt(rdt.substr(4,2));
+                    var dt_day = parseInt(rdt.substr(6,2));
+                    var dt_hour = parseInt(rdt.substr(8,2));
+                    var dt_minute = parseInt(rdt.substr(10,2));
+                    var dt_second = parseInt(rdt.substr(12,2));
+                    var dt_msecond = parseInt(rdt.substr(14));
+                    var now_dt = new Date(dt_year, dt_month, dt_day, dt_hour, dt_minute, dt_second);
+                    var now_str = [dt_year, dt_month, dt_day].join('/') + " " + [dt_hour, dt_minute, dt_second].join(':');
+                    $.each(data_obj['graph'], function(index, value){
+                        $.each(data_obj['graph'][index]['serials'], function(sindex,svalue)
+                        {
+                            window.series[window.series.length-1][sindex].push({name: now_dt, value: [now_str, parseInt(svalue['value'])]})
+                        })
+                    });
+
+                    var local_series = [];
+                    $.each(data_obj['graph'], function(index, value){
+                        $.each(window.series[index], function(sindex, svalue){
+                            local_series.push({xAxisIndex: index,yAxisIndex: index, type: 'line',showSymbol: false,hoverAnimation: false,data: svalue});
+                        });
+                    });
+                    //alert(JSON.stringify({series: local_series}));
+                    //window.myChart.setOption({series: local_series});
+                    },"text"
+            );
+        
+        }, 1000);
+    } 
+    </script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <!-- Main File-->
+    <script src="js/front.js"></script>
+  </body>
+</html>

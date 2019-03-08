@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bootstrap Material Admin by Bootstrapious.com</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <!-- Fontastic Custom icon font-->
+    <link rel="stylesheet" href="css/fontastic.css">
+    <!-- Google fonts - Poppins -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <script type="text/javascript" src="instruments.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <div class="page-content d-flex align-items-stretch"> 
+        <!-- Side Navbar -->
+        <div class="content-inner">
+          <!-- Page Header-->
+          <header class="page-header">
+            <div class="container-fluid">
+              <h2 class="no-margin-bottom">Deploy strategy</h2>
+            </div>
+          </header>
+          <!-- Breadcrumb-->
+          <div class="breadcrumb-holder container-fluid">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item active">Deploy strategy            </li>
+            </ul>
+          </div>
+          <section class="tables">   
+            <div class="container-fluid">
+              <div id="all_supports" class="row">
+                  <div class="col-lg-10">
+                      <div class="card">
+                          <button class="btn btn-primary" onclick="on_click_deploy()">Deploy</button>
+                          <button class="btn btn-primary" onclick="on_click_json_string()">Show config json</button>
+                      </div>
+                      <div class="card">
+                          <div id="strategy_div" class="card-body">
+                              <label class="control-label"><h3 class="h4">Strategy</h3></label>
+                              <select class="form-control" id="strategy_name" onchange="strategy_onchange(this)">
+                              </select>
+                          </div>
+                      </div>
+                      <div class="card">
+                          <div id="key_value_div" class="card-body">
+                              <label class="control-label">
+                                  <h3 class="h4">Other settings</h3>
+                              </label><br>
+                              <label class="control-label">Archive</label>
+                              <input type="text" class="form-control" id="archive_input">
+                              <label class="control-label">Comment</label>
+                              <input type="text" class="form-control" id="comment_input">
+                          </div>
+                      </div>
+                      <div class="card">
+                          <div class="card-close">
+                              <button type="button" id="closeCard1" class="btn btn-primary" onclick="adjust_channel(1)">+</button>
+                              <button type="button" id="closeCard1" class="btn btn-primary" onclick="adjust_channel(-1)">-</button>
+                          </div>
+                          <div id="key_value_div" class="card-body">
+                              <label class="control-label">
+                                  <h3 class="h4">Quotations channel</h3>
+                              </label><br>
+                              <div class="table-responsive">
+                                <table id="quotations" class="table">
+                                  <thead>
+                                    <tr><th>#</th><th>Instrument</th><th>Trade</th><th>Marketdata</th></tr>
+                                  </thead>
+                                  <tbody id="source-config">
+                                  </tbody>
+                                </table>
+                              </div>
+                              </select>
+                          </div>
+                      </div>
+                      <div class="card">
+                          <div class="card-body">
+                              <label class="control-label">
+                                  <h3 class="h4">Strategy parameter settings</h3>
+                              </label>
+                              <form id="strategy_params_form">
+                              </form>
+                          </div>
+                      </div>
+                      <div class="card">
+                          <div class="card-body">
+                              <label class="control-label">
+                                  <h3 class="h4">JSON string</h3>
+                              </label>
+                              <textarea class="form-control" rows="10" id="json_textarea"></textarea>
+                          </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script type="text/javascript">
+    function on_click_deploy()
+    {
+        $.post("/thunder-trader", 
+            current_json(),
+            function(data){
+                alert(data);
+                },"text"
+        );
+    }
+    function on_click_json_string()
+    {
+        $("#json_textarea").val(current_json());
+    }
+
+    function current_json()
+    {
+        var json = {"type": "reqdeploynewstrategy"};
+        json["bin"] = $("#strategy_name").val();
+        json["archive"] = $("#archive_input").val();
+        json["comment"] = $("#comment_input").val();
+        var param = {};
+        $.each($("#strategy_params_form").serializeArray(), function(){param[this.name] = this.value;});
+        json["param"] = param;
+        var source = {};
+        $.each($("#source-config").children(), 
+        function (){
+            var instrument = $(this).children("#instrument_td").children("#instrument_select").val();
+            var one = {"symboldefine": window.global_instruments[instrument]}
+            one["marketdatasource"] = $(this).children("#md_source_td").children("#md_source_select").val();
+            one["tradesource"] = $(this).children("#td_source_td").children("#td_source_select").val();
+            source[$(this).children("#data_id").text()] = one;
+            }
+        );
+        json["dataid"] = source;
+        return JSON.stringify(json);
+    }
+    function adjust_channel(n)
+    {
+        
+        var cur_cnt = $("#source-config").children().length;
+        if(cur_cnt + n > 0 & cur_cnt + n < 30)
+            set_quotations_ncount(cur_cnt + n);
+    }
+
+    function set_quotations_ncount(cnt)
+    {
+        var source_html = "";
+        for(var i=0;i<cnt;i++)
+        {
+            var one = "<tr><td id=\"data_id\">"+i+"</td>";
+            var all_ins = "";
+            for(var ins in window.global_instruments)
+            {
+                all_ins += "<option>"+ins+"</option>";
+            }
+            one += "<td id=\"instrument_td\"><select class=\"form-control\" id=\"instrument_select\">"+all_ins+"</select></td>";
+
+            var all_td = "";
+            for(var td in window.all_td_source)
+            {
+                all_td += "<option>"+td+"</option>";
+            }
+            one += "<td id=\"td_source_td\"><select class=\"form-control\" id=\"td_source_select\">"+all_td+"</select></td>";
+
+            var all_md = "";
+            for(var md in window.all_md_source)
+            {
+                all_md += "<option>"+md+"</option>";
+            }
+            one += "<td id=\"md_source_td\"><select class=\"form-control\" id=\"md_source_select\">"+all_md+"</select></td></tr>";
+            source_html += one;
+        }
+        $("#source-config").html(source_html);
+    }
+
+    function strategy_onchange(_this)
+    {
+        $.post("/thunder-trader", 
+            JSON.stringify({"type": "reqstrategyparams", "strategybin": $(_this).val()}),
+            function(data){
+                var js = JSON.parse(data);
+                var param_html = "";
+                for(var k in js)
+                {
+                    param_html+="<label class=\"control-label\" for=\"inputSuccess1\">"+k+"</label><input type=\"text\" class=\"form-control\" name=\""+k+"\" value=\""+js[k]+"\"aria-describedby=\"helpBlock2\">";
+                };
+                $("#strategy_params_form").html(param_html);
+
+                },"text"
+        );
+
+    }
+
+    window.onload = function(){ 
+        $.get("/instruments.txt", 
+            function(data){
+                window.global_instruments = JSON.parse(data);
+                }
+        );
+        $.post("/thunder-trader", 
+            JSON.stringify({"type": "reqgetalltradesource"}),
+            function(data){
+                window.all_td_source = JSON.parse(data);
+                },"text"
+        );
+        $.post("/thunder-trader", 
+            JSON.stringify({"type": "reqgetallmarketdatasource"}),
+            function(data){
+                window.all_md_source = JSON.parse(data);
+                },"text"
+        );
+        $.post("/thunder-trader", 
+            JSON.stringify({"type": "reqallstrategybin"}),
+            function(data){
+                var js = JSON.parse(data);
+                var strategy_names_html = "";
+                for(var k in js)
+                    strategy_names_html+="<option>"+js[k]+"</option>";
+                $("#strategy_name").html(strategy_names_html);
+                },"text"
+        );
+        set_quotations_ncount(0);
+ 
+    } 
+    </script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/jquery-validation/jquery.validate.min.js"></script>
+    <!-- Main File-->
+    <script src="js/front.js"></script>
+  </body>
+</html>

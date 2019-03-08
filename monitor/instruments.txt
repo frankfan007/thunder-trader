@@ -1,0 +1,40 @@
+{
+   "Stock Index Futures 1903": {
+       "type": "future",
+       "instrumentid": "IF1903",
+       "exchangeid": "CFFEX"
+   },
+   "Stock Index Futures 1902": {
+       "type": "future",
+       "instrumentid": "IF1902",
+       "exchangeid": "CFFEX"
+   },
+   "Ribbed Bars 1903": {
+       "type": "future",
+       "instrumentid": "rb1903",
+       "exchangeid": "SHFE"
+   },
+   "Corn 1903": {
+       "type": "future",
+       "instrumentid": "c1903",
+       "exchangeid": "DCE"
+   },
+   "Cotton 903": {
+       "type": "future",
+       "instrumentid": "CF903",
+       "exchangeid": "CZCE"
+   },
+   "11000497": {
+       "type": "dfitc",
+       "instrumentid": "11000497",
+       "exchangeid": "SH"
+   },
+   "XINA50201903": {
+       "type": "TWS",
+       "symbol": "XINA50",
+       "secType": "FUT",
+       "expiry": "201903",
+       "exchange": "SGX",
+       "currency": "USD"
+   }
+};
