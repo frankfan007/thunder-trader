@@ -100,7 +100,7 @@ The following is the process of building WebMonitor.
 > * make -j8
 > * make install
 
-Then set the nginx conf /path/to/openresty/install/nginx/conf/nginx.conf file like [nginx.example.conf](./nginx.example.conf).
+Then set the nginx conf file /path/to/openresty/install/nginx/conf/nginx.conf like [nginx.example.conf](./nginx.example.conf).
 
 The main point is:
 
