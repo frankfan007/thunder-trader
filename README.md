@@ -28,8 +28,8 @@ Based on C++ 11, this project implements a quantitative trading system supportin
 
 ## Snapshot
 
-![monitor-1.jpg](monitor-1.jpg)
-![monitor-2.jpg](monitor-2.jpg)
+![monitor-1.jpg](assets/monitor-1.jpg)
+![monitor-2.jpg](assets/monitor-2.jpg)
 
 
 ## User's guide
@@ -78,7 +78,7 @@ The usage of thunder-trader is `./thunder-trader config_file.conf system_number`
 
 The reason of use a system_number will be illustrated in the document.
 
-Then you can use the [Monitor](http://www.huyifeng.net/HFT-monitor.html) to connect the thunder-trader.
+Then you can use the WebMonitor to connect to the thunder-trader.
 
 And if the cmake cannot find the boost, you should set the BOOST_ROOT to the custom boost install path.In the CMakeLists.txt,it should be like this: 
 
@@ -87,9 +87,100 @@ set(BOOST_ROOT /usr/local/install/boost/install/path)
 ```
 
 For WebMonitor, we should firstly prepare a nginx for it.
-But usually we use [openresty](http://openresty.org/cn/) because he has integrated the nginx-lua and lua-socket we need.
+
+But usually we use [openresty](http://openresty.org/cn/) because it has integrated the nginx-lua and lua-socket we need.
+
 Our thunder-trader monitors the local port. WebMonitor communicates with thunder-trader through lua-socket.
+
 The following is the process of building WebMonitor.
+
+* Downloads [openresty-1.13.6.2.tar.gz](https://openresty.org/download/openresty-1.13.6.2.tar.gz) from [Openresty.org](http://openresty.org/cn/download.html)
+* tar zxvf openresty-1.13.6.2.tar.gz 
+* cd openresty-1.13.6.2
+* ./configure --prefix=/path/to/openresty/install --with-luajit  
+* make -j8
+* make install
+
+Then set the nginx conf file like [nginx.example.conf](./nginx.example.conf).
+The main point is:
+* thunder-trader handler
+Note that the variable **thunder_trader_port** indicates the port of thunder-trader, which is configured in thunder-trader.conf by default of 8800.
+```
+location /thunder-trader{
+    default_type application/json;
+    content_by_lua '
+        local bit = require("bit")
+        local thunder_trader_ip = "127.0.0.1"
+        local thunder_trader_port = 8800
+        if "POST" ~= ngx.var.request_method then
+            ngx.exit(ngx.HTTP_BAD_REQUEST)
+        end
+        
+        ngx.req.read_body()
+        local body = ngx.req.get_body_data()
+        if body == nil then
+            local file_name = ngx.req.get_body_file()
+            if file_name then
+                body= getFile(file_name)
+            else
+                ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+            end
+        end
+        
+        local sock = ngx.socket.tcp()
+        local ok,err = sock:connect(thunder_trader_ip, thunder_trader_port)
+        if not ok then
+            ngx.log(ngx.ERR, err)
+            ngx.exit(ngx.HTTP_BAD_REQUEST)
+        end
+        sock:settimeout(5000)
+        len = string.len(body) + 4
+        h0 = bit.band(len, 0xff)
+        h1 = bit.rshift(bit.band(len, 0xff00), 8)
+        h2 = bit.rshift(bit.band(len, 0xff0000), 16)
+        h3 = bit.rshift(bit.band(len, 0xff000000), 24)
+        buffer_tobe_send = string.char(h0,h1,h2,h3)..body
+        
+        local ok, err = sock:send(buffer_tobe_send)
+        if not ok then
+            ngx.log(ngx.ERR, err)
+            ngx.exit(ngx.HTTP_BAD_REQUEST)
+        end
+        
+        local response_head, err, partial = sock:receive(4)
+        if not response_head then
+            ngx.log(ngx.ERR, err)
+            ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+        end
+        
+        h0 = string.byte(string.sub(response_head, 1,1))
+        h1 = string.byte(string.sub(response_head, 2,2))
+        h2 = string.byte(string.sub(response_head, 3,3))
+        h3 = string.byte(string.sub(response_head, 4,4))
+        
+        ret_len = h0 + bit.lshift(h1, 8) + bit.lshift(h2, 16) + bit.lshift(h3, 24)
+        if ret_len < 0 then
+            ngx.log(ngx.ERR, "Response len > MAX_LEN")
+            ngx.exit(ngx.HTTP_BAD_REQUEST)
+        end
+        local response_body, err, partial = sock:receive(ret_len - 4)
+        if not err then
+            ngx.say(response_body)
+        else
+            ngx.log(ngx.ERR, err)
+            ngx.exit(ngx.HTTP_BAD_REQUEST)
+        end
+        sock:close()
+    ';
+}
+```
+* Specify a path for WebMonitor's web application.
+```
+location / {
+    root   /path/to/monitor;
+    index  index.html index.htm;
+}
+```
 
 
 Compile steps: 
