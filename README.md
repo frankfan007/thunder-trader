@@ -93,14 +93,12 @@ But usually we use [openresty](http://openresty.org/cn/) because it has integrat
 Our thunder-trader listens the local port. WebMonitor communicates with thunder-trader through lua-socket.
 
 The following is the process of building WebMonitor.
-```
-* Downloads [openresty-1.13.6.2.tar.gz](https://openresty.org/download/openresty-1.13.6.2.tar.gz) from [Openresty.org](http://openresty.org/cn/download.html)
-* tar zxvf openresty-1.13.6.2.tar.gz 
-* cd openresty-1.13.6.2
-* ./configure --prefix=/path/to/openresty/install --with-luajit  
-* make -j8
-* make install
-```
+> * Downloads [openresty-1.13.6.2.tar.gz](https://openresty.org/download/openresty-1.13.6.2.tar.gz) from [Openresty.org](http://openresty.org/cn/download.html)
+> * tar zxvf openresty-1.13.6.2.tar.gz 
+> * cd openresty-1.13.6.2
+> * ./configure --prefix=/path/to/openresty/install --with-luajit  
+> * make -j8
+> * make install
 
 Then set the nginx conf file like [nginx.example.conf](./nginx.example.conf).
 
