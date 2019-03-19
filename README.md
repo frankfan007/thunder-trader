@@ -93,17 +93,21 @@ But usually we use [openresty](http://openresty.org/cn/) because it has integrat
 Our thunder-trader listens the local port. WebMonitor communicates with thunder-trader through lua-socket.
 
 The following is the process of building WebMonitor.
-
+```
 * Downloads [openresty-1.13.6.2.tar.gz](https://openresty.org/download/openresty-1.13.6.2.tar.gz) from [Openresty.org](http://openresty.org/cn/download.html)
 * tar zxvf openresty-1.13.6.2.tar.gz 
 * cd openresty-1.13.6.2
 * ./configure --prefix=/path/to/openresty/install --with-luajit  
 * make -j8
 * make install
+```
 
 Then set the nginx conf file like [nginx.example.conf](./nginx.example.conf).
+
 The main point is:
+
 * thunder-trader handler
+
 Note that the variable **thunder_trader_port** indicates the port of thunder-trader, which is configured in thunder-trader.conf by default of 8800.
 ```
 location /thunder-trader{
@@ -183,18 +187,12 @@ location / {
 ```
 
 
-Compile steps: 
-* Open the [monitor.sln](https://github.com/solopointer/thunder-trader/blob/master/monitor/monitor.sln) using Microsoft visual stdio 2013 or above.
-* Open the property page of project, and switch to the VC++ directory, set the boost root to the correct install path of your boost. 
-* Build it.
-* Config [Monitor.json](https://github.com/solopointer/thunder-trader/blob/master/monitor/Monitor.json).
-* Put the Monitor.exe and [Monitor.json](https://github.com/solopointer/thunder-trader/blob/master/monitor/Monitor.json) and [PEGRP32E.DLL](https://github.com/solopointer/thunder-trader/blob/master/monitor/PEGRP32E.DLL) together in a directory.
-* Run Monitor.exe.
 
 ## Update log
 * 2018.11.20 : Support gcc 4.8.4
 * 2018.12.04 : Update arbitrage_strategy & simple_strategy
 * 2018.12.20 : Commit the Monitor v0.1
+* 2019.03.19 : WebMonitor v0.1 (Without graph, developping)
 
 
 ## Ask Questions
