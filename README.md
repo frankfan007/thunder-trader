@@ -90,7 +90,7 @@ For WebMonitor, we should firstly prepare a nginx for it.
 
 But usually we use [openresty](http://openresty.org/cn/) because it has integrated the nginx-lua and lua-socket we need.
 
-Our thunder-trader monitors the local port. WebMonitor communicates with thunder-trader through lua-socket.
+Our thunder-trader listens the local port. WebMonitor communicates with thunder-trader through lua-socket.
 
 The following is the process of building WebMonitor.
 
