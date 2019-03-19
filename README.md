@@ -100,15 +100,16 @@ The following is the process of building WebMonitor.
 > * make -j8
 > * make install
 
-Then set the nginx conf file like [nginx.example.conf](./nginx.example.conf).
+Then set the nginx conf /path/to/openresty/install/nginx/conf/nginx.conf file like [nginx.example.conf](./nginx.example.conf).
 
 The main point is:
 
-* thunder-trader handler
+* thunder-trader interface 
 
-Note that the variable **thunder_trader_port** indicates the port of thunder-trader, which is configured in thunder-trader.conf by default of 8800.
+Our browser uses jQuery to communicate with this interface.
+
 ```
-location /thunder-trader{
+location /thunder-trader {
     default_type application/json;
     content_by_lua '
         local bit = require("bit")
@@ -176,6 +177,9 @@ location /thunder-trader{
     ';
 }
 ```
+
+Note that the variable **thunder_trader_ip**, **thunder_trader_port** indicates the ip:port of thunder-trader, which is configured in thunder-trader.conf.default by default of 0.0.0.0:8800.
+
 * Specify a path for WebMonitor's web application.
 ```
 location / {
@@ -183,6 +187,17 @@ location / {
     index  index.html index.htm;
 }
 ```
+The WebMonitor is a pure html/js web application, all HTML and JS files are in /path/to/monitor.
+
+* Set the listening port or nginx.
+
+```
+listen       8080;
+```
+
+Please distinguish thunder-trader's listening port 8800 from nginx's listening port 8080.
+
+Once you've done the above, you can access WebMonitor at http://127.0.0.1:8080/.
 
 
 
