@@ -45,6 +45,10 @@ Welcome to my [personal blog](http://www.huyifeng.net/). There are User's guide.
 
 Welcome to my [personal blog](http://www.huyifeng.net/). There are detailed introductory manuals.
 
+The data communication diagram.
+
+![thunder-trader-communication.png](assets/thunder-trader-communication.png)
+
 > * [Introductory](http://www.huyifeng.net/HFT-start.html)
 > * [Prepare](http://www.huyifeng.net/HFT-prepare.html)
 > * Strategy
@@ -93,6 +97,7 @@ But usually we use [openresty](http://openresty.org/cn/) because it has integrat
 Our thunder-trader listens the local port. WebMonitor communicates with thunder-trader through lua-socket.
 
 The following is the process of building WebMonitor.
+
 > * Downloads [openresty-1.13.6.2.tar.gz](https://openresty.org/download/openresty-1.13.6.2.tar.gz) from [Openresty.org](http://openresty.org/cn/download.html)
 > * tar zxvf openresty-1.13.6.2.tar.gz 
 > * cd openresty-1.13.6.2
