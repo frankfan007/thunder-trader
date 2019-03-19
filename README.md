@@ -16,7 +16,7 @@ Based on C++ 11, this project implements a quantitative trading system supportin
 - **Easy to use**
 
     - Support both linux and windows
-    - C/S architecture
+    - B/S architecture
     - Client with graphical interface
     - The real-time tracing of the variables in the strategy can be supported by "probe", and the display mode of the "probe" can be customized.
     - Supporting the "intervention" of the strategy, by predefining some intervention actions, to achieve a fixed operation in the transaction process.
@@ -26,10 +26,16 @@ Based on C++ 11, this project implements a quantitative trading system supportin
     - C++ implementation
     - Asynchronous event driven
 
+## Snapshot
+
+![monitor-1.jpg](monitor-1.jpg)
+![monitor-2.jpg](monitor-2.jpg)
+
+
 ## User's guide
 Welcome to my [personal blog](http://www.huyifeng.net/). There are User's guide.
 > * [Launch thunder-trader](http://www.huyifeng.net/HFT-usage.html#start_thunder_trader)
-> * [Use Monitor](http://www.huyifeng.net/HFT-usage.html#use_monitor)
+> * [Use WebMonitor](http://www.huyifeng.net/HFT-usage.html#use_monitor)
 >   * [TradeServer](http://www.huyifeng.net/HFT-usage.html#TradeServer)
 >   * [UIStyle](http://www.huyifeng.net/HFT-usage.html#UIStyle)
 >   * [SymbolDefine](http://www.huyifeng.net/HFT-usage.html#SymbolDefine)
@@ -80,7 +86,11 @@ And if the cmake cannot find the boost, you should set the BOOST_ROOT to the cus
 set(BOOST_ROOT /usr/local/install/boost/install/path)
 ```
 
-For Monitor,you can either [download the binary .exe](http://www.huyifeng.net/download/monitor.tar.gz)  or compile by source.
+For WebMonitor, we should firstly prepare a nginx for it.
+But usually we use [openresty](http://openresty.org/cn/) because he has integrated the nginx-lua and lua-socket we need.
+Our thunder-trader monitors the local port. WebMonitor communicates with thunder-trader through lua-socket.
+The following is the process of building WebMonitor.
+
 
 Compile steps: 
 * Open the [monitor.sln](https://github.com/solopointer/thunder-trader/blob/master/monitor/monitor.sln) using Microsoft visual stdio 2013 or above.
