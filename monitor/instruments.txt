@@ -37,4 +37,4 @@
        "exchange": "SGX",
        "currency": "USD"
    }
-};
+}
