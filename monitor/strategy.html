@@ -46,13 +46,8 @@
           <section class="tables">   
             <div class="container-fluid">
               <div id="all_supports" class="row">
-                  <div class="col-lg-8">
-                   <div class="card">
-                    <div class="card-close">
-                     <button id="add_source" type="button" class="btn btn-primary" onclick="add_sharedvalue()">ADD</button>
-                    </div>
-                    <div id="main_chart" style="width: 600px;height:800px;"></div>
-                   </div>
+                  <div id="main_chart_area" class="col-lg-8">
+                   <div class="card"><div id="main_chart" style="width: 600px;height:800px;"></div></div>
                   </div>
               </div>
             </div>
@@ -74,6 +69,17 @@
             ]
         }
     }
+    function datetime_transform(rdt)
+    {
+        var dt_year = parseInt(rdt.substr(0,4));
+        var dt_month = parseInt(rdt.substr(4,2));
+        var dt_day = parseInt(rdt.substr(6,2));
+        var dt_hour = parseInt(rdt.substr(8,2));
+        var dt_minute = parseInt(rdt.substr(10,2));
+        var dt_second = parseInt(rdt.substr(12,2));
+        var dt_msecond = parseInt(rdt.substr(14));
+        return (new Date(dt_year, dt_month, dt_day, dt_hour, dt_minute, dt_second)).getTime();
+    }
 
     window.onload = function(){ 
         var href = window.location.href;
@@ -81,73 +87,200 @@
         if(parts[0] == href)
             return;
         window.sid = parts[1];
-        window.series = []; 
         $.post("/thunder-trader", 
             JSON.stringify({"type": "reqgetprobe", "strategyid": window.sid}),
             function(rsp_data){
                 var data_obj = JSON.parse(rsp_data);
-                var option = {};
-                option['xAxis'] = [];
-                option['yAxis'] = [];
-                option['grid'] = [];
-                var cnt_graph = Object.keys(data_obj['graph']).length;
-                var graph_height = 100.0/cnt_graph;
-
-                $.each(data_obj['graph'], function(index, value){
-                    option['xAxis'].push({gridIndex: index, type: 'time',splitLine: {show: false}});
-                    option['yAxis'].push({gridIndex: index, type: 'value', splitLine: {show: false}, scale: true});
-                    option['grid'].push({x:'2%',y: (index*graph_height), height: (graph_height-2).toString()+'%'});
-                    window.series.push({});
-                    $.each(data_obj['graph'][index]['serials'], function(sindex,svalue)
+                var graph_cnt = Object.keys(data_obj['graph']).length;
+                window.graph = new Array(graph_cnt);
+                var main_chart_area_html = "";
+                for(var i=0;i < graph_cnt; i++)
+                {
+                    var serials_cnt = Object.keys(data_obj['graph'][i.toString()]).length;
+                    window.graph[i] = {};
+                    var all_serials = data_obj['graph'][i.toString()]['serials'];
+                    for(var t in data_obj['graph'][i.toString()]['serials'])
                     {
-                        window.series[window.series.length-1][sindex] = [];
-                    });
-                });
-                alert(JSON.stringify(window.series));
-                window.myChart = echarts.init(document.getElementById('main_chart'));
-                window.myChart.setOption(option);
-                },"text"
-        );
+                        window.graph[i][t] = new Array();
+                        window.graph[i][t]['name'] = t;
+                        window.graph[i][t]['data'] = (function () {
+                                    // generate an array of random data
+                                    var data = [],
+                                        time = (new Date()).getTime(),
+                                        i;
 
+                                    for (i = -19; i <= 0; i += 1) {
+                                        data.push({
+                                            x: time + i * 1000,
+                                            y: Math.random()
+                                        });
+                                    }
+                                    return data;
+                                }());
 
-        setInterval(function () {
-            $.post("/thunder-trader", 
-                JSON.stringify({"type": "reqgetprobe", "strategyid": window.sid}),
-                function(rsp_data){
-                    var data_obj = JSON.parse(rsp_data);
-                    var rdt = data_obj['rawdatetime'];
-                    var dt_year = parseInt(rdt.substr(0,4));
-                    var dt_month = parseInt(rdt.substr(4,2));
-                    var dt_day = parseInt(rdt.substr(6,2));
-                    var dt_hour = parseInt(rdt.substr(8,2));
-                    var dt_minute = parseInt(rdt.substr(10,2));
-                    var dt_second = parseInt(rdt.substr(12,2));
-                    var dt_msecond = parseInt(rdt.substr(14));
-                    var now_dt = new Date(dt_year, dt_month, dt_day, dt_hour, dt_minute, dt_second);
-                    var now_str = [dt_year, dt_month, dt_day].join('/') + " " + [dt_hour, dt_minute, dt_second].join(':');
-                    $.each(data_obj['graph'], function(index, value){
-                        $.each(data_obj['graph'][index]['serials'], function(sindex,svalue)
+                        alert(JSON.stringify(window.graph[i][t]));
+                    }
+                    main_chart_area_html += "<div class=\"card\"><div id=\"main_chart_"+i+"\" style=\"width: 600px;height:800px;\"></div></div>";
+                }
+                $("#main_chart_area").html(main_chart_area_html);
+                for(var graph_pos=0; graph_pos < graph_cnt; graph_pos++)
+                {
+                    Highcharts.chart('main_chart_'+graph_pos,
                         {
-                            window.series[window.series.length-1][sindex].push({name: now_dt, value: [now_str, parseInt(svalue['value'])]})
-                        })
-                    });
+                            chart: {
+                                type: 'spline',
+                                animation: Highcharts.svg, // don't animate in old IE
+                                marginRight: 10,
+                            },
+                            time: {useUTC: false},
+                            title: {text: 'Live random data'},
+                            xAxis: {type: 'datetime', tickPixelInterval: 150},
+                            yAxis: {
+                                title: {text: 'Value'},
+                                plotLines: [{value: 0,width: 1,color: '#808080'}]
+                            },
+                            tooltip: {
+                                headerFormat: '<b>{series.name}</b><br/>',
+                                pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+                            },
+                            legend: {enabled: false},
+                            exporting: {enabled: false},
+                            series: (function(){
+                                var serial_cnt = Object.keys(window.graph[graph_pos]).length;
+                                var data = Array(serial_cnt);
+                                var serial_pos = 0;
+                                for(var serial_name in window.graph[graph_pos])
+                                {
+                                    data[serial_pos] = window.graph[graph_pos][t];
+                                    serial_pos ++;
+                                }
+                                return data;
+                            })(),
+                        }
+                        );
+                };
+            },"text");
+        //Highcharts.chart('main_chart', 
+        //    {
+        //        chart: {
+        //            type: 'spline',
+        //            animation: Highcharts.svg, // don't animate in old IE
+        //            marginRight: 10,
+        //            events: {
+        //                load: function () {
+        //                    var series = this.series[0];
+        //                    setInterval(function () {
+        //                        $.post("/thunder-trader", 
+        //                            JSON.stringify({"type": "reqgetprobe", "strategyid": window.sid}),
+        //                            function(rsp_data){
+        //                                var data_obj = JSON.parse(rsp_data);
+        //                                x = datetime_transform(data_obj['rawdatetime']);
+        //                            },"text");
+        //                        var x = (new Date()).getTime(), // current time
+        //                            y = Math.random();
+        //                        series.addPoint([x, y], true, true);
+        //                    }, 1000);
+        //                }
+        //            }
+        //        },
+        //        time: {useUTC: false},
+        //        title: {text: 'Live random data'},
+        //        xAxis: {type: 'datetime', tickPixelInterval: 150},
+        //        yAxis: {
+        //            title: {text: 'Value'},
+        //            plotLines: [{value: 0,width: 1,color: '#808080'}]
+        //        },
+        //        tooltip: {
+        //            headerFormat: '<b>{series.name}</b><br/>',
+        //            pointFormat: '{point.x:%Y-%m-%d %H:%M:%S}<br/>{point.y:.2f}'
+        //        },
+        //        legend: {enabled: false},
+        //        exporting: {enabled: false},
+        //        series: [{
+        //            name: 'Random data',
+        //            data: [],
+        //            //data: (function () {
+        //            //    // generate an array of random data
+        //            //    var data = [],
+        //            //        time = (new Date()).getTime(),
+        //            //        i;
 
-                    var local_series = [];
-                    $.each(data_obj['graph'], function(index, value){
-                        $.each(window.series[index], function(sindex, svalue){
-                            local_series.push({xAxisIndex: index,yAxisIndex: index, type: 'line',showSymbol: false,hoverAnimation: false,data: svalue});
-                        });
-                    });
-                    //alert(JSON.stringify({series: local_series}));
-                    //window.myChart.setOption({series: local_series});
-                    },"text"
-            );
-        
-        }, 1000);
+        //            //    for (i = -19; i <= 0; i += 1) {
+        //            //        data.push({
+        //            //            x: time + i * 1000,
+        //            //            y: Math.random()
+        //            //        });
+        //            //    }
+        //            //    alert(JSON.stringify(data));
+        //            //    return data;
+        //            //}())
+        //        }]
+        //});
+        //$.post("/thunder-trader", 
+        //    JSON.stringify({"type": "reqgetprobe", "strategyid": window.sid}),
+        //    function(rsp_data){
+        //        var data_obj = JSON.parse(rsp_data);
+        //        var option = {};
+        //        option['xAxis'] = [];
+        //        option['yAxis'] = [];
+        //        option['grid'] = [];
+        //        var cnt_graph = Object.keys(data_obj['graph']).length;
+        //        var graph_height = 100.0/cnt_graph;
+
+        //        $.each(data_obj['graph'], function(index, value){
+        //            option['xAxis'].push({gridIndex: index, type: 'time',splitLine: {show: false}});
+        //            option['yAxis'].push({gridIndex: index, type: 'value', splitLine: {show: false}, scale: true});
+        //            option['grid'].push({x:'2%',y: (index*graph_height), height: (graph_height-2).toString()+'%'});
+        //            window.series.push({});
+        //            $.each(data_obj['graph'][index]['serials'], function(sindex,svalue)
+        //            {
+        //                window.series[window.series.length-1][sindex] = [];
+        //            });
+        //        });
+        //        window.myChart = echarts.init(document.getElementById('main_chart'));
+        //        window.myChart.setOption(option);
+        //        },"text"
+        //);
+
+
+        //setInterval(function () {
+        //    $.post("/thunder-trader", 
+        //        JSON.stringify({"type": "reqgetprobe", "strategyid": window.sid}),
+        //        function(rsp_data){
+        //            var data_obj = JSON.parse(rsp_data);
+        //            var rdt = data_obj['rawdatetime'];
+        //            var dt_year = parseInt(rdt.substr(0,4));
+        //            var dt_month = parseInt(rdt.substr(4,2));
+        //            var dt_day = parseInt(rdt.substr(6,2));
+        //            var dt_hour = parseInt(rdt.substr(8,2));
+        //            var dt_minute = parseInt(rdt.substr(10,2));
+        //            var dt_second = parseInt(rdt.substr(12,2));
+        //            var dt_msecond = parseInt(rdt.substr(14));
+        //            var now_dt = new Date(dt_year, dt_month, dt_day, dt_hour, dt_minute, dt_second);
+        //            var now_str = [dt_year, dt_month, dt_day].join('/') + " " + [dt_hour, dt_minute, dt_second].join(':');
+        //            $.each(data_obj['graph'], function(index, value){
+        //                $.each(data_obj['graph'][index]['serials'], function(sindex,svalue)
+        //                {
+        //                    window.series[window.series.length-1][sindex].push({name: now_dt, value: [now_str, parseInt(svalue['value'])]})
+        //                })
+        //            });
+
+        //            var local_series = [];
+        //            $.each(data_obj['graph'], function(index, value){
+        //                $.each(window.series[index], function(sindex, svalue){
+        //                    local_series.push({xAxisIndex: index,yAxisIndex: index, type: 'line',showSymbol: false,hoverAnimation: false,data: svalue});
+        //                });
+        //            });
+        //            //alert(JSON.stringify({series: local_series}));
+        //            //window.myChart.setOption({series: local_series});
+        //            },"text"
+        //    );
+        //
+        //}, 1000);
     } 
     </script>
     <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="js/echarts.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script src="vendor/popper.js/umd/popper.min.js"> </script>
     <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
     <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
