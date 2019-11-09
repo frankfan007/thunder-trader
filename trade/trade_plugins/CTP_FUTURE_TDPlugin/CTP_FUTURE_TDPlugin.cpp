@@ -17,7 +17,7 @@ struct PowerOfTen<0> {
 const size_t SizeOfRef = sizeof(CThostFtdcInputOrderField::OrderRef)-1;
 const TOrderRefIdType MaxOrderRef = (PowerOfTen<SizeOfRef>::val - 1);
 
-const string CCTP_FUTURE_TDPlugin::s_strAccountKeyword = "serveraddress;brokerid;username;password;maxcancelperday;";
+const string CCTP_FUTURE_TDPlugin::s_strAccountKeyword = "serveraddress;brokerid;username;password;appid;authCode;investorid;userProductInfo;maxcancelperday;";
 
 date CCTP_FUTURE_TDPlugin::GetTradeday(ptime _Current)
 {
@@ -127,6 +127,16 @@ void CCTP_FUTURE_TDPlugin::GetState(ptree & out)
 	out.put("serveraddress", m_strServerAddress);
 	out.put("brokerid", m_strBrokerID);
 	out.put("username", m_strUsername);
+
+	//out.put("appid", m_strAppID);
+	//out.put("authcode", m_strAuthCode);
+	//out.put("investorid", m_strInvestorID);
+	//out.put("userProductinfo", m_strUserProductInfo);
+
+
+
+
+
 	ptree CancelAmount;
 	{
 		boost::shared_lock<boost::shared_mutex> lg(m_mtxProtectCancelAmount);
@@ -530,6 +540,16 @@ void CCTP_FUTURE_TDPlugin::OnFrontConnected()
 	strncpy(req.BrokerID, m_strBrokerID.c_str(), sizeof(req.BrokerID));
 	strncpy(req.UserID, m_strUsername.c_str(), sizeof(req.UserID));
 	strncpy(req.Password, m_strPassword.c_str(), sizeof(req.Password));
+
+    strncpy(req.AppID, m_strAppID.c_str(), sizeof(req.AppID));
+	strncpy(req.AuthCode, m_strAuthCode.c_str(), sizeof(req.AuthCode));
+	strncpy(req.InvestorID, m_strInvestorID.c_str(), sizeof(req.InvestorID));
+	strncpy(req.UserProductinfo, m_strUserProductInfo.c_str(), sizeof(req.UserProductInfo));
+
+
+
+
+
 	if ((nullptr == m_pUserApi)||(0 != m_pUserApi->ReqUserLogin(&req, ++m_uRequestID)))
 	{
 		ShowMessage(

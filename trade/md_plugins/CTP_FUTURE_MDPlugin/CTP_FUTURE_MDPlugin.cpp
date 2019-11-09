@@ -2,7 +2,7 @@
 #include <stdarg.h>
 #include <thread>
 #include "AutoPend.h"
-const string CCTP_FUTURE_MDPlugin::s_strAccountKeyword = "serveraddress;brokerid;username;password;";
+const string CCTP_FUTURE_MDPlugin::s_strAccountKeyword = "serveraddress;brokerid;username;password;appid;authCode;investorid;userProductInfo";
 extern char ProcessName[256];
 
 CCTP_FUTURE_MDPlugin::CCTP_FUTURE_MDPlugin() :m_StartAndStopCtrlTimer(m_IOservice), m_abIsPending(false), m_adbIsPauseed(false)
@@ -96,6 +96,13 @@ void CCTP_FUTURE_MDPlugin::GetState(ptree & out)
 	out.put("serveraddress", m_strServerAddress);
 	out.put("brokerid", m_strBrokerID);
 	out.put("username", m_strUsername);
+
+	//out.put("appid", m_strAppID);
+	//out.put("authcode", m_strAuthCode);
+	//out.put("investorid", m_strInvestorID);
+	//out.put("userProductinfo", m_strUserProductInfo);
+
+
 }
 
 void CCTP_FUTURE_MDPlugin::MDInit(const ptree & in)
@@ -434,6 +441,13 @@ void CCTP_FUTURE_MDPlugin::OnFrontConnected()
 	strncpy(req.BrokerID, m_strBrokerID.c_str(), sizeof(req.BrokerID));
 	strncpy(req.UserID, m_strUsername.c_str(), sizeof(req.UserID));
 	strncpy(req.Password, m_strPassword.c_str(), sizeof(req.Password));
+
+	strncpy(req.AppID, m_strAppID.c_str(), sizeof(req.AppID));
+	strncpy(req.AuthCode, m_strAuthCode.c_str(), sizeof(req.AuthCode));
+	strncpy(req.InvestorID, m_strInvestorID.c_str(), sizeof(req.InvestorID));
+	strncpy(req.UserProductinfo, m_strUserProductInfo.c_str(), sizeof(req.UserProductInfo));
+
+
 
 	if ((nullptr == m_pUserApi)||(0 != m_pUserApi->ReqUserLogin(&req, ++m_uRequestID)))
 	{
