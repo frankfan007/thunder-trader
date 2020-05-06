@@ -7,8 +7,8 @@ message(${PROJECT_BINARY_DIR})
 set (VERSION_MAJOR 1)
 set (VERSION_MINOR 0)
 configure_file (
-  "${PROJECT_SOURCE_DIR}/common/config.h.in"
-  "${PROJECT_BINARY_DIR}/common/config.h"
+  "${PROJECT_SOURCE_DIR}/thunder_trader_common/config.h.in"
+  "${PROJECT_BINARY_DIR}/thunder_trader_common/config.h"
   )
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-Bsymbolic")
     set(BOOST_THREAD "boost_thread-mt")
@@ -21,11 +21,11 @@ set(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb -std=c++11 -fno-str
 set(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall -std=c++11 -fno-strict-aliasing")
 set(CMAKE_BUILD_TYPE "Release")
 
-include_directories("${PROJECT_SOURCE_DIR}/common")
-include_directories("${PROJECT_SOURCE_DIR}/common/trade_headers")  
+include_directories("${PROJECT_SOURCE_DIR}/thunder_trader_common")
+include_directories("${PROJECT_SOURCE_DIR}/thunder_trader_common/trade_headers")  
 include_directories("${PROJECT_SOURCE_DIR}/trade/md_plugins")  
 include_directories("${PROJECT_SOURCE_DIR}/trade/trade_plugins")  
-include_directories("${PROJECT_SOURCE_DIR}/common/tick")  
+include_directories("${PROJECT_SOURCE_DIR}/thunder_trader_common/tick")  
 
 SET(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 
@@ -60,7 +60,7 @@ option (DFITC_SOP_TDPlugin "Support DFITC trade" ON)
 option (FEMAS_FUTURE_MDPlugin "Support FEMAS quotation" OFF) 
 option (FEMAS_FUTURE_TDPlugin "Support FEMAS trade" OFF) 
 
-add_library(autopend STATIC  common/AutoPend.cpp)
+add_library(autopend STATIC  thunder_trader_common/AutoPend.cpp)
 
 
     ###################### CTP ##########################################
