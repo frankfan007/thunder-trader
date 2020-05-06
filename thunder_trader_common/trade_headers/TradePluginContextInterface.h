@@ -1,9 +1,7 @@
-#ifndef _COMMONFILES_COMPRETRADESYSTEMHEADERS_TRADEPLUGINCONTEXTINTERFACE_H_
-#define _COMMONFILES_COMPRETRADESYSTEMHEADERS_TRADEPLUGINCONTEXTINTERFACE_H_
+#pragma once
 #include "StrategyData.h"
 using namespace StrategyData;
-class MTradePluginContextInterface
-{
+class MTradePluginContextInterface {
 public:
 	virtual void OnTrade(
 		TOrderRefIdType,
@@ -19,4 +17,3 @@ public:
 		TRemainVolumeType
 		) = 0;
 };
-#endif

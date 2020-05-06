@@ -1,5 +1,4 @@
-#ifndef _COMPRETRADESYSTEMHEADERS_ATMTRADEPLUGININTERFACE_H_
-#define _COMPRETRADESYSTEMHEADERS_ATMTRADEPLUGININTERFACE_H_
+#pragma once
 #include "StrategyData.h"
 #include "StrategyDefine.h"
 #ifndef BOOST_SPIRIT_THREADSAFE
@@ -34,4 +33,3 @@ public:
 	virtual TLastErrorIdType TDBasicCancelOrder(TOrderRefIdType,unordered_map<string, string> &, TOrderSysIdType) = 0;	
 	virtual int TDGetRemainAmountOfCancelChances(const char *) = 0;
 };
-#endif

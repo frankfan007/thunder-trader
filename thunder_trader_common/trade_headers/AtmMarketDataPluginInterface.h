@@ -1,5 +1,4 @@
-#ifndef _COMPRETRADESYSTEMHEADERS_ATMMARKETDATAPLUGININTERFACE_H_
-#define _COMPRETRADESYSTEMHEADERS_ATMMARKETDATAPLUGININTERFACE_H_
+#pragma once
 #include "StrategyData.h"
 #include "StrategyDefine.h"
 #include <unordered_map>
@@ -35,4 +34,3 @@ public:
 		atomic_uint_least64_t *) = 0;
 	virtual void MDDetachStrategy(MStrategy*) = 0;
 };
-#endif

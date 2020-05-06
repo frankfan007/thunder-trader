@@ -1,5 +1,4 @@
-#ifndef _COMPRETRADESYSTEMHEADERS_MATMPLUGINMANAGEINTERFACE_H_
-#define _COMPRETRADESYSTEMHEADERS_MATMPLUGINMANAGEINTERFACE_H_
+#pragma once
 #include <string>
 #include <unordered_map>
 
@@ -25,4 +24,3 @@ public:
 	virtual string GetCurrentKeyword() = 0;
 	virtual string GetProspectiveKeyword(const ptree &) = 0;
 };
-#endif

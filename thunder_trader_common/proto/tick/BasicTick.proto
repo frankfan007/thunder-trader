@@ -1,0 +1,14 @@
+syntax = "proto3";
+package thunder_trader.tick;
+
+message BasicTick {
+	uint32 m_uDataID = 1;
+	string m_strInstrumentID = 2;
+	uint64 m_datetimeUTCDateTime = 3;
+	double m_dbLastPrice = 4;
+	uint32 m_intVolume = 5;
+	repeated double m_dbBidPrice = 6;
+	repeated double m_dbAskPrice = 7;
+	repeated uint32 m_intBidVolume = 8;
+	repeated uint32 m_intAskVolume = 9;
+}

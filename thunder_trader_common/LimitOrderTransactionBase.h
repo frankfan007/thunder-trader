@@ -1,5 +1,4 @@
 //原子事务下单，该类能保证一篮子报单能最终全部成交，返回成交的结果
-//Code by 胡逸峰 20160729
 #ifndef _COMMONFILES_LIMITORDERTRANSACTIONBASE_H_
 #define _COMMONFILES_LIMITORDERTRANSACTIONBASE_H_
 #include "StrategyDefine.h"

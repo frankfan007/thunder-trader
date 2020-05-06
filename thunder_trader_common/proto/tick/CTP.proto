@@ -1,0 +1,18 @@
+syntax = "proto3";
+package thunder_trader.tick;
+
+message CTPFuture {
+    BasicTick m_BasicTick = 1;
+	double m_dbLowerLimitPrice = 3;
+	double m_dbUpperLimitPrice = 4;
+	double m_dbAveragePrice = 5;
+	double m_dbPreSettlementPrice = 6;
+	double m_dbPreClosePrice = 7;
+	double m_dbTurnover = 8;
+	double m_dbOpenInterest = 9;
+	double m_dbOpenPrice = 10;
+	double m_dbHighestPrice = 11;
+	double m_dbLowestPrice = 12;
+	double m_dbClosePrice = 13;
+
+}

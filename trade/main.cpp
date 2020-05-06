@@ -159,14 +159,12 @@ void InitLog(std::string configFile)
 
 }
 
-int main(int argc,char *argv[])
-{
+int main(int argc,char *argv[]) {
     if (argc < 3)
     {
-        cout<<"Usage:ATM.exe %ConfigFileName%.json sysNumber [daemon]"<<endl;
+        cout<<"Usage:./thunder-trader %ConfigFileName%.json sysNumber [daemon]"<<endl;
         return 0;
     }
-#ifndef WIN32
     if (argc > 3 && argv[3] && strcmp(argv[3], "daemon") == 0)
     {
         pid_t pc = fork();
@@ -181,7 +179,6 @@ int main(int argc,char *argv[])
         umask(0);
 
     }    
-#endif
     try
     {
         strncpy(ProcessName, argv[0], sizeof(ProcessName));

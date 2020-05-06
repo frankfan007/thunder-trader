@@ -1,6 +1,5 @@
-#ifndef _COMPRETRADESYSTEMHEADERS_COMMUMODFORSERVINTERFACE_H
-#define _COMPRETRADESYSTEMHEADERS_COMMUMODFORSERVINTERFACE_H
 
+#pragma once
 #ifdef WIN32
 
 #ifdef _EXPORT 
@@ -40,4 +39,3 @@ public:
 	virtual void StopListen() = 0;
 	virtual void Release() = 0;
 };
-#endif

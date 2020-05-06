@@ -1,9 +1,7 @@
-#ifndef _QFCOMPRETRADESYSTEM_ATM_PUBLIC_H_
-#define _QFCOMPRETRADESYSTEM_ATM_PUBLIC_H_
+#pragma once
 enum severity_levels
 {
 	normal,
 	warning,
 	error
 };
-#endif

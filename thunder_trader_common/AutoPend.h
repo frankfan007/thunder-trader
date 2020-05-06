@@ -1,5 +1,4 @@
-#ifndef _COMMONFILES_AUTOPEND_H_
-#define _COMMONFILES_AUTOPEND_H_
+#pragma once
 #include <atomic>
 class CAutoPend
 {
@@ -8,4 +7,3 @@ public:
 	CAutoPend(std::atomic_bool & _IsPending);
 	~CAutoPend();
 };
-#endif

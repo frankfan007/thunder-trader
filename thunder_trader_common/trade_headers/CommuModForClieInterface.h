@@ -1,5 +1,3 @@
-#ifndef COMMUNICATIONMODULEFORCLIENT_COMMUMODFORCLIEINTERFACE_H
-#define COMMUNICATIONMODULEFORCLIENT_COMMUMODFORCLIEINTERFACE_H
+#pragma once
 #include <sstream>
 typedef size_t (*PFNCommunicateType)(char * address, unsigned int port, std::stringstream & in, std::stringstream & out);
-#endif
